@@ -11,10 +11,7 @@
     content="Fix contradictions between AGENTS.md, CLAUDE.md, Cursor rules and Copilot instructions in 2 seconds."
   />
   <meta property="og:title" content="agent-check" />
-  <meta
-    property="og:description"
-    content="Tired of your agents contradicting each other? Run npx agent-check."
-  />
+  <meta property="og:url" content="https://agentcheck-moisesvs84-6837s-projects.vercel.app" />
 </svelte:head>
 
 <div class="page">

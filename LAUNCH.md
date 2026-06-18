@@ -5,7 +5,7 @@
 1. Record terminal GIF for README and landing
 2. Create GitHub repo `moisesvalero/agent-check`
 3. `pnpm --filter agent-check publish --access public`
-4. Deploy `apps/web` to Vercel with domain `agentcheck.sh`
+4. Deploy `apps/web` to Vercel (free `.vercel.app` URL, no custom domain)
 5. Tag `v0.1.0`
 
 ## Launch posts

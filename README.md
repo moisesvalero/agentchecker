@@ -91,7 +91,7 @@ pnpm --filter @agent-check/web dev
 
 ## Landing
 
-https://agentcheck.sh
+https://agentcheck-moisesvs84-6837s-projects.vercel.app
 
 ## License
 
