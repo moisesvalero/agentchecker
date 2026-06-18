@@ -2,7 +2,9 @@ export type FactCategory =
   | 'package-manager'
   | 'linter'
   | 'formatter'
-  | 'test-runner';
+  | 'test-runner'
+  | 'shell-environment'
+  | 'package-runner';
 
 export type AgentId =
   | 'shared'
@@ -70,4 +72,6 @@ export const CATEGORY_LABELS: Record<FactCategory, string> = {
   linter: 'Linter',
   formatter: 'Formatter',
   'test-runner': 'Test runner',
+  'shell-environment': 'Shell environment',
+  'package-runner': 'Package runner',
 };

@@ -33,6 +33,27 @@ export const CHECK_DEFINITIONS: CheckDefinition[] = [
     values: ['vitest', 'jest', 'playwright'],
     patterns: [/\bvitest\b/i, /\bjest\b/i, /\bplaywright\b/i],
   },
+  {
+    category: 'shell-environment',
+    values: ['wsl', 'wsl2', 'windows', 'macos', 'linux'],
+    patterns: [
+      /\bwsl2\b/i,
+      /\bwsl\b/i,
+      /\bwindows\b/i,
+      /\bmacos\b/i,
+      /\blinux\b/i,
+    ],
+  },
+  {
+    category: 'package-runner',
+    values: ['npx', 'pnpm dlx', 'bunx', 'yarn dlx'],
+    patterns: [
+      /\bnpx\b/i,
+      /\bpnpm\s+dlx\b/i,
+      /\bbunx\b/i,
+      /\byarn\s+dlx\b/i,
+    ],
+  },
 ];
 
 function detectValueOnLine(line: string, def: CheckDefinition): string | null {

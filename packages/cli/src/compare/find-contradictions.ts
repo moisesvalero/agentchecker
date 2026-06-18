@@ -20,6 +20,22 @@ const INCOMPATIBLE: Partial<Record<FactCategory, string[][]>> = {
     ['biome', 'dprint'],
   ],
   'test-runner': [['vitest', 'jest']],
+  'shell-environment': [
+    ['wsl', 'windows'],
+    ['wsl2', 'windows'],
+    ['wsl', 'macos'],
+    ['wsl2', 'macos'],
+    ['windows', 'macos'],
+    ['windows', 'linux'],
+    ['macos', 'linux'],
+  ],
+  'package-runner': [
+    ['npx', 'pnpm dlx'],
+    ['npx', 'bunx'],
+    ['npx', 'yarn dlx'],
+    ['pnpm dlx', 'bunx'],
+    ['pnpm dlx', 'yarn dlx'],
+  ],
 };
 
 function valuesConflict(category: FactCategory, a: string, b: string): boolean {
