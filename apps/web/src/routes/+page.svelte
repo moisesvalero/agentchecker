@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   const installCommand = 'npx agentchecker';
   let copied = $state(false);
 
@@ -9,14 +11,30 @@
       copied = false;
     }, 2000);
   }
+
+  onMount(() => {
+    const landing = document.querySelector('.landing') as HTMLElement;
+    if (!landing) return;
+    const updateMouse = (e: MouseEvent) => {
+      const rect = landing.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      landing.style.setProperty('--mouse-x', `${x}px`);
+      landing.style.setProperty('--mouse-y', `${y}px`);
+    };
+    window.addEventListener('mousemove', updateMouse);
+    return () => window.removeEventListener('mousemove', updateMouse);
+  });
 </script>
 
 <div class="landing">
+  <div class="flashlight" aria-hidden="true"></div>
+  <div class="crt-overlay" aria-hidden="true"></div>
   <header class="header">
     <a class="logo" href="/">
       <span class="logo-prompt">&gt;_</span>
       <span class="logo-text">agentchecker</span>
-      <span class="logo-badge">AI</span>
+      <span class="logo-dot">.</span>
     </a>
     <nav class="nav" aria-label="Primary">
       <a class="active" href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
@@ -236,18 +254,35 @@
     margin: 0 auto;
     padding: 20px 24px 44px;
     overflow: hidden;
-    background-image: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.8) 120%);
+    background-color: #050505;
+    background-image: 
+      linear-gradient(to right, rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 
-  .landing::before {
-    content: '';
+  .flashlight {
     position: absolute;
     inset: 0;
     z-index: -1;
-    background:
-      radial-gradient(circle at 50% 30%, rgba(0, 255, 65, 0.22) 0%, transparent 55%),
-      radial-gradient(circle at 50% 55%, rgba(0, 255, 65, 0.08) 0%, transparent 65%);
     pointer-events: none;
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
+      rgba(0, 255, 65, 0.15) 0%,
+      transparent 100%
+    );
+  }
+
+  .crt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: 
+      linear-gradient(rgba(0, 0, 0, 0.15) 50%, transparent 50%),
+      radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.75) 130%);
+    background-size: 100% 4px, 100% 100%;
+    opacity: 0.85;
   }
 
   .header {
@@ -272,11 +307,12 @@
   .logo {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     color: #ffffff;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 800;
     text-decoration: none;
+    letter-spacing: -0.01em;
   }
 
   .logo-prompt {
@@ -286,19 +322,13 @@
   }
 
   .logo-text {
-    letter-spacing: 0.05em;
     text-transform: lowercase;
   }
 
-  .logo-badge {
-    background: var(--primary);
-    color: #000000;
-    font-size: 8px;
+  .logo-dot {
+    color: var(--primary);
+    text-shadow: var(--glow-strong);
     font-weight: 900;
-    padding: 1px 4px;
-    letter-spacing: 0.05em;
-    line-height: 1;
-    text-shadow: none;
   }
 
   .nav {
@@ -336,14 +366,14 @@
   }
 
   .hero {
-    padding: 48px 0 0;
+    padding: 32px 0 0;
     text-align: center;
   }
 
   .status-badge {
     display: inline-flex;
-    padding: 10px 16px;
-    margin-bottom: 24px;
+    padding: 9px 15px;
+    margin-bottom: 16px;
     color: var(--primary);
     background: rgba(0, 255, 65, 0.06);
     border: 1px solid rgba(0, 255, 65, 0.34);
@@ -356,7 +386,7 @@
   .hero-title {
     margin: 0;
     color: #ffffff;
-    font-size: clamp(48px, 7.4vw, 96px);
+    font-size: clamp(36px, 6vw, 68px);
     font-weight: 900;
     line-height: 0.95;
     letter-spacing: -0.03em;
@@ -371,17 +401,17 @@
   }
 
   .hero-subtitle {
-    max-width: 660px;
-    margin: 16px auto 28px;
+    max-width: 580px;
+    margin: 10px auto 18px;
     color: var(--text-muted);
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.55;
     text-wrap: pretty;
   }
 
   .terminal {
-    width: min(800px, 100%);
-    margin: 0 auto 32px;
+    width: min(760px, 100%);
+    margin: 0 auto 24px;
     overflow: hidden;
     color: var(--text);
     text-align: left;
@@ -457,18 +487,18 @@
   }
 
   .terminal-body {
-    padding: 24px 32px 20px;
-    font-size: 13px;
+    padding: 16px 22px 14px;
+    font-size: 12.5px;
     font-weight: 700;
-    line-height: 1.6;
+    line-height: 1.5;
   }
 
   .terminal p {
-    margin: 0 0 8px;
+    margin: 0 0 4px;
   }
 
   .command {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     color: var(--text);
   }
 
@@ -490,15 +520,15 @@
   }
 
   .audit {
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .terminal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 38px;
-    padding: 10px 0 12px;
-    margin: 0 0 12px;
+    gap: 32px;
+    padding: 6px 0;
+    margin: 0 0 6px;
     border-top: 1px solid #151515;
     border-bottom: 1px solid #151515;
   }
@@ -527,7 +557,7 @@
     display: flex;
     justify-content: center;
     gap: 22px;
-    margin-bottom: 36px;
+    margin-bottom: 20px;
   }
 
   .btn {
@@ -572,10 +602,10 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: min(768px, 100%);
-    min-height: 66px;
-    margin: 0 auto 64px;
-    padding: 0 22px;
+    width: min(720px, 100%);
+    min-height: 52px;
+    margin: 0 auto 28px;
+    padding: 0 18px;
     color: var(--text);
     background: #050505;
     border: 1px solid var(--primary);
