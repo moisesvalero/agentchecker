@@ -30,6 +30,36 @@ export const AGENT_FILE_PATTERNS: AgentFilePattern[] = [
       '.github/instructions/*.instructions.md',
     ],
   },
+  {
+    agent: 'codex',
+    kind: 'tool-specific',
+    patterns: ['.codex/config.toml'],
+  },
+  {
+    agent: 'antigravity',
+    kind: 'tool-specific',
+    patterns: ['.gemini.md', '.gemini/gemini.md', 'gemini.md', '.agents/AGENTS.md'],
+  },
+  {
+    agent: 'opencode',
+    kind: 'tool-specific',
+    patterns: ['.opencode.json', '.opencode.jsonc'],
+  },
+  {
+    agent: 'windsurf',
+    kind: 'tool-specific',
+    patterns: ['.windsurfrules', '.windsurf/rules/*.md'],
+  },
+  {
+    agent: 'cline',
+    kind: 'tool-specific',
+    patterns: ['.clinerules', '.clinerules/*.md', '.roo/rules/*.md', '.clinerules-*'],
+  },
+  {
+    agent: 'aider',
+    kind: 'tool-specific',
+    patterns: ['.aider.conf.yml', 'CONVENTIONS.md', '.aider.instructions.md'],
+  },
 ];
 
 export const IGNORE_PATTERNS = [

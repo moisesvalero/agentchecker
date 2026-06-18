@@ -4,7 +4,17 @@ export type FactCategory =
   | 'formatter'
   | 'test-runner';
 
-export type AgentId = 'shared' | 'cursor' | 'claude' | 'copilot';
+export type AgentId =
+  | 'shared'
+  | 'cursor'
+  | 'claude'
+  | 'copilot'
+  | 'codex'
+  | 'antigravity'
+  | 'opencode'
+  | 'windsurf'
+  | 'cline'
+  | 'aider';
 
 export type AgentFile = {
   path: string;

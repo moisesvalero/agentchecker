@@ -64,13 +64,15 @@ graph TD
 
 ---
 
-### 🚀 Quick Start
+### 🚀 Quick Start — Zero Installation
 
-No installation required. Run it directly in the root of your project:
-
-```bash
-npx agentchecker
-```
+> [!IMPORTANT]
+> **No installation required.** Run it instantly using `npx` directly in the root of your project:
+>
+> ```bash
+> npx agentchecker
+> ```
+> *No configuration files, no global packages, no environment setup. Just run and align all your agents in 2 seconds.*
 
 ---
 
@@ -118,7 +120,7 @@ jobs:
 | **Claude Code** | `CLAUDE.md`, `.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Markdown |
 | **GitHub Copilot** | `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md` | *Copilot global settings* | Markdown |
 | **Codex App** | `AGENTS.md`, `.codex/config.toml` | `~/.codex/AGENTS.md`, `~/.codex/config.toml` | Markdown / TOML |
-| **Antigravity 2.0** | `.agents/AGENTS.md`, `.agents/skills/*/SKILL.md` | `~/.gemini/config/AGENTS.md` | Markdown |
+| **Antigravity 2.0** | `.gemini/gemini.md`, `.gemini.md`, `gemini.md` | *Gemini global custom settings* | Markdown |
 | **OpenCode** | `AGENTS.md`, `.opencode.json` | `~/.config/opencode/AGENTS.md`, `~/.config/opencode/opencode.json` | Markdown / JSON |
 | **Windsurf** | `.windsurfrules`, `.windsurf/rules/` | *Cascade Sidebar custom rules* | Markdown |
 | **Roo Cline (Roo Code / Cline)** | `.clinerules`, `.clinerules/`, `.roo/rules/` | `.clinerules-<mode>` | Markdown |
@@ -218,13 +220,15 @@ graph TD
 
 ---
 
-### 🚀 Inicio Rápido
+### 🚀 Inicio Rápido — Cero Instalación
 
-No requiere instalación. Ejecútalo directamente en la raíz de tu proyecto:
-
-```bash
-npx agentchecker
-```
+> [!IMPORTANT]
+> **No requiere instalación.** Ejecútalo al instante usando `npx` directamente en la raíz de tu proyecto:
+>
+> ```bash
+> npx agentchecker
+> ```
+> *Sin archivos de configuración previos, sin descargas globales, sin fricción de configuración inicial. Ejecuta y alinea todos tus agentes en 2 segundos.*
 
 ---
 
@@ -272,7 +276,7 @@ jobs:
 | **Claude Code** | `CLAUDE.md`, `.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Markdown |
 | **GitHub Copilot** | `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md` | *Ajustes globales de Copilot* | Markdown |
 | **Codex App** | `AGENTS.md`, `.codex/config.toml` | `~/.codex/AGENTS.md`, `~/.codex/config.toml` | Markdown / TOML |
-| **Antigravity 2.0** | `.agents/AGENTS.md`, `.agents/skills/*/SKILL.md` | `~/.gemini/config/AGENTS.md` | Markdown |
+| **Antigravity 2.0** | `.gemini/gemini.md`, `.gemini.md`, `gemini.md` | *Ajustes globales de Gemini* | Markdown |
 | **OpenCode** | `AGENTS.md`, `.opencode.json` | `~/.config/opencode/AGENTS.md`, `~/.config/opencode/opencode.json` | Markdown / JSON |
 | **Windsurf** | `.windsurfrules`, `.windsurf/rules/` | *Reglas personalizadas de Cascade* | Markdown |
 | **Roo Cline (Roo Code / Cline)** | `.clinerules`, `.clinerules/`, `.roo/rules/` | `.clinerules-<mode>` | Markdown |

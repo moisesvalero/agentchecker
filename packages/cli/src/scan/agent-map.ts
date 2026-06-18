@@ -5,6 +5,12 @@ export const AGENT_LABELS: Record<AgentId, string> = {
   cursor: 'Cursor',
   claude: 'Claude Code',
   copilot: 'GitHub Copilot',
+  codex: 'Codex App',
+  antigravity: 'Antigravity 2.0',
+  opencode: 'OpenCode',
+  windsurf: 'Windsurf',
+  cline: 'Roo Cline',
+  aider: 'Aider',
 };
 
 export const AGENT_FILE_OWNERS: Record<string, AgentId[]> = {
@@ -13,6 +19,16 @@ export const AGENT_FILE_OWNERS: Record<string, AgentId[]> = {
   '.claude/CLAUDE.md': ['claude'],
   '.cursorrules': ['cursor'],
   '.github/copilot-instructions.md': ['copilot'],
+  '.codex/config.toml': ['codex'],
+  '.gemini.md': ['antigravity'],
+  '.gemini/gemini.md': ['antigravity'],
+  'gemini.md': ['antigravity'],
+  '.agents/AGENTS.md': ['antigravity'],
+  '.opencode.json': ['opencode'],
+  '.opencode.jsonc': ['opencode'],
+  '.windsurfrules': ['windsurf'],
+  '.clinerules': ['cline'],
+  'CONVENTIONS.md': ['aider'],
 };
 
 export function normalizeAgentFilter(input: string): AgentId | null {
@@ -26,6 +42,15 @@ export function normalizeAgentFilter(input: string): AgentId | null {
     'claude-code': 'claude',
     copilot: 'copilot',
     'github-copilot': 'copilot',
+    codex: 'codex',
+    antigravity: 'antigravity',
+    gemini: 'antigravity',
+    opencode: 'opencode',
+    windsurf: 'windsurf',
+    cline: 'cline',
+    'roo-cline': 'cline',
+    'roo-code': 'cline',
+    aider: 'aider',
   };
   return map[key] ?? null;
 }
