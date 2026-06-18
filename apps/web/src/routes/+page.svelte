@@ -68,7 +68,7 @@ Found:
   </section>
 
   <div class="links">
-    <a href="https://github.com/moisesvalero/agent-check">GitHub</a>
+    <a href="https://github.com/moisesvalero/agentchecker">GitHub</a>
     <a href="https://www.npmjs.com/package/agentchecker">npm</a>
   </div>
 </main>

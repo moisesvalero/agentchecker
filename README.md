@@ -8,6 +8,8 @@
 npx agentchecker
 ```
 
+![Demo](./demo.gif)
+
 ## Problem
 
 When you use multiple AI coding tools, each one may read a different instruction file:
@@ -86,12 +88,17 @@ Found:
 pnpm install
 pnpm --filter agentchecker test
 pnpm --filter agentchecker build
-pnpm --filter @agent-check/web dev
+pnpm --filter @agentchecker/web dev
 ```
 
 ## Landing
 
 Deployed from GitHub via Vercel (project: `agentchecker`).
+
+## Links
+
+- npm: https://www.npmjs.com/package/agentchecker
+- GitHub: https://github.com/moisesvalero/agentchecker
 
 ## License
 

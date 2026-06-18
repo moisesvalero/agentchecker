@@ -7,31 +7,24 @@ TypingSpeed 40ms
 Type "cd my-project"
 Enter
 Sleep 300ms
-Type "npx agentcheck"
+Type "npx agentchecker"
 Enter
 Sleep 800ms
 
 Show
 Sleep 500ms
 
-Output `agent-check
+Output `agentchecker
 
 Found:
-  ✓ AGENTS.md (Shared)
-  ✓ CLAUDE.md (Claude)
-  ✓ .cursor/rules/global.mdc (Cursor)
+  ✓ AGENTS.md
+  ✓ CLAUDE.md
+  ✓ .cursor/rules/global.mdc
 
-⚠ 2 contradictions found:
+⚠ 2 contradictions found
 
-Package manager
-  AGENTS.md → pnpm
-  CLAUDE.md → npm
-  recommended: pnpm
-
-Linter
-  AGENTS.md → oxlint
-  CLAUDE.md → eslint
-  recommended: oxlint
+Package manager → pnpm (recommended)
+Linter → oxlint (recommended)
 
 Dry run complete. No files were changed.`
 

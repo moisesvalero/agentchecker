@@ -1,6 +1,6 @@
 {
   "installCommand": "cd ../.. && pnpm install",
-  "buildCommand": "cd ../.. && pnpm --filter @agent-check/web build",
+  "buildCommand": "cd ../.. && pnpm --filter @agentchecker/web build",
   "outputDirectory": "build",
   "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }

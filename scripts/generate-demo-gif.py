@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import subprocess
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -17,13 +16,13 @@ FONT_CANDIDATES = [
 
 FRAMES = [
     "$ cd my-project",
-    "$ cd my-project\n$ npx agentcheck",
-    "$ cd my-project\n$ npx agentcheck\n\nagent-check",
-    "$ cd my-project\n$ npx agentcheck\n\nagent-check\n\nFound:\n  ✓ AGENTS.md\n  ✓ CLAUDE.md\n  ✓ .cursor/rules/global.mdc",
+    "$ cd my-project\n$ npx agentchecker",
+    "$ cd my-project\n$ npx agentchecker\n\nagentchecker",
+    "$ cd my-project\n$ npx agentchecker\n\nagentchecker\n\nFound:\n  ✓ AGENTS.md\n  ✓ CLAUDE.md\n  ✓ .cursor/rules/global.mdc",
     """$ cd my-project
-$ npx agentcheck
+$ npx agentchecker
 
-agent-check
+agentchecker
 
 Found:
   ✓ AGENTS.md
