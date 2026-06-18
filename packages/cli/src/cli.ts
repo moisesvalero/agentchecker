@@ -1,6 +1,7 @@
 import { parseArgs } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeFile } from 'node:fs/promises';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import { scanProject } from './scan/scan-project.js';
@@ -117,11 +118,14 @@ export async function runCli(argv: string[]): Promise<number> {
     return EXIT_OK;
   }
 
+  const globalPaths = new Set(files.filter((f) => f.kind === 'global').map((f) => f.path));
+  const localFiles = files.filter((f) => f.kind !== 'global');
+
   const facts = extractFacts(files);
   let contradictions = applyRecommendations(findContradictions(facts), facts);
 
   if (contradictions.length > 0) {
-    console.log('\n' + renderContradictions(contradictions));
+    console.log('\n' + renderContradictions(contradictions, globalPaths));
   }
 
   if (contradictions.length === 0) {
@@ -137,7 +141,8 @@ export async function runCli(argv: string[]): Promise<number> {
     return EXIT_CONTRADICTIONS;
   }
 
-  const fileContents = new Map(files.map((file) => [file.path, file.content]));
+  // Solo los archivos locales son modificables; los globales son de solo lectura
+  const fileContents = new Map(localFiles.map((file) => [file.path, file.content]));
 
   let resolved = contradictions.map((contradiction) => ({
     ...contradiction,
@@ -153,7 +158,40 @@ export async function runCli(argv: string[]): Promise<number> {
     resolved = prompted;
   }
 
-  const changes = planFixes(resolved, fileContents);
+  let changes = planFixes(resolved, fileContents);
+
+  // Si no hay archivos locales que fixear, ofrecer crear AGENTS.md con las decisiones tomadas
+  if (changes.length === 0 && localFiles.length === 0 && !options.dryRun) {
+    const agentsMdPath = path.join(options.cwd, 'AGENTS.md');
+    const lines = [
+      '# Agent Instructions',
+      '',
+      '<!-- Generado por agentchecker para alinear configuraciones de herramientas IA -->',
+      '',
+      ...resolved.map((r) => `- Use **${r.chosen}** for ${r.category.replace('-', ' ')}.`),
+      '',
+    ];
+
+    if (!options.yes) {
+      const create = await p.confirm({
+        message: `No local config files found. Create ${pc.cyan('AGENTS.md')} with your choices?`,
+        initialValue: true,
+      });
+      if (p.isCancel(create) || !create) {
+        p.outro(pc.yellow('No changes applied.'));
+        return EXIT_CONTRADICTIONS;
+      }
+    }
+
+    await writeFile(agentsMdPath, lines.join('\n'), 'utf8');
+    const message = `✓ Created AGENTS.md with resolved settings. Done in ${((Date.now() - started) / 1000).toFixed(1)}s`;
+    if (!options.yes) {
+      p.outro(pc.green(message));
+    } else {
+      console.log(pc.green(message));
+    }
+    return EXIT_OK;
+  }
 
   if (changes.length === 0) {
     p.outro(pc.yellow('No safe automatic fixes found.'));

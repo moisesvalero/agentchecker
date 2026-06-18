@@ -57,10 +57,11 @@ graph TD
 ### The Solution
 
 `agentchecker` is a zero-dependency, ultra-fast CLI tool that:
-1. **Scans** your project for all agent instructions files in milliseconds.
-2. **Extracts & parses** tech stack decisions (package managers, linters, formatters, test runners).
-3. **Highlights contradictions** using a clean, terminal-based diagnostic report.
-4. **Fixes them interactively** by applying safe, localized inline updates so all your agents agree.
+1. **Scans** your project's local agent files AND your global tool configs (`~/.claude/`, `~/.cursor/rules/`, `~/.codex/`, etc.).
+2. **Extracts & parses** tech stack decisions (package managers, linters, formatters, test runners, shell environments).
+3. **Highlights contradictions** across all sources with a clean, terminal-based diagnostic report.
+4. **Fixes them interactively** — only modifying local project files. Global configs are always **read-only**.
+5. **Creates `AGENTS.md`** automatically if no local config exists, locking in your choices for this project.
 
 ---
 
@@ -213,10 +214,11 @@ graph TD
 ### La Solución
 
 `agentchecker` es una herramienta CLI extremadamente rápida y sin dependencias externas que:
-1. **Escanea** tu proyecto buscando archivos de instrucciones en milisegundos.
-2. **Extrae y parsea** las tecnologías definidas (gestores de paquetes, linters, formateadores, test runners).
-3. **Muestra las contradicciones** en un reporte de diagnóstico limpio directamente en tu terminal.
-4. **Las soluciona de forma interactiva** aplicando cambios seguros en el propio archivo para que todas tus IAs estén alineadas.
+1. **Escanea** tanto los archivos locales de tu proyecto como tus configuraciones globales de herramientas (`~/.claude/`, `~/.cursor/rules/`, `~/.codex/`, etc.).
+2. **Extrae y analiza** las decisiones tecnológicas (gestores de paquetes, linters, formateadores, ejecutores de tests, entornos de shell).
+3. **Resalta las contradicciones** entre todas las fuentes con un informe de diagnóstico claro en la terminal.
+4. **Las corrige interactivamente**, modificando únicamente los archivos locales del proyecto. Las configuraciones globales son siempre de **solo lectura**.
+5. **Crea `AGENTS.md`** automáticamente si no existe ninguna configuración local, asegurando tus elecciones para este proyecto.
 
 ---
 
