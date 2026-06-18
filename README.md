@@ -27,11 +27,11 @@
 
 ### ⚡ The Problem: The "Rule Drift"
 
-When you pair program with multiple AI coding tools, each one reads a different instructions file:
+When you pair program with multiple AI coding tools, each one reads a different instructions or rules file in your repository:
 * **Cursor** reads `.cursorrules` or `.cursor/rules/*.mdc`
 * **Claude Code** reads `CLAUDE.md` or `.claude/CLAUDE.md`
 * **GitHub Copilot** reads `.github/copilot-instructions.md`
-* **Humans** read `AGENTS.md`
+* **Humans & Shared Agents** read `AGENTS.md`
 
 Over time, these rules drift apart. Cursor starts using `pnpm` and `eslint`, Claude defaults to `npm` and `oxlint`, and Copilot reformats everything with `biome`. **The result? Conflicted generation, compilation errors, and wasted API tokens.**
 
@@ -108,13 +108,21 @@ jobs:
 
 ---
 
-### 📋 Supported Files & Checks
+### 📋 Supported Tools & Instruction Files
 
-#### Supported Instruction Files
-* `AGENTS.md` (Shared rules)
-* `CLAUDE.md` & `.claude/CLAUDE.md` (Claude Code)
-* `.cursorrules` & `.cursor/rules/*.mdc` (Cursor)
-* `.github/copilot-instructions.md` & `.github/instructions/*.instructions.md` (Copilot)
+`agentchecker` unifies the configurations of the industry's most popular AI coding assistants, editors, and agents:
+
+| AI Program / Agent | Project-Level Rules | Global / User Rules | Format |
+| :--- | :--- | :--- | :--- |
+| **Cursor** | `.cursorrules`, `.cursor/rules/*.mdc` | *Sidebar settings / Profiles* | Markdown / MDC |
+| **Claude Code** | `CLAUDE.md`, `.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Markdown |
+| **GitHub Copilot** | `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md` | *Copilot global settings* | Markdown |
+| **Codex App** | `AGENTS.md`, `.codex/config.toml` | `~/.codex/AGENTS.md`, `~/.codex/config.toml` | Markdown / TOML |
+| **Antigravity 2.0** | `.agents/AGENTS.md`, `.agents/skills/*/SKILL.md` | `~/.gemini/config/AGENTS.md` | Markdown |
+| **OpenCode** | `AGENTS.md`, `.opencode.json` | `~/.config/opencode/AGENTS.md`, `~/.config/opencode/opencode.json` | Markdown / JSON |
+| **Windsurf** | `.windsurfrules`, `.windsurf/rules/` | *Cascade Sidebar custom rules* | Markdown |
+| **Roo Cline (Roo Code / Cline)** | `.clinerules`, `.clinerules/`, `.roo/rules/` | `.clinerules-<mode>` | Markdown |
+| **Aider** | `CONVENTIONS.md`, `.aider.conf.yml` | `~/.aider.conf.yml` | Markdown / YAML |
 
 #### Analyzed Tooling Categories
 * 📦 **Package Managers**: `pnpm`, `npm`, `yarn`, `bun`
@@ -173,11 +181,11 @@ pnpm --filter @agentchecker/web dev
 
 ### ⚡ El Problema: La desviación de reglas (Rule Drift)
 
-Cuando programas en pareja con varias herramientas de IA al mismo tiempo, cada una de ellas lee un archivo de configuración e instrucciones diferente:
+Cuando programas en pareja con varias herramientas de IA al mismo tiempo, cada una de ellas lee un archivo de configuración e instrucciones diferente en tu repositorio:
 * **Cursor** lee `.cursorrules` o `.cursor/rules/*.mdc`
 * **Claude Code** lee `CLAUDE.md` o `.claude/CLAUDE.md`
 * **GitHub Copilot** lee `.github/copilot-instructions.md`
-* **Los desarrolladores** leemos `AGENTS.md`
+* **Humanos y Agentes Compartidos** leemos `AGENTS.md`
 
 Con el tiempo, estas reglas inevitablemente divergen. Cursor empezará a usar `pnpm` y `eslint`, Claude asumirá por defecto `npm` y `oxlint`, y Copilot reformateará el código usando `biome`. **¿El resultado? Comportamiento errático de los agentes, errores de compilación y pérdida innecesaria de tokens de API.**
 
@@ -254,13 +262,21 @@ jobs:
 
 ---
 
-### 📋 Archivos y Reglas Soportadas
+### 📋 Herramientas y Archivos Soportados
 
-#### Archivos de Instrucciones Soportados
-* `AGENTS.md` (Reglas compartidas)
-* `CLAUDE.md` y `.claude/CLAUDE.md` (Claude Code)
-* `.cursorrules` y `.cursor/rules/*.mdc` (Cursor)
-* `.github/copilot-instructions.md` y `.github/instructions/*.instructions.md` (Copilot)
+`agentchecker` unifica las configuraciones de los asistentes de código de IA, editores y agentes más populares de la industria:
+
+| Programa / Agente de IA | Reglas a Nivel de Proyecto | Reglas Globales / de Usuario | Formato |
+| :--- | :--- | :--- | :--- |
+| **Cursor** | `.cursorrules`, `.cursor/rules/*.mdc` | *Ajustes de barra lateral / Perfiles* | Markdown / MDC |
+| **Claude Code** | `CLAUDE.md`, `.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Markdown |
+| **GitHub Copilot** | `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md` | *Ajustes globales de Copilot* | Markdown |
+| **Codex App** | `AGENTS.md`, `.codex/config.toml` | `~/.codex/AGENTS.md`, `~/.codex/config.toml` | Markdown / TOML |
+| **Antigravity 2.0** | `.agents/AGENTS.md`, `.agents/skills/*/SKILL.md` | `~/.gemini/config/AGENTS.md` | Markdown |
+| **OpenCode** | `AGENTS.md`, `.opencode.json` | `~/.config/opencode/AGENTS.md`, `~/.config/opencode/opencode.json` | Markdown / JSON |
+| **Windsurf** | `.windsurfrules`, `.windsurf/rules/` | *Reglas personalizadas de Cascade* | Markdown |
+| **Roo Cline (Roo Code / Cline)** | `.clinerules`, `.clinerules/`, `.roo/rules/` | `.clinerules-<mode>` | Markdown |
+| **Aider** | `CONVENTIONS.md`, `.aider.conf.yml` | `~/.aider.conf.yml` | Markdown / YAML |
 
 #### Categorías Analizadas
 * 📦 **Gestores de paquetes**: `pnpm`, `npm`, `yarn`, `bun`
