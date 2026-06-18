@@ -49,27 +49,37 @@
         </div>
         <div class="terminal-body">
           <div class="terminal-main">
-            <p class="command"><span>$</span> agentchecker ./instructions</p>
-            <p class="muted">[INFO] Initializing logic engine v1.2.4...</p>
-            <p class="muted">[INFO] Loading 42 instruction files...</p>
-            <p class="muted">[INFO] Mapping semantic dependencies...</p>
-            <p class="accent audit">>>> AUDIT STARTED</p>
+            <p class="command"><span>$</span> npx agentchecker</p>
+            <p class="muted">Scanning AI agent rules files...</p>
+            <p class="dim">Found:</p>
+            <p class="dim">  ✓ AGENTS.md (Shared)</p>
+            <p class="dim">  ✓ CLAUDE.md (Claude Code)</p>
+            <p class="dim">  ✓ .cursor/rules/global.mdc (Cursor)</p>
+            
+            <p class="accent audit">⚠ 2 contradictions found</p>
 
             <div class="terminal-grid">
               <div>
-                <p class="dim">CHECKING FILE: INSTRUCTION_V1.MD</p>
-                <p class="dim">Rule 1: Never reveal data.</p>
-                <p class="dim">Rule 42: Export to CDN.</p>
+                <p class="dim">CATEGORY: PACKAGE MANAGER</p>
+                <p class="dim">  - .cursor/rules/global.mdc -> npm</p>
+                <p class="dim">  - CLAUDE.md -> npm</p>
+                <p class="dim">  - AGENTS.md -> pnpm</p>
+                <p class="accent">  recommended: pnpm</p>
               </div>
-              <div class="conflict-panel">
-                <p class="accent">CONFLICT DETECTED</p>
-                <p class="conflict">CONFLICT: DATA_LEAK_RISK</p>
-                <p>Resolution: Override Rule 42 with VPC endpoint.</p>
+              <div>
+                <p class="dim">CATEGORY: LINTER</p>
+                <p class="dim">  - .cursor/rules/global.mdc -> eslint</p>
+                <p class="dim">  - CLAUDE.md -> eslint</p>
+                <p class="dim">  - AGENTS.md -> oxlint</p>
+                <p class="accent">  recommended: oxlint</p>
               </div>
             </div>
 
-            <p class="success">[SUCCESS] Logic map consistent.</p>
-            <p class="wait">Process complete. Waiting for command...<span class="cursor"></span></p>
+            <p class="prompt">? Fix contradictions? Yes</p>
+            <p class="prompt">? Select package manager: pnpm (recommended)</p>
+            <p class="prompt">? Select linter: oxlint</p>
+            <p class="success">✓ Fixed 2 files. All your agents agree.</p>
+            <p class="wait">Process complete. Ready.<span class="cursor"></span></p>
           </div>
         </div>
       </div>
@@ -209,17 +219,17 @@
     margin: 0 auto;
     padding: 20px 24px 44px;
     overflow: hidden;
+    background-image: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.8) 120%);
   }
 
   .landing::before {
     content: '';
     position: absolute;
-    inset: 190px -18% 120px;
+    inset: 0;
     z-index: -1;
     background:
-      radial-gradient(circle at 50% 38%, rgba(0, 255, 65, 0.2), transparent 33%),
-      radial-gradient(circle at 50% 54%, rgba(0, 255, 65, 0.12), transparent 42%);
-    filter: blur(8px);
+      radial-gradient(circle at 50% 30%, rgba(0, 255, 65, 0.22) 0%, transparent 55%),
+      radial-gradient(circle at 50% 55%, rgba(0, 255, 65, 0.08) 0%, transparent 65%);
     pointer-events: none;
   }
 
@@ -341,6 +351,28 @@
     border: 1px solid rgba(0, 255, 65, 0.25);
     border-radius: 0;
     box-shadow: 0 0 32px rgba(0, 255, 65, 0.15);
+    position: relative;
+    animation: crt-flicker 0.15s infinite;
+  }
+
+  .terminal::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: 
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+    z-index: 10;
+    background-size: 100% 3px, 6px 100%;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  @keyframes crt-flicker {
+    0% { opacity: 0.985; }
+    50% { opacity: 0.995; }
+    100% { opacity: 0.985; }
   }
 
   .terminal-bar {
@@ -414,8 +446,7 @@
 
   .accent,
   .success,
-  .wait,
-  .conflict {
+  .wait {
     color: var(--primary);
     text-shadow: var(--glow);
   }
@@ -426,7 +457,7 @@
 
   .terminal-grid {
     display: grid;
-    grid-template-columns: 1fr 0.95fr;
+    grid-template-columns: 1fr 1fr;
     gap: 38px;
     padding: 14px 0 15px;
     margin: 0 0 12px;
@@ -434,13 +465,8 @@
     border-bottom: 1px solid #151515;
   }
 
-  .conflict-panel {
-    color: var(--text-muted);
-  }
-
-  .conflict {
-    font-size: 14px;
-    letter-spacing: 0.04em;
+  .prompt {
+    color: #ffffff;
   }
 
   .cursor {

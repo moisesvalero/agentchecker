@@ -1,4 +1,4 @@
-# agentchecker 🔍🤖
+# agentchecker
 
 <p align="center">
   <strong>One command. All your AI agents agree.</strong><br>
@@ -15,17 +15,17 @@
 ---
 
 <p align="center">
-  <a href="#-english">English</a> • 
-  <a href="#-español">Español</a>
+  <a href="#english">English</a> • 
+  <a href="#español">Español</a>
 </p>
 
 ---
 
-<a id="-english"></a>
+<a id="english"></a>
 
-## 🇬🇧 English
+## English
 
-### ⚡ The Problem: The "Rule Drift"
+### The Problem: The "Rule Drift"
 
 When you pair program with multiple AI coding tools, each one reads a different instructions or rules file in your repository:
 * **Cursor** reads `.cursorrules` or `.cursor/rules/*.mdc`
@@ -54,7 +54,7 @@ graph TD
     I --> J[✓ Unified Rules across all tools!]:::solution
 ```
 
-### ✨ The Solution
+### The Solution
 
 `agentchecker` is a zero-dependency, ultra-fast CLI tool that:
 1. **Scans** your project for all agent instructions files in milliseconds.
@@ -64,7 +64,7 @@ graph TD
 
 ---
 
-### 🚀 Quick Start — Zero Installation
+### Quick Start: Zero Installation
 
 > [!IMPORTANT]
 > **No installation required.** Run it instantly using `npx` directly in the root of your project:
@@ -76,7 +76,7 @@ graph TD
 
 ---
 
-### 🛠️ Professional Workflow Integration
+### Professional Workflow Integration
 
 To get the most out of `agentchecker` and guarantee that your rules never drift again, integrate it into your daily workflow:
 
@@ -110,7 +110,7 @@ jobs:
 
 ---
 
-### 📋 Supported Tools & Instruction Files
+### Supported Tools & Instruction Files
 
 `agentchecker` unifies the configurations of the industry's most popular AI coding assistants, editors, and agents:
 
@@ -127,17 +127,17 @@ jobs:
 | **Aider** | `CONVENTIONS.md`, `.aider.conf.yml` | `~/.aider.conf.yml` | Markdown / YAML |
 
 #### Analyzed Tooling Categories
-* 📦 **Package Managers**: `pnpm`, `npm`, `yarn`, `bun`
-* ⚡ **Linters**: `oxlint`, `eslint`, `biome`
-* 🎨 **Formatters**: `prettier`, `biome`, `dprint`
-* 🧪 **Test Runners**: `vitest`, `jest`, `playwright`
+* **Package Managers**: `pnpm`, `npm`, `yarn`, `bun`
+* **Linters**: `oxlint`, `eslint`, `biome`
+* **Formatters**: `prettier`, `biome`, `dprint`
+* **Test Runners**: `vitest`, `jest`, `playwright`
 
 ---
 
-### ⚙️ Command Line Options
+### Command Line Options
 
 ```bash
-agentchecker — fix contradictions between AI agent instruction files
+agentchecker: fix contradictions between AI agent instruction files
 
 Usage:
   npx agentchecker [options]
@@ -154,7 +154,7 @@ Options:
 
 ---
 
-### 💻 Local Development
+### Local Development
 
 ```bash
 # Clone the repository
@@ -177,11 +177,11 @@ pnpm --filter @agentchecker/web dev
 ---
 ---
 
-<a id="-español"></a>
+<a id="español"></a>
 
-## 🇪🇸 Español
+## Español
 
-### ⚡ El Problema: La desviación de reglas (Rule Drift)
+### El Problema: La desviación de reglas (Rule Drift)
 
 Cuando programas en pareja con varias herramientas de IA al mismo tiempo, cada una de ellas lee un archivo de configuración e instrucciones diferente en tu repositorio:
 * **Cursor** lee `.cursorrules` o `.cursor/rules/*.mdc`
@@ -210,7 +210,7 @@ graph TD
     I --> J[✓ Reglas unificadas en todas las herramientas]:::solution
 ```
 
-### ✨ La Solución
+### La Solución
 
 `agentchecker` es una herramienta CLI extremadamente rápida y sin dependencias externas que:
 1. **Escanea** tu proyecto buscando archivos de instrucciones en milisegundos.
@@ -220,7 +220,7 @@ graph TD
 
 ---
 
-### 🚀 Inicio Rápido — Cero Instalación
+### Inicio Rápido: Cero Instalación
 
 > [!IMPORTANT]
 > **No requiere instalación.** Ejecútalo al instante usando `npx` directamente en la raíz de tu proyecto:
@@ -232,7 +232,7 @@ graph TD
 
 ---
 
-### 🛠️ Integración en tu Flujo Diario de Trabajo
+### Integración en tu Flujo Diario de Trabajo
 
 Para maximizar el valor de `agentchecker` y asegurar que tus reglas nunca se vuelvan a desviar, intégralo en tus herramientas habituales:
 
@@ -266,7 +266,7 @@ jobs:
 
 ---
 
-### 📋 Herramientas y Archivos Soportados
+### Herramientas y Archivos Soportados
 
 `agentchecker` unifica las configuraciones de los asistentes de código de IA, editores y agentes más populares de la industria:
 
@@ -283,17 +283,17 @@ jobs:
 | **Aider** | `CONVENTIONS.md`, `.aider.conf.yml` | `~/.aider.conf.yml` | Markdown / YAML |
 
 #### Categorías Analizadas
-* 📦 **Gestores de paquetes**: `pnpm`, `npm`, `yarn`, `bun`
-* ⚡ **Linters**: `oxlint`, `eslint`, `biome`
-* 🎨 **Formateadores**: `prettier`, `biome`, `dprint`
-* 🧪 **Test Runners**: `vitest`, `jest`, `playwright`
+* **Gestores de paquetes**: `pnpm`, `npm`, `yarn`, `bun`
+* **Linters**: `oxlint`, `eslint`, `biome`
+* **Formateadores**: `prettier`, `biome`, `dprint`
+* **Test Runners**: `vitest`, `jest`, `playwright`
 
 ---
 
-### ⚙️ Parámetros de Consola (Flags)
+### Parámetros de Consola (Flags)
 
 ```bash
-agentchecker — fix contradictions between AI agent instruction files
+agentchecker: fix contradictions between AI agent instruction files
 
 Uso:
   npx agentchecker [opciones]
@@ -310,7 +310,7 @@ Opciones:
 
 ---
 
-### 💻 Desarrollo Local
+### Desarrollo Local
 
 ```bash
 # Clonar el repositorio
