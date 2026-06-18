@@ -13,7 +13,11 @@
 
 <div class="landing">
   <header class="header">
-    <a class="logo" href="/">AGENTCHECKER</a>
+    <a class="logo" href="/">
+      <span class="logo-prompt">&gt;_</span>
+      <span class="logo-text">agentchecker</span>
+      <span class="logo-badge">AI</span>
+    </a>
     <nav class="nav" aria-label="Primary">
       <a class="active" href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
       <a class="donate-link" href="https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD" target="_blank" rel="noreferrer">DONATE</a>
@@ -266,10 +270,35 @@
   }
 
   .logo {
-    color: var(--primary);
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #ffffff;
+    font-size: 13px;
     font-weight: 700;
+    text-decoration: none;
+  }
+
+  .logo-prompt {
+    color: var(--primary);
     text-shadow: var(--glow);
+    font-weight: 800;
+  }
+
+  .logo-text {
+    letter-spacing: 0.05em;
+    text-transform: lowercase;
+  }
+
+  .logo-badge {
+    background: var(--primary);
+    color: #000000;
+    font-size: 8px;
+    font-weight: 900;
+    padding: 1px 4px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-shadow: none;
   }
 
   .nav {
@@ -307,14 +336,14 @@
   }
 
   .hero {
-    padding: 92px 0 0;
+    padding: 48px 0 0;
     text-align: center;
   }
 
   .status-badge {
     display: inline-flex;
-    padding: 11px 17px;
-    margin-bottom: 38px;
+    padding: 10px 16px;
+    margin-bottom: 24px;
     color: var(--primary);
     background: rgba(0, 255, 65, 0.06);
     border: 1px solid rgba(0, 255, 65, 0.34);
@@ -343,16 +372,16 @@
 
   .hero-subtitle {
     max-width: 660px;
-    margin: 24px auto 44px;
+    margin: 16px auto 28px;
     color: var(--text-muted);
-    font-size: 17px;
+    font-size: 15px;
     line-height: 1.55;
     text-wrap: pretty;
   }
 
   .terminal {
-    width: min(895px, 100%);
-    margin: 0 auto 40px;
+    width: min(800px, 100%);
+    margin: 0 auto 32px;
     overflow: hidden;
     color: var(--text);
     text-align: left;
@@ -428,7 +457,7 @@
   }
 
   .terminal-body {
-    padding: 40px 40px 32px;
+    padding: 24px 32px 20px;
     font-size: 13px;
     font-weight: 700;
     line-height: 1.6;
@@ -439,7 +468,7 @@
   }
 
   .command {
-    margin-bottom: 22px;
+    margin-bottom: 12px;
     color: var(--text);
   }
 
@@ -461,14 +490,14 @@
   }
 
   .audit {
-    margin-top: 14px;
+    margin-top: 8px;
   }
 
   .terminal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 38px;
-    padding: 14px 0 15px;
+    padding: 10px 0 12px;
     margin: 0 0 12px;
     border-top: 1px solid #151515;
     border-bottom: 1px solid #151515;
@@ -498,7 +527,7 @@
     display: flex;
     justify-content: center;
     gap: 22px;
-    margin-bottom: 84px;
+    margin-bottom: 36px;
   }
 
   .btn {
@@ -799,6 +828,10 @@
 
     .copy-btn {
       align-self: flex-end;
+    }
+
+    .install-bar code {
+      font-size: 12px;
     }
   }
 </style>
