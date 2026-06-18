@@ -20,3 +20,9 @@
 <div class="page">
   {@render children()}
 </div>
+
+<style>
+  .page {
+    min-height: 100vh;
+  }
+</style>
