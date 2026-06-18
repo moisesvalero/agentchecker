@@ -110,7 +110,9 @@ export async function runCli(argv: string[]): Promise<number> {
 
   if (files.length === 0) {
     if (!options.checkOnly && !options.yes) {
-      p.outro(pc.green(`Done in ${((Date.now() - started) / 1000).toFixed(1)}s`));
+      p.outro(pc.yellow('No AI agent instruction files found in this directory.'));
+    } else {
+      console.log(pc.yellow('No AI agent instruction files found.'));
     }
     return EXIT_OK;
   }
@@ -118,11 +120,15 @@ export async function runCli(argv: string[]): Promise<number> {
   const facts = extractFacts(files);
   let contradictions = applyRecommendations(findContradictions(facts), facts);
 
-  console.log('\n' + renderContradictions(contradictions));
+  if (contradictions.length > 0) {
+    console.log('\n' + renderContradictions(contradictions));
+  }
 
   if (contradictions.length === 0) {
     if (!options.checkOnly && !options.yes) {
-      p.outro(pc.green(`Done in ${((Date.now() - started) / 1000).toFixed(1)}s`));
+      p.outro(pc.green(`✓ No contradictions found. All your agents agree! (Done in ${((Date.now() - started) / 1000).toFixed(1)}s)`));
+    } else {
+      console.log(pc.green('✓ No contradictions found. All your agents agree!'));
     }
     return EXIT_OK;
   }
