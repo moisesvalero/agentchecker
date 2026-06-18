@@ -192,7 +192,9 @@ export async function runCli(argv: string[]): Promise<number> {
 
 const isMain =
   process.argv[1] &&
-  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+  (path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url)) ||
+   process.argv[1].endsWith('agentchecker.js') ||
+   process.argv[1].endsWith('agentchecker'));
 
 if (isMain) {
   runCli(process.argv.slice(2)).then((code) => {
