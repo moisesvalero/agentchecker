@@ -1,5 +1,5 @@
 <script lang="ts">
-  const command = 'npx agent-check';
+  const command = 'npx agentcheck';
 
   async function copyCommand() {
     await navigator.clipboard.writeText(command);
@@ -23,7 +23,7 @@
   <section class="grid">
     <article class="card">
       <h2>1. Run the command</h2>
-      <p>Execute <code>npx agent-check</code> in your project root.</p>
+      <p>Execute <code>npx agentcheck</code> in your project root.</p>
     </article>
     <article class="card">
       <h2>2. Auto-detect</h2>
@@ -38,7 +38,7 @@
   <section class="section">
     <h2>Example output</h2>
     <div class="terminal">
-$ npx agent-check
+$ npx agentcheck
 
 Found:
   ✓ AGENTS.md
@@ -69,7 +69,7 @@ Found:
 
   <div class="links">
     <a href="https://github.com/moisesvalero/agent-check">GitHub</a>
-    <a href="https://www.npmjs.com/package/agent-check">npm</a>
+    <a href="https://www.npmjs.com/package/agentcheck">npm</a>
   </div>
 </main>
 

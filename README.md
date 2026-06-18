@@ -1,11 +1,11 @@
-# agent-check
+# agentcheck
 
 **One command. All your agents agree.**
 
-`agent-check` finds contradictions between AI agent instruction files in your repository and fixes them interactively.
+`agentcheck` finds contradictions between AI agent instruction files in your repository and fixes them interactively.
 
 ```bash
-npx agent-check
+npx agentcheck
 ```
 
 ## Problem
@@ -24,7 +24,7 @@ They slowly drift apart. Cursor says `pnpm`, Claude says `npm`, Copilot says `es
 Run one command:
 
 ```bash
-npx agent-check
+npx agentcheck
 ```
 
 It will:
@@ -37,7 +37,7 @@ It will:
 ## Example
 
 ```bash
-$ npx agent-check
+$ npx agentcheck
 
 Found:
   ✓ AGENTS.md
@@ -84,14 +84,14 @@ Found:
 
 ```bash
 pnpm install
-pnpm --filter agent-check test
-pnpm --filter agent-check build
+pnpm --filter agentcheck test
+pnpm --filter agentcheck build
 pnpm --filter @agent-check/web dev
 ```
 
 ## Landing
 
-https://agentcheck-moisesvs84-6837s-projects.vercel.app
+Deployed from GitHub via Vercel (project: `agentcheck`).
 
 ## License
 

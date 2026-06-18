@@ -40,10 +40,10 @@ function parseCliOptions(argv: string[]): CliOptions {
   });
 
   if (values.help) {
-    console.log(`agent-check — fix contradictions between AI agent instruction files
+    console.log(`agentcheck — fix contradictions between AI agent instruction files
 
 Usage:
-  npx agent-check [options]
+  npx agentcheck [options]
 
 Options:
   --dry-run       Show contradictions and preview without writing
@@ -92,9 +92,9 @@ export async function runCli(argv: string[]): Promise<number> {
   }
 
   if (!options.checkOnly && !options.yes) {
-    p.intro(pc.cyan('agent-check'));
+    p.intro(pc.cyan('agentcheck'));
   } else {
-    console.log(pc.cyan('agent-check'));
+    console.log(pc.cyan('agentcheck'));
   }
 
   let files;

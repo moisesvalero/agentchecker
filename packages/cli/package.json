@@ -1,12 +1,11 @@
 {
-  "name": "@moisesvalero/agentcheck",
+  "name": "agentcheck",
   "version": "0.1.0",
   "description": "Fix contradictions between AI agent instruction files in 2 seconds.",
   "type": "module",
   "main": "./dist/cli.js",
   "bin": {
-    "agentcheck": "./bin/agent-check.js",
-    "agent-check": "./bin/agent-check.js"
+    "agentcheck": "./bin/agent-check.js"
   },
   "files": [
     "bin",
