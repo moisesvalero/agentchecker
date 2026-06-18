@@ -1,0 +1,51 @@
+{
+  "name": "agent-check",
+  "version": "0.1.0",
+  "description": "Fix contradictions between AI agent instruction files in 2 seconds.",
+  "type": "module",
+  "main": "./dist/cli.js",
+  "bin": {
+    "agent-check": "./bin/agent-check.js"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "lint": "oxlint src tests",
+    "check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "pretest": "pnpm run build",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "agent",
+    "ai",
+    "cursor",
+    "claude",
+    "copilot",
+    "agents-md",
+    "cli"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "fast-glob": "^3.3.3",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "oxlint": "^0.16.11",
+    "prettier": "^3.5.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
+  }
+}

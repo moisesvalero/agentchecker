@@ -1,0 +1,201 @@
+import { parseArgs } from 'node:util';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import * as p from '@clack/prompts';
+import pc from 'picocolors';
+import { scanProject } from './scan/scan-project.js';
+import { extractFacts } from './extract/extract-facts.js';
+import { findContradictions } from './compare/find-contradictions.js';
+import { applyRecommendations } from './compare/recommend-resolution.js';
+import { planFixes } from './fix/plan-fixes.js';
+import { applyFixes, previewFixes } from './fix/apply-fixes.js';
+import { renderContradictions, renderFoundFiles } from './ui/render-report.js';
+import {
+  confirmApplyChanges,
+  promptFixContradictions,
+} from './ui/prompt-resolutions.js';
+import { normalizeAgentFilter } from './scan/agent-map.js';
+import {
+  EXIT_CONTRADICTIONS,
+  EXIT_OK,
+  EXIT_USAGE,
+  EXIT_WRITE_ERROR,
+  type AgentId,
+  type CliOptions,
+} from './types.js';
+
+function parseCliOptions(argv: string[]): CliOptions {
+  const { values } = parseArgs({
+    args: argv,
+    options: {
+      'dry-run': { type: 'boolean', default: false },
+      'check-only': { type: 'boolean', default: false },
+      yes: { type: 'boolean', short: 'y', default: false },
+      verbose: { type: 'boolean', short: 'v', default: false },
+      agent: { type: 'string', short: 'a', multiple: true },
+      'project-dir': { type: 'string' },
+      help: { type: 'boolean', short: 'h', default: false },
+    },
+    allowPositionals: true,
+  });
+
+  if (values.help) {
+    console.log(`agent-check — fix contradictions between AI agent instruction files
+
+Usage:
+  npx agent-check [options]
+
+Options:
+  --dry-run       Show contradictions and preview without writing
+  --check-only    Exit 1 if contradictions exist (CI mode)
+  -y, --yes       Apply recommended fixes without prompts
+  -a, --agent     Limit scan to agents: cursor, claude, copilot, shared
+  --project-dir   Project directory to scan (default: cwd)
+  -v, --verbose   Verbose output
+  -h, --help      Show help
+`);
+    process.exit(EXIT_OK);
+  }
+
+  const agentsRaw = values.agent ?? [];
+  const agents =
+    agentsRaw.length === 0
+      ? null
+      : (agentsRaw
+          .flatMap((entry) => entry.split(','))
+          .map((entry) => normalizeAgentFilter(entry.trim()))
+          .filter((entry): entry is AgentId => entry !== null));
+
+  if (agentsRaw.length > 0 && agents !== null && agents.length === 0) {
+    throw new Error('Invalid --agent value. Use cursor, claude, copilot, or shared.');
+  }
+
+  return {
+    cwd: values['project-dir'] ? path.resolve(values['project-dir']) : process.cwd(),
+    dryRun: Boolean(values['dry-run']),
+    checkOnly: Boolean(values['check-only']),
+    yes: Boolean(values.yes),
+    verbose: Boolean(values.verbose),
+    agents,
+  };
+}
+
+export async function runCli(argv: string[]): Promise<number> {
+  const started = Date.now();
+
+  let options: CliOptions;
+  try {
+    options = parseCliOptions(argv);
+  } catch (error) {
+    console.error(pc.red(error instanceof Error ? error.message : String(error)));
+    return EXIT_USAGE;
+  }
+
+  if (!options.checkOnly && !options.yes) {
+    p.intro(pc.cyan('agent-check'));
+  } else {
+    console.log(pc.cyan('agent-check'));
+  }
+
+  let files;
+  if (!options.checkOnly && !options.yes) {
+    const spinner = p.spinner();
+    spinner.start('Scanning AI agent files...');
+    files = await scanProject(options.cwd, options.agents);
+    spinner.stop(renderFoundFiles(files));
+  } else {
+    files = await scanProject(options.cwd, options.agents);
+    console.log(renderFoundFiles(files));
+  }
+
+  if (files.length === 0) {
+    if (!options.checkOnly && !options.yes) {
+      p.outro(pc.green(`Done in ${((Date.now() - started) / 1000).toFixed(1)}s`));
+    }
+    return EXIT_OK;
+  }
+
+  const facts = extractFacts(files);
+  let contradictions = applyRecommendations(findContradictions(facts), facts);
+
+  console.log('\n' + renderContradictions(contradictions));
+
+  if (contradictions.length === 0) {
+    if (!options.checkOnly && !options.yes) {
+      p.outro(pc.green(`Done in ${((Date.now() - started) / 1000).toFixed(1)}s`));
+    }
+    return EXIT_OK;
+  }
+
+  if (options.checkOnly) {
+    return EXIT_CONTRADICTIONS;
+  }
+
+  const fileContents = new Map(files.map((file) => [file.path, file.content]));
+
+  let resolved = contradictions.map((contradiction) => ({
+    ...contradiction,
+    chosen: contradiction.recommendation,
+  }));
+
+  if (!options.yes && !options.dryRun) {
+    const prompted = await promptFixContradictions(contradictions);
+    if (!prompted) {
+      p.outro(pc.yellow('No changes applied.'));
+      return EXIT_CONTRADICTIONS;
+    }
+    resolved = prompted;
+  }
+
+  const changes = planFixes(resolved, fileContents);
+
+  if (changes.length === 0) {
+    p.outro(pc.yellow('No safe automatic fixes found.'));
+    return EXIT_CONTRADICTIONS;
+  }
+
+  const preview = previewFixes(changes);
+  console.log('\n' + preview);
+
+  if (options.dryRun) {
+    const message = 'Dry run complete. No files were changed.';
+    if (!options.yes) {
+      p.outro(pc.dim(message));
+    } else {
+      console.log(pc.dim(message));
+    }
+    return EXIT_OK;
+  }
+
+  if (!options.yes) {
+    const confirmed = await confirmApplyChanges();
+    if (!confirmed) {
+      p.outro(pc.yellow('No changes applied.'));
+      return EXIT_CONTRADICTIONS;
+    }
+  }
+
+  try {
+    const updated = await applyFixes(changes);
+    const message = `✓ Fixed ${updated.length} file${updated.length === 1 ? '' : 's'}. All your agents agree.\nDone in ${((Date.now() - started) / 1000).toFixed(1)}s`;
+    if (!options.yes) {
+      p.outro(pc.green(message));
+    } else {
+      console.log(pc.green(message));
+    }
+    return EXIT_OK;
+  } catch (error) {
+    console.error(pc.red(error instanceof Error ? error.message : String(error)));
+    return EXIT_WRITE_ERROR;
+  }
+}
+
+const isMain =
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+
+if (isMain) {
+  runCli(process.argv.slice(2)).then((code) => {
+    process.exit(code);
+  });
+}
