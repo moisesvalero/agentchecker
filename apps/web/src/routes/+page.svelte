@@ -15,7 +15,7 @@
   <header class="header">
     <a class="logo" href="/">AGENTCHECKER</a>
     <nav class="nav" aria-label="Primary">
-      <a href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
+      <a class="active" href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
       <a href="#features">BENCHMARKS</a>
       <a href="https://www.npmjs.com/package/agentchecker">PRICING</a>
     </nav>
@@ -32,15 +32,15 @@
   <main>
     <section class="hero">
       <div class="status-badge">STATUS: PRODUCTION READY V1.2.4</div>
-      <h1 class="hero-title">AGENTCHECKER<span class="dot">.</span></h1>
+      <h1 class="hero-title">AGENTCHECKER<span>.</span></h1>
       <p class="hero-subtitle">
         Fix contradictions between AI agent instruction files. Clinical precision for ensuring
         your agents act with logical consistency.
       </p>
 
-      <div class="terminal">
+      <div class="terminal" aria-label="Agentchecker audit terminal preview">
         <div class="terminal-bar">
-          <div class="traffic">
+          <div class="traffic" aria-hidden="true">
             <span class="dot-red"></span>
             <span class="dot-yellow"></span>
             <span class="dot-green"></span>
@@ -48,22 +48,28 @@
           <span class="terminal-title">SYSTEM_AUDIT_TERMINAL</span>
         </div>
         <div class="terminal-body">
-          <div class="terminal-left">
-            <p><span class="prompt">$</span> agentchecker ./instructions</p>
+          <div class="terminal-main">
+            <p class="command"><span>$</span> agentchecker ./instructions</p>
             <p class="muted">[INFO] Initializing logic engine v1.2.4...</p>
             <p class="muted">[INFO] Loading 42 instruction files...</p>
             <p class="muted">[INFO] Mapping semantic dependencies...</p>
-            <p class="accent">&gt;&gt;&gt; AUDIT STARTED</p>
-            <p class="muted">CHECKING FILE: INSTRUCTION_V1.MD</p>
-            <p class="muted">Rule 1: Never reveal data.</p>
-            <p class="muted">Rule 42: Export to CDN.</p>
+            <p class="accent audit">>>> AUDIT STARTED</p>
+
+            <div class="terminal-grid">
+              <div>
+                <p class="dim">CHECKING FILE: INSTRUCTION_V1.MD</p>
+                <p class="dim">Rule 1: Never reveal data.</p>
+                <p class="dim">Rule 42: Export to CDN.</p>
+              </div>
+              <div class="conflict-panel">
+                <p class="accent">CONFLICT DETECTED</p>
+                <p class="conflict">CONFLICT: DATA_LEAK_RISK</p>
+                <p>Resolution: Override Rule 42 with VPC endpoint.</p>
+              </div>
+            </div>
+
             <p class="success">[SUCCESS] Logic map consistent.</p>
             <p class="wait">Process complete. Waiting for command...<span class="cursor"></span></p>
-          </div>
-          <div class="terminal-right">
-            <p class="accent">CONFLICT DETECTED</p>
-            <p class="conflict">CONFLICT: DATA_LEAK_RISK</p>
-            <p class="muted">Resolution: Override Rule 42 with VPC endpoint.</p>
           </div>
         </div>
       </div>
@@ -89,10 +95,10 @@
 
       <div class="install-bar">
         <span class="install-label">QUICK INSTALL</span>
-        <code class="install-command">$ {installCommand}</code>
+        <code><span>$</span> {installCommand}</code>
         <button class="copy-btn" type="button" onclick={copyInstall} aria-label="Copy install command">
           {#if copied}
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path
                 d="M20 6L9 17l-5-5"
                 stroke="currentColor"
@@ -102,20 +108,21 @@
               />
             </svg>
           {:else}
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <rect
                 x="9"
-                y="9"
-                width="13"
+                y="3"
+                width="9"
                 height="13"
-                rx="2"
+                rx="1"
                 stroke="currentColor"
-                stroke-width="1.5"
+                stroke-width="2"
               />
               <path
-                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                d="M6 8H5a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1"
                 stroke="currentColor"
-                stroke-width="1.5"
+                stroke-width="2"
+                stroke-linejoin="round"
               />
             </svg>
           {/if}
@@ -123,13 +130,14 @@
       </div>
     </section>
 
-    <section class="features" id="features">
+    <section class="features" id="features" aria-label="Features">
       <article class="feature-card">
         <span class="feature-mod">MOD_01</span>
         <div class="feature-icon" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5" />
-            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8" />
+            <path d="M16 16l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            <path d="M7.5 10.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
           </svg>
         </div>
         <h2>DETECTION</h2>
@@ -143,14 +151,14 @@
       <article class="feature-card">
         <span class="feature-mod">MOD_02</span>
         <div class="feature-icon" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
             <path
-              d="M12 3l1.4 4.3H18l-3.7 2.7 1.4 4.3L12 11.6 8.3 14.3l1.4-4.3L6 7.3h4.6L12 3z"
+              d="M14 3l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3zM7 11l.8 2.2L10 14l-2.2.8L7 17l-.8-2.2L4 14l2.2-.8L7 11z"
               stroke="currentColor"
-              stroke-width="1.2"
+              stroke-width="1.7"
               stroke-linejoin="round"
             />
-            <path d="M5 19h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M5 20L20 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
           </svg>
         </div>
         <h2>CORRECTION</h2>
@@ -164,16 +172,16 @@
       <article class="feature-card">
         <span class="feature-mod">MOD_03</span>
         <div class="feature-icon" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5" />
-            <path d="M7 8h10M7 12h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <rect x="4" y="6" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.8" />
+            <path d="M8 10l3 2-3 2M13 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </div>
         <h2>INTEGRATION</h2>
         <div class="feature-line"></div>
         <p>
-          Seamless CLI tool that fits into your CI/CD pipeline. Fail builds if agent instructions
-          don't pass the check.
+          CLI tool that fits into your CI/CD pipeline. Fail builds if agent instructions don't
+          pass the check.
         </p>
       </article>
     </section>
@@ -195,213 +203,253 @@
 
 <style>
   .landing {
-    width: min(1280px, calc(100% - 48px));
+    position: relative;
+    width: min(100%, 1280px);
+    min-height: 100vh;
     margin: 0 auto;
-    padding: 24px 0 48px;
+    padding: 20px 24px 44px;
+    overflow: hidden;
+  }
+
+  .landing::before {
+    content: '';
+    position: absolute;
+    inset: 190px -18% 120px;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 50% 38%, rgba(0, 255, 65, 0.2), transparent 33%),
+      radial-gradient(circle at 50% 54%, rgba(0, 255, 65, 0.12), transparent 42%);
+    filter: blur(8px);
+    pointer-events: none;
   }
 
   .header {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    padding: 8px 0 32px;
-    border-bottom: 1px solid var(--border);
+    align-items: start;
+    min-height: 36px;
+  }
+
+  .logo,
+  .nav a,
+  .header-github,
+  .status-badge,
+  .terminal,
+  .btn,
+  .install-bar,
+  .feature-mod,
+  .footer {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
   }
 
   .logo {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
     color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
     text-shadow: var(--glow);
   }
 
   .nav {
     display: flex;
-    gap: 32px;
+    gap: clamp(28px, 5vw, 64px);
     justify-content: center;
   }
 
-  .nav a {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  .nav a,
+  .footer-nav a {
+    color: var(--text-dim);
     font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
-    transition: color 0.15s ease;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    transition: color 0.16s ease;
   }
 
-  .nav a:hover {
-    color: var(--text);
+  .nav a:hover,
+  .nav a.active,
+  .footer-nav a:hover {
+    color: var(--primary);
+  }
+
+  .nav a.active {
+    color: var(--primary);
   }
 
   .header-github {
     justify-self: end;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    min-width: 84px;
+    padding: 12px 18px;
     color: var(--primary);
     border: 1px solid var(--primary);
-    padding: 8px 14px;
-    border-radius: 4px;
-    box-shadow: var(--glow);
-    transition:
-      background 0.15s ease,
-      color 0.15s ease;
-  }
-
-  .header-github:hover {
-    background: rgba(0, 255, 65, 0.08);
+    border-radius: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-align: center;
   }
 
   .hero {
-    padding: 48px 0 0;
+    padding: 92px 0 0;
     text-align: center;
   }
 
   .status-badge {
-    display: inline-block;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    display: inline-flex;
+    padding: 11px 17px;
+    margin-bottom: 38px;
     color: var(--primary);
-    border: 1px solid var(--primary);
-    padding: 8px 16px;
-    border-radius: 4px;
-    margin-bottom: 32px;
+    background: rgba(0, 255, 65, 0.06);
+    border: 1px solid rgba(0, 255, 65, 0.34);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
     box-shadow: var(--glow);
   }
 
   .hero-title {
     margin: 0;
-    font-size: clamp(40px, 8vw, 64px);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.04em;
+    color: #ffffff;
+    font-size: clamp(48px, 7.4vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
     text-transform: uppercase;
-    color: var(--text);
+    text-wrap: balance;
+    text-shadow: 0 0 24px rgba(0, 255, 65, 0.2);
   }
 
-  .dot {
+  .hero-title span {
     color: var(--primary);
     text-shadow: var(--glow-strong);
   }
 
   .hero-subtitle {
-    max-width: 720px;
-    margin: 20px auto 40px;
-    font-size: 16px;
-    line-height: 1.6;
+    max-width: 660px;
+    margin: 24px auto 44px;
     color: var(--text-muted);
+    font-size: 17px;
+    line-height: 1.55;
+    text-wrap: pretty;
   }
 
   .terminal {
-    text-align: left;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    box-shadow: var(--glow-strong);
+    width: min(895px, 100%);
+    margin: 0 auto 40px;
     overflow: hidden;
-    margin-bottom: 32px;
+    color: var(--text);
+    text-align: left;
+    background: #050505;
+    border: 1px solid rgba(0, 255, 65, 0.25);
+    border-radius: 0;
+    box-shadow: 0 0 32px rgba(0, 255, 65, 0.15);
   }
 
   .terminal-bar {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    padding: 12px 16px;
+    min-height: 35px;
+    background: linear-gradient(#181818, #121212);
     border-bottom: 1px solid var(--border);
-    background: #0d0d0d;
   }
 
   .traffic {
     position: absolute;
-    left: 16px;
+    left: 20px;
     display: flex;
-    gap: 6px;
+    gap: 7px;
   }
 
   .traffic span {
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
+    opacity: 0.65;
   }
 
   .dot-red {
-    background: #ff5f57;
+    background: #ff6b6b;
   }
 
   .dot-yellow {
-    background: #febc2e;
+    background: #f5c542;
   }
 
   .dot-green {
-    background: #28c840;
+    background: #00ff41;
   }
 
   .terminal-title {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    color: #323232;
     font-size: 11px;
+    font-weight: 800;
     letter-spacing: 0.08em;
-    color: var(--text-dim);
   }
 
   .terminal-body {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 24px;
-    padding: 24px 28px 28px;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    padding: 40px 40px 32px;
     font-size: 13px;
-    line-height: 1.55;
+    font-weight: 700;
+    line-height: 1.6;
   }
 
-  .terminal-body p {
-    margin: 0 0 6px;
+  .terminal p {
+    margin: 0 0 8px;
   }
 
-  .prompt {
+  .command {
+    margin-bottom: 22px;
+    color: var(--text);
+  }
+
+  .command span,
+  .install-bar code span {
     color: var(--primary);
   }
 
-  .muted {
-    color: #7a7f86;
+  .muted,
+  .dim {
+    color: #4d504d;
   }
 
-  .accent {
+  .accent,
+  .success,
+  .wait,
+  .conflict {
     color: var(--primary);
-    font-weight: 600;
     text-shadow: var(--glow);
   }
 
+  .audit {
+    margin-top: 14px;
+  }
+
+  .terminal-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.95fr;
+    gap: 38px;
+    padding: 14px 0 15px;
+    margin: 0 0 12px;
+    border-top: 1px solid #151515;
+    border-bottom: 1px solid #151515;
+  }
+
+  .conflict-panel {
+    color: var(--text-muted);
+  }
+
   .conflict {
-    color: var(--primary);
-    font-weight: 700;
-    text-shadow: var(--glow-strong);
-    margin-top: 8px;
-  }
-
-  .success {
-    color: var(--primary);
-    margin-top: 12px;
-  }
-
-  .wait {
-    color: var(--primary);
-    margin-top: 8px;
+    font-size: 14px;
+    letter-spacing: 0.04em;
   }
 
   .cursor {
     display: inline-block;
-    width: 8px;
-    height: 14px;
-    margin-left: 2px;
+    width: 14px;
+    height: 2px;
+    margin-left: 4px;
     background: var(--primary);
-    vertical-align: -2px;
+    vertical-align: middle;
     animation: blink 1s step-end infinite;
   }
 
@@ -411,269 +459,281 @@
     }
   }
 
-  .terminal-right {
-    padding-top: 72px;
-    text-align: right;
-  }
-
   .cta-row {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 22px;
+    margin-bottom: 84px;
   }
 
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 200px;
+    min-width: 248px;
+    min-height: 46px;
     padding: 14px 24px;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    border-radius: 0;
     font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-weight: 800;
+    letter-spacing: 0.1em;
     transition:
-      background 0.15s ease,
-      border-color 0.15s ease,
-      box-shadow 0.15s ease;
+      background 0.16s ease,
+      border-color 0.16s ease,
+      color 0.16s ease;
   }
 
   .btn-primary {
+    color: #000000;
     background: var(--primary);
-    color: #000;
     border: 1px solid var(--primary);
-    box-shadow: var(--glow-strong);
   }
 
   .btn-primary:hover {
-    background: #33ff66;
+    background-color: #33ff66;
+    box-shadow: var(--glow);
   }
 
   .btn-secondary {
-    background: transparent;
     color: var(--text);
-    border: 1px solid #3f3f46;
+    background: transparent;
+    border: 1px solid transparent;
   }
 
   .btn-secondary:hover {
-    border-color: #6b7280;
+    color: var(--primary);
   }
 
   .install-bar {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 18px 20px;
-    background: var(--surface);
+    width: min(768px, 100%);
+    min-height: 66px;
+    margin: 0 auto 64px;
+    padding: 0 22px;
+    color: var(--text);
+    background: #050505;
     border: 1px solid var(--primary);
-    border-radius: 4px;
-    box-shadow: var(--glow);
-    margin-bottom: 64px;
   }
 
   .install-label {
     position: absolute;
-    top: -10px;
-    left: 16px;
+    top: -9px;
+    left: 20px;
     padding: 0 8px;
-    background: var(--bg);
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    color: #888;
+    background: #0a0a0a;
     font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    color: var(--text-dim);
+    font-weight: 800;
+    letter-spacing: 0.28em;
   }
 
-  .install-command {
+  .install-bar code {
     flex: 1;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 14px;
-    color: var(--text);
     overflow-x: auto;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
   }
 
   .copy-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 4px;
-    background: transparent;
+    width: 42px;
+    height: 42px;
     color: var(--primary);
-    flex-shrink: 0;
-  }
-
-  .copy-btn:hover {
-    background: rgba(0, 255, 65, 0.08);
+    background: transparent;
+    border: 0;
   }
 
   .features {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding-top: 8px;
-    border-top: 1px solid var(--border);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 0;
   }
 
   .feature-card {
     position: relative;
-    padding: 24px 20px 28px;
-    background: var(--surface-elevated);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    text-align: left;
+    min-height: 220px;
+    padding: 42px 22px 26px;
     overflow: hidden;
+    text-align: left;
+    background: linear-gradient(180deg, rgba(17, 17, 17, 0.94), rgba(14, 14, 14, 0.94));
+    border: 1px solid var(--border);
   }
 
   .feature-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -1px;
+    left: -1px;
     width: 28px;
     height: 28px;
-    border-top: 2px solid var(--primary);
-    border-left: 2px solid var(--primary);
-    opacity: 0.9;
+    border-top: 1px solid var(--primary);
+    border-left: 1px solid var(--primary);
   }
 
   .feature-mod {
     position: absolute;
-    top: 14px;
-    right: 14px;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    top: 43px;
+    right: 22px;
+    color: #343434;
     font-size: 10px;
-    letter-spacing: 0.08em;
-    color: #4b5563;
+    font-weight: 800;
+    letter-spacing: 0.14em;
   }
 
   .feature-icon {
+    margin-bottom: 28px;
     color: var(--primary);
-    margin-bottom: 16px;
     filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.35));
   }
 
   .feature-card h2 {
-    margin: 0 0 10px;
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    margin: 0 0 14px;
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
   }
 
   .feature-line {
-    width: 40px;
-    height: 2px;
+    width: 32px;
+    height: 1px;
+    margin-bottom: 22px;
     background: var(--primary);
-    margin-bottom: 16px;
     box-shadow: var(--glow);
   }
 
   .feature-card p {
     margin: 0;
-    font-size: 14px;
-    line-height: 1.6;
     color: var(--text-muted);
+    font-family: 'Geist Sans', Geist, ui-sans-serif, system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
   }
 
   .footer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     gap: 24px;
-    margin-top: 64px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
+    margin-top: 126px;
   }
 
   .footer-left {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 12px;
   }
 
   .footer-brand {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
     color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
   }
 
   .footer-copy {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    color: #343434;
     font-size: 10px;
-    letter-spacing: 0.06em;
-    color: var(--text-dim);
+    font-weight: 800;
+    letter-spacing: 0.18em;
   }
 
   .footer-nav {
     display: flex;
-    gap: 24px;
+    gap: clamp(20px, 4vw, 44px);
     flex-wrap: wrap;
     justify-content: flex-end;
   }
 
-  .footer-nav a {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    color: var(--text-dim);
-    transition: color 0.15s ease;
-  }
+  @media (max-width: 900px) {
+    .landing {
+      padding-inline: 18px;
+    }
 
-  .footer-nav a:hover {
-    color: var(--text-muted);
-  }
-
-  @media (max-width: 960px) {
     .header {
       grid-template-columns: 1fr;
-      gap: 16px;
-      text-align: center;
+      gap: 18px;
+      justify-items: center;
     }
 
     .header-github {
       justify-self: center;
     }
 
-    .nav {
-      flex-wrap: wrap;
-      gap: 16px;
+    .hero {
+      padding-top: 58px;
+    }
+
+    .hero-title {
+      font-size: clamp(42px, 13vw, 72px);
+      overflow-wrap: anywhere;
     }
 
     .terminal-body {
-      grid-template-columns: 1fr;
+      padding: 28px 22px;
+      font-size: 12px;
     }
 
-    .terminal-right {
-      padding-top: 0;
-      text-align: left;
-      border-top: 1px solid var(--border);
-      padding-top: 16px;
+    .terminal-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .cta-row {
+      flex-direction: column;
+      align-items: stretch;
+      margin-bottom: 64px;
+    }
+
+    .btn {
+      min-width: 0;
     }
 
     .features {
       grid-template-columns: 1fr;
     }
 
-    .cta-row {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
     .footer {
-      flex-direction: column;
       align-items: flex-start;
+      flex-direction: column;
+      margin-top: 72px;
     }
 
     .footer-nav {
       justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .nav {
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .status-badge {
+      max-width: 100%;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+    }
+
+    .install-bar {
+      align-items: stretch;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .copy-btn {
+      align-self: flex-end;
     }
   }
 </style>
