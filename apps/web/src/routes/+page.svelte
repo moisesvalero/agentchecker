@@ -313,6 +313,16 @@
     font-weight: 800;
     text-decoration: none;
     letter-spacing: -0.01em;
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .logo:hover {
+    transform: translateY(-1px);
+  }
+
+  .logo:hover .logo-prompt {
+    color: #ffffff;
+    text-shadow: var(--glow-strong);
   }
 
   .logo-prompt {
@@ -363,6 +373,12 @@
   .footer-github {
     display: inline-flex;
     align-items: center;
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), color 0.2s ease;
+  }
+
+  .footer-github:hover {
+    transform: translateY(-2px) scale(1.08);
+    color: var(--primary);
   }
 
   .hero {
@@ -421,6 +437,12 @@
     box-shadow: 0 0 32px rgba(0, 255, 65, 0.15);
     position: relative;
     animation: crt-flicker 0.15s infinite;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .terminal:hover {
+    border-color: rgba(0, 255, 65, 0.45);
+    box-shadow: 0 0 44px rgba(0, 255, 65, 0.24);
   }
 
   .terminal::after {
@@ -465,6 +487,12 @@
     height: 9px;
     border-radius: 50%;
     opacity: 0.65;
+    transition: filter 0.16s ease, opacity 0.16s ease;
+  }
+
+  .terminal:hover .traffic span {
+    opacity: 0.9;
+    filter: brightness(1.2) drop-shadow(0 0 3px currentColor);
   }
 
   .dot-red {
@@ -641,6 +669,16 @@
     color: var(--primary);
     background: transparent;
     border: 0;
+    transition: transform 0.16s ease, color 0.16s ease;
+  }
+
+  .copy-btn:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+  }
+
+  .copy-btn:active {
+    transform: scale(0.95);
   }
 
   .features {
@@ -658,6 +696,13 @@
     text-align: left;
     background: linear-gradient(180deg, rgba(17, 17, 17, 0.94), rgba(14, 14, 14, 0.94));
     border: 1px solid var(--border);
+    transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 255, 65, 0.4);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.12);
   }
 
   .feature-card::before {
@@ -669,6 +714,11 @@
     height: 28px;
     border-top: 1px solid var(--primary);
     border-left: 1px solid var(--primary);
+    transition: border-color 0.22s ease;
+  }
+
+  .feature-card:hover::before {
+    border-color: #33ff66;
   }
 
   .feature-mod {
@@ -685,6 +735,13 @@
     margin-bottom: 28px;
     color: var(--primary);
     filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.35));
+    transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), color 0.22s ease, filter 0.22s ease;
+  }
+
+  .feature-card:hover .feature-icon {
+    color: #ffffff;
+    filter: drop-shadow(0 0 12px rgba(0, 255, 65, 0.65));
+    transform: scale(1.05);
   }
 
   .feature-card h2 {
