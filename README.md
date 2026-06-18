@@ -1,124 +1,160 @@
 # agentchecker 🔍🤖
 
-> **One command. All your AI agents agree.**  
-> **Un solo comando. Todos tus agentes de IA alineados.**
-
----
+<p align="center">
+  <strong>One command. All your AI agents agree.</strong><br>
+  <em>Un solo comando. Todos tus agentes de IA alineados.</em>
+</p>
 
 <p align="center">
-  <a href="#english">English 🇬🇧</a> • 
-  <a href="#español">Español 🇪🇸</a>
+  <a href="https://www.npmjs.com/package/agentchecker"><img src="https://img.shields.io/npm/v/agentchecker?color=00ff41&labelColor=131313&style=flat-square" alt="npm version"></a>
+  <a href="https://github.com/moisesvalero/agentchecker/blob/main/LICENSE"><img src="https://img.shields.io/github/license/moisesvalero/agentchecker?color=3b82f6&labelColor=131313&style=flat-square" alt="license"></a>
+  <img src="https://img.shields.io/badge/coverage-100%25-00ff41?labelColor=131313&style=flat-square" alt="test coverage">
+  <img src="https://img.shields.io/badge/PRs-welcome-3b82f6?labelColor=131313&style=flat-square" alt="PRs welcome">
 </p>
 
 ---
 
-<a id="english"></a>
-
-## English Version
-
-`agentchecker` is a zero-dependency CLI tool that scans your codebase for agent instruction files (Cursor, Claude Code, Copilot, etc.), detects logical contradictions in your rules, and helps you fix them interactively in 2 seconds.
-
-```mermaid
-graph TD
-    subgraph Problem
-        A[Multiple AI Tools] --> B[Cursor reads rules.mdc]
-        A --> C[Claude reads CLAUDE.md]
-        A --> D[Copilot reads copilot-instructions.md]
-        B --> E["eslint, npm, vitest"]
-        C --> F["oxlint, pnpm, jest"]
-        D --> G["biome, yarn, playwright"]
-        E & F & G --> H[❌ Conflicting rules, broken code, wasted tokens]
-    end
-    subgraph Solution
-        H --> I["$ npx agentchecker"]
-        I --> J[✓ Interactively resolve rules]
-        J --> K[🚀 Consistent rules. All agents agree!]
-    end
-```
-
-### Why do you need it?
-
-When working with multiple AI coding tools, each tool reads a different instruction file:
-* **Cursor**: `.cursorrules`, `.cursor/rules/*.mdc`
-* **Claude Code**: `CLAUDE.md`, `.claude/CLAUDE.md`
-* **GitHub Copilot**: `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md`
-* **Shared Rules**: `AGENTS.md`
-
-Without synchronization, rules slowly drift apart. Cursor runs `pnpm`, Claude runs `npm`, and Copilot formats with `eslint` instead of `oxlint`. `agentchecker` fixes this drift instantly.
+<p align="center">
+  <a href="#-english">English</a> • 
+  <a href="#-español">Español</a>
+</p>
 
 ---
 
-### Quick Start
+<a id="-english"></a>
 
-Run the auditor directly in your project root:
+## 🇬🇧 English
+
+### ⚡ The Problem: The "Rule Drift"
+
+When you pair program with multiple AI coding tools, each one reads a different instructions file:
+* **Cursor** reads `.cursorrules` or `.cursor/rules/*.mdc`
+* **Claude Code** reads `CLAUDE.md` or `.claude/CLAUDE.md`
+* **GitHub Copilot** reads `.github/copilot-instructions.md`
+* **Humans** read `AGENTS.md`
+
+Over time, these rules drift apart. Cursor starts using `pnpm` and `eslint`, Claude defaults to `npm` and `oxlint`, and Copilot reformats everything with `biome`. **The result? Conflicted generation, compilation errors, and wasted API tokens.**
+
+```mermaid
+graph TD
+    classDef problem fill:#1a1a1a,stroke:#ff6b6b,stroke-width:1.5px,color:#ff6b6b;
+    classDef solution fill:#1a1a1a,stroke:#00ff41,stroke-width:1.5px,color:#00ff41;
+    classDef neutral fill:#131313,stroke:#3b82f6,stroke-width:1.5px,color:#adc6ff;
+    
+    A[Developer Workspace]:::neutral --> B[Cursor: .cursor/rules]:::problem
+    A --> C[Claude Code: CLAUDE.md]:::problem
+    A --> D[Copilot: copilot-instructions]:::problem
+    
+    B --> E["Rule: use pnpm, eslint"]:::problem
+    C --> F["Rule: use npm, oxlint"]:::problem
+    D --> G["Rule: use yarn, biome"]:::problem
+    
+    E & F & G --> H[❌ AI Rule Contradictions]:::problem
+    H --> I[npx agentchecker]:::solution
+    I --> J[✓ Unified Rules across all tools!]:::solution
+```
+
+### ✨ The Solution
+
+`agentchecker` is a zero-dependency, ultra-fast CLI tool that:
+1. **Scans** your project for all agent instructions files in milliseconds.
+2. **Extracts & parses** tech stack decisions (package managers, linters, formatters, test runners).
+3. **Highlights contradictions** using a clean, terminal-based diagnostic report.
+4. **Fixes them interactively** by applying safe, localized inline updates so all your agents agree.
+
+---
+
+### 🚀 Quick Start
+
+No installation required. Run it directly in the root of your project:
 
 ```bash
 npx agentchecker
 ```
 
-#### What it does:
-1. **Scans** your project for agent instruction files.
-2. **Detects** objective contradictions (e.g. package manager, linters, test runners).
-3. **Prompts** you to select your preferred choice.
-4. **Applies** safe, precise inline fixes to all files.
-
 ---
 
-### Live Example
+### 🛠️ Professional Workflow Integration
+
+To get the most out of `agentchecker` and guarantee that your rules never drift again, integrate it into your daily workflow:
+
+#### 1. Pre-commit Hook (Husky)
+Prevent committing conflicting instructions. Add this to your `.husky/pre-commit` or Git hooks runner:
 
 ```bash
-$ npx agentchecker
+npx agentchecker --check-only
+```
+*It will scan files and exit with code `1` if any contradiction exists, halting the commit.*
 
-┌  agentchecker
-│
-◇  Found:
-   ✓ AGENTS.md (Shared)
-   ✓ CLAUDE.md (Claude Code)
-   ✓ .cursor/rules/global.mdc (Cursor)
-│
-⚠ 2 contradictions found
-│
-? Fix contradictions? Yes
-? Package manager › pnpm (recommended)
-? Linter › oxlint
-│
-✓ Fixed 2 files. All your agents agree.
-└  Done in 0.4s
+#### 2. CI/CD Pipeline (GitHub Actions)
+Ensure team pull requests don't introduce conflicting rules. Create `.github/workflows/agent-check.yml`:
+
+```yaml
+name: AI Agent Rules Check
+on: [push, pull_request]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run agentchecker
+        run: npx agentchecker --check-only
 ```
 
 ---
 
-### Command Flags & Options
+### 📋 Supported Files & Checks
 
-| Flag | Description |
-| --- | --- |
-| `--dry-run` | Preview contradictions and changes without writing to files |
-| `--check-only` | CI mode: exits with status code `1` if contradictions are found |
-| `-y, --yes` | Automatically apply all recommended fixes without prompt |
-| `-a, --agent` | Limit the scan to specific agents (e.g., `cursor`, `claude`, `copilot`, `shared`) |
-| `--project-dir` | Scan a specific directory instead of the current working directory |
-| `-h, --help` | Show the help menu |
+#### Supported Instruction Files
+* `AGENTS.md` (Shared rules)
+* `CLAUDE.md` & `.claude/CLAUDE.md` (Claude Code)
+* `.cursorrules` & `.cursor/rules/*.mdc` (Cursor)
+* `.github/copilot-instructions.md` & `.github/instructions/*.instructions.md` (Copilot)
 
----
-
-### Checks Supported (v0.1)
-
-* 📦 **Package manager**: `pnpm` | `npm` | `yarn` | `bun`
-* ⚡ **Linter**: `oxlint` | `eslint` | `biome`
-* 🎨 **Formatter**: `prettier` | `biome` | `dprint`
-* 🧪 **Test runner**: `vitest` | `jest` | `playwright`
+#### Analyzed Tooling Categories
+* 📦 **Package Managers**: `pnpm`, `npm`, `yarn`, `bun`
+* ⚡ **Linters**: `oxlint`, `eslint`, `biome`
+* 🎨 **Formatters**: `prettier`, `biome`, `dprint`
+* 🧪 **Test Runners**: `vitest`, `jest`, `playwright`
 
 ---
 
-### Local Development
-
-To run the project locally or contribute:
+### ⚙️ Command Line Options
 
 ```bash
-# Install workspace dependencies
+agentchecker — fix contradictions between AI agent instruction files
+
+Usage:
+  npx agentchecker [options]
+
+Options:
+  --dry-run       Show contradictions and preview without writing
+  --check-only    Exit 1 if contradictions exist (CI mode)
+  -y, --yes       Apply recommended fixes without prompts
+  -a, --agent     Limit scan to agents: cursor, claude, copilot, shared
+  --project-dir   Project directory to scan (default: cwd)
+  -v, --verbose   Verbose output
+  -h, --help      Show help
+```
+
+---
+
+### 💻 Local Development
+
+```bash
+# Clone the repository
+git clone https://github.com/moisesvalero/agentchecker.git
+cd agentchecker
+
+# Install monorepo dependencies
 pnpm install
 
-# Run unit and E2E tests
+# Run all test suites (Unit + E2E)
 pnpm --filter agentchecker test
 
 # Build the CLI
@@ -131,119 +167,146 @@ pnpm --filter @agentchecker/web dev
 ---
 ---
 
-<a id="español"></a>
+<a id="-español"></a>
 
-## Versión en Español
+## 🇪🇸 Español
 
-`agentchecker` es una herramienta CLI sin dependencias externas que escanea tu repositorio en busca de archivos de instrucciones para agentes de IA (Cursor, Claude Code, Copilot, etc.), detecta contradicciones lógicas en las reglas y te ayuda a resolverlas interactivamente en 2 segundos.
+### ⚡ El Problema: La desviación de reglas (Rule Drift)
+
+Cuando programas en pareja con varias herramientas de IA al mismo tiempo, cada una de ellas lee un archivo de configuración e instrucciones diferente:
+* **Cursor** lee `.cursorrules` o `.cursor/rules/*.mdc`
+* **Claude Code** lee `CLAUDE.md` o `.claude/CLAUDE.md`
+* **GitHub Copilot** lee `.github/copilot-instructions.md`
+* **Los desarrolladores** leemos `AGENTS.md`
+
+Con el tiempo, estas reglas inevitablemente divergen. Cursor empezará a usar `pnpm` y `eslint`, Claude asumirá por defecto `npm` y `oxlint`, y Copilot reformateará el código usando `biome`. **¿El resultado? Comportamiento errático de los agentes, errores de compilación y pérdida innecesaria de tokens de API.**
 
 ```mermaid
 graph TD
-    subgraph Problema
-        A[Múltiples herramientas IA] --> B[Cursor lee rules.mdc]
-        A --> C[Claude lee CLAUDE.md]
-        A --> D[Copilot lee copilot-instructions.md]
-        B --> E["eslint, npm, vitest"]
-        C --> F["oxlint, pnpm, jest"]
-        D --> G["biome, yarn, playwright"]
-        E & F & G --> H[❌ Instrucciones contradictorias, código roto, tokens tirados]
-    end
-    subgraph Solución
-        H --> I["$ npx agentchecker"]
-        I --> J[✓ Resolución interactiva de reglas]
-        J --> K[🚀 Reglas uniformes. Agentes en sintonía]
-    end
+    classDef problem fill:#1a1a1a,stroke:#ff6b6b,stroke-width:1.5px,color:#ff6b6b;
+    classDef solution fill:#1a1a1a,stroke:#00ff41,stroke-width:1.5px,color:#00ff41;
+    classDef neutral fill:#131313,stroke:#3b82f6,stroke-width:1.5px,color:#adc6ff;
+    
+    A[Workspace de Desarrollo]:::neutral --> B[Cursor: .cursor/rules]:::problem
+    A --> C[Claude Code: CLAUDE.md]:::problem
+    A --> D[Copilot: copilot-instructions]:::problem
+    
+    B --> E["Regla: usar pnpm, eslint"]:::problem
+    C --> F["Regla: usar npm, oxlint"]:::problem
+    D --> G["Regla: usar yarn, biome"]:::problem
+    
+    E & F & G --> H[❌ Contradicciones de Reglas de IA]:::problem
+    H --> I[npx agentchecker]:::solution
+    I --> J[✓ Reglas unificadas en todas las herramientas]:::solution
 ```
 
-### ¿Por qué lo necesitas?
+### ✨ La Solución
 
-Cuando utilizas múltiples herramientas de desarrollo asistido por IA, cada una lee un archivo de instrucciones diferente:
-* **Cursor**: `.cursorrules`, `.cursor/rules/*.mdc`
-* **Claude Code**: `CLAUDE.md`, `.claude/CLAUDE.md`
-* **GitHub Copilot**: `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md`
-* **Reglas compartidas**: `AGENTS.md`
-
-Con el tiempo, estas reglas divergen de forma inevitable. Cursor ejecutará `pnpm`, Claude intentará instalar dependencias con `npm`, y Copilot usará `eslint` en lugar de `oxlint`. `agentchecker` unifica y corrige este desfase al instante.
+`agentchecker` es una herramienta CLI extremadamente rápida y sin dependencias externas que:
+1. **Escanea** tu proyecto buscando archivos de instrucciones en milisegundos.
+2. **Extrae y parsea** las tecnologías definidas (gestores de paquetes, linters, formateadores, test runners).
+3. **Muestra las contradicciones** en un reporte de diagnóstico limpio directamente en tu terminal.
+4. **Las soluciona de forma interactiva** aplicando cambios seguros en el propio archivo para que todas tus IAs estén alineadas.
 
 ---
 
-### Inicio Rápido
+### 🚀 Inicio Rápido
 
-Ejecuta el auditor directamente en la raíz de tu proyecto:
+No requiere instalación. Ejecútalo directamente en la raíz de tu proyecto:
 
 ```bash
 npx agentchecker
 ```
 
-#### ¿Qué hace exactamente?
-1. **Escanea** el proyecto identificando todos los archivos de instrucciones de agentes.
-2. **Detecta** contradicciones de forma estática (ej. gestores de paquetes, linters, formateadores).
-3. **Pregunta** interactivamente qué herramientas prefieres mantener.
-4. **Aplica** modificaciones seguras in-situ en todos los archivos markdown para alinearlos.
-
 ---
 
-### Ejemplo de Uso
+### 🛠️ Integración en tu Flujo Diario de Trabajo
+
+Para maximizar el valor de `agentchecker` y asegurar que tus reglas nunca se vuelvan a desviar, intégralo en tus herramientas habituales:
+
+#### 1. Git Hook Pre-commit (Husky)
+Evita subir instrucciones conflictivas al repositorio. Añade esto a tu `.husky/pre-commit` o tu gestor de hooks de Git:
 
 ```bash
-$ npx agentchecker
+npx agentchecker --check-only
+```
+*Si se detecta una contradicción, la herramienta saldrá con código `1` y detendrá el commit automáticamente.*
 
-┌  agentchecker
-│
-◇  Found:
-   ✓ AGENTS.md (Shared)
-   ✓ CLAUDE.md (Claude Code)
-   ✓ .cursor/rules/global.mdc (Cursor)
-│
-⚠ 2 contradicciones encontradas
-│
-? Fix contradictions? Yes
-? Package manager › pnpm (recommended)
-? Linter › oxlint
-│
-✓ Fixed 2 files. All your agents agree.
-└  Done in 0.4s
+#### 2. Pipeline de Integración Continua (GitHub Actions)
+Garantiza que ningún pull request introduzca reglas conflictivas. Crea el archivo `.github/workflows/agent-check.yml`:
+
+```yaml
+name: AI Agent Rules Check
+on: [push, pull_request]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run agentchecker
+        run: npx agentchecker --check-only
 ```
 
 ---
 
-### Opciones y Parámetros (Flags)
+### 📋 Archivos y Reglas Soportadas
 
-| Opción | Descripción |
-| --- | --- |
-| `--dry-run` | Muestra las contradicciones y previsualiza los cambios sin escribir en disco |
-| `--check-only` | Modo de Integración Continua (CI): sale con código `1` si hay contradicciones |
-| `-y, --yes` | Aplica todas las soluciones recomendadas automáticamente sin preguntar |
-| `-a, --agent` | Limita el análisis a herramientas específicas (ej. `cursor`, `claude`, `copilot`, `shared`) |
-| `--project-dir` | Escanea un directorio de proyecto específico en lugar del actual (CWD) |
-| `-h, --help` | Muestra el menú de ayuda |
+#### Archivos de Instrucciones Soportados
+* `AGENTS.md` (Reglas compartidas)
+* `CLAUDE.md` y `.claude/CLAUDE.md` (Claude Code)
+* `.cursorrules` y `.cursor/rules/*.mdc` (Cursor)
+* `.github/copilot-instructions.md` y `.github/instructions/*.instructions.md` (Copilot)
 
----
-
-### Reglas Soportadas (v0.1)
-
-* 📦 **Gestor de paquetes**: `pnpm` | `npm` | `yarn` | `bun`
-* ⚡ **Linter**: `oxlint` | `eslint` | `biome`
-* 🎨 **Formateador**: `prettier` | `biome` | `dprint`
-* 🧪 **Framework de pruebas**: `vitest` | `jest` | `playwright`
+#### Categorías Analizadas
+* 📦 **Gestores de paquetes**: `pnpm`, `npm`, `yarn`, `bun`
+* ⚡ **Linters**: `oxlint`, `eslint`, `biome`
+* 🎨 **Formateadores**: `prettier`, `biome`, `dprint`
+* 🧪 **Test Runners**: `vitest`, `jest`, `playwright`
 
 ---
 
-### Desarrollo Local
-
-Si deseas probar la herramienta localmente o contribuir al código:
+### ⚙️ Parámetros de Consola (Flags)
 
 ```bash
+agentchecker — fix contradictions between AI agent instruction files
+
+Uso:
+  npx agentchecker [opciones]
+
+Opciones:
+  --dry-run       Muestra contradicciones y previsualiza cambios sin escribir
+  --check-only    Sale con código 1 si existen contradicciones (modo CI)
+  -y, --yes       Aplica las soluciones recomendadas de forma automática
+  -a, --agent     Limita el análisis a: cursor, claude, copilot, shared
+  --project-dir   Directorio a escanear (por defecto: cwd)
+  -v, --verbose   Salida detallada (modo debug)
+  -h, --help      Muestra la ayuda
+```
+
+---
+
+### 💻 Desarrollo Local
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/moisesvalero/agentchecker.git
+cd agentchecker
+
 # Instalar dependencias del monorepo
 pnpm install
 
-# Correr los tests unitarios y E2E
+# Ejecutar la suite de tests (Unitarios + E2E)
 pnpm --filter agentchecker test
 
 # Compilar la herramienta CLI
 pnpm --filter agentchecker build
 
-# Iniciar el servidor local Svelte para la landing page
+# Iniciar el servidor Svelte local para la landing page
 pnpm --filter @agentchecker/web dev
 ```
 
