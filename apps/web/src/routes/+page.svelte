@@ -241,7 +241,6 @@
       </a>
       <a href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
       <a href="https://www.npmjs.com/package/agentchecker">STATUS</a>
-      <a href="https://twitter.com">TWITTER</a>
     </nav>
   </footer>
 </div>
