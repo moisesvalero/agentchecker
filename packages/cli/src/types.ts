@@ -20,7 +20,7 @@ export type AgentFile = {
   path: string;
   relativePath: string;
   agent: AgentId;
-  kind: 'shared' | 'tool-specific' | 'legacy';
+  kind: 'shared' | 'tool-specific' | 'legacy' | 'global';
   content: string;
 };
 
