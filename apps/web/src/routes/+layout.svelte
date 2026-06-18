@@ -5,15 +5,15 @@
 </script>
 
 <svelte:head>
-  <title>agentcheck — One command. All your agents agree.</title>
+  <title>agentchecker — One command. All your agents agree.</title>
   <meta
     name="description"
     content="Fix contradictions between AGENTS.md, CLAUDE.md, Cursor rules and Copilot instructions in 2 seconds."
   />
-  <meta property="og:title" content="agentcheck" />
+  <meta property="og:title" content="agentchecker" />
   <meta
     property="og:description"
-    content="Tired of your agents contradicting each other? Run npx agentcheck."
+    content="Tired of your agents contradicting each other? Run npx agentchecker."
   />
 </svelte:head>
 

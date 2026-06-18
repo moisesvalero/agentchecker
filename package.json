@@ -2,11 +2,11 @@
   "name": "agent-check-monorepo",
   "private": true,
   "scripts": {
-    "build": "pnpm --filter agentcheck build",
-    "test": "pnpm --filter agentcheck test",
-    "lint": "pnpm --filter agentcheck lint",
-    "check": "pnpm --filter agentcheck check",
-    "format:check": "pnpm --filter agentcheck format:check",
+    "build": "pnpm --filter agentchecker build",
+    "test": "pnpm --filter agentchecker test",
+    "lint": "pnpm --filter agentchecker lint",
+    "check": "pnpm --filter agentchecker check",
+    "format:check": "pnpm --filter agentchecker format:check",
     "dev:web": "pnpm --filter @agent-check/web dev"
   },
   "packageManager": "pnpm@10.12.1"
