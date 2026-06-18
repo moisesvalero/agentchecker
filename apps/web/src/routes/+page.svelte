@@ -16,7 +16,8 @@
     <a class="logo" href="/">AGENTCHECKER</a>
     <nav class="nav" aria-label="Primary">
       <a class="active" href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
-      <a class="sponsor-link" href="https://paypal.me/moisesvalero" target="_blank" rel="noreferrer">SPONSOR</a>
+      <a class="donate-link" href="https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD" target="_blank" rel="noreferrer">DONATE</a>
+      <a class="star-link" href="https://github.com/moisesvalero/agentchecker" target="_blank" rel="noreferrer">★ STAR</a>
     </nav>
     <div class="header-spacer"></div>
   </header>
@@ -683,7 +684,8 @@
     text-shadow: var(--glow);
   }
 
-  .sponsor-link {
+  .donate-link,
+  .star-link {
     color: var(--text-dim);
     font-size: 11px;
     font-weight: 700;
@@ -691,7 +693,8 @@
     transition: color 0.16s ease;
   }
 
-  .sponsor-link:hover {
+  .donate-link:hover,
+  .star-link:hover {
     color: var(--primary);
     text-shadow: var(--glow);
   }
