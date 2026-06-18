@@ -9,3 +9,5 @@ build
 coverage
 .DS_Store
 *.log
+stitch_*.zip
+*:Zone.Identifier

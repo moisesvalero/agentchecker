@@ -93,7 +93,7 @@ pnpm --filter @agentchecker/web dev
 
 ## Landing
 
-https://agentchecker.vercel.app (Vercel, deploy desde GitHub)
+https://agentchecker.vercel.app
 
 ## Links
 
