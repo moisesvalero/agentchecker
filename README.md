@@ -156,6 +156,21 @@ Use `--local-only` in CI so builds only validate repository files, not each deve
 - **Formatters**: `prettier`, `biome`, `dprint`
 - **Test Runners**: `vitest`, `jest`, `playwright`
 
+#### Request support for a new agent
+
+Missing your tool? Open a [support request](https://github.com/moisesvalero/agentchecker/issues/new?template=agent-support.yml) and include:
+
+1. **Tool name** (e.g. Continue.dev)
+2. **Project rule paths** — exact files or globs (e.g. `.continue/rules/*.md`)
+3. **Global paths** (if any) — e.g. `~/.config/foo/rules.md`
+4. **Format** — Markdown, JSON, YAML, TOML…
+5. **Docs link** — official reference for where rules live
+6. **Example snippet** — a few lines with package manager / linter / formatter rules
+
+We only add tools that store instructions in **files on disk**. IDE-only settings (Copilot global UI, Cursor profiles without files, etc.) cannot be scanned reliably.
+
+PRs welcome: add patterns in [`packages/cli/src/scan/known-files.ts`](packages/cli/src/scan/known-files.ts) + a fixture under `packages/cli/tests/fixtures/`.
+
 ---
 
 ### Command Line Options
@@ -333,6 +348,21 @@ Usa `--local-only` en CI para validar solo los archivos del repositorio, no las 
 - **Linters**: `oxlint`, `eslint`, `biome`
 - **Formateadores**: `prettier`, `biome`, `dprint`
 - **Test Runners**: `vitest`, `jest`, `playwright`
+
+#### Solicitar soporte para un agente nuevo
+
+¿Falta tu herramienta? Abre una [solicitud de soporte](https://github.com/moisesvalero/agentchecker/issues/new?template=agent-support.yml) e incluye:
+
+1. **Nombre de la herramienta** (ej. Continue.dev)
+2. **Rutas de reglas en el proyecto** — archivos o globs exactos (ej. `.continue/rules/*.md`)
+3. **Rutas globales** (si las hay) — ej. `~/.config/foo/rules.md`
+4. **Formato** — Markdown, JSON, YAML, TOML…
+5. **Enlace a la documentación oficial** — dónde define esa herramienta sus reglas
+6. **Fragmento de ejemplo** — unas líneas con gestor de paquetes, linter, formateador, etc.
+
+Solo añadimos herramientas que guardan instrucciones en **archivos en disco**. Ajustes solo de IDE (UI global de Copilot, perfiles de Cursor sin archivos, etc.) no se pueden escanear de forma fiable.
+
+PRs bienvenidos: patrones en [`packages/cli/src/scan/known-files.ts`](packages/cli/src/scan/known-files.ts) + fixture en `packages/cli/tests/fixtures/`.
 
 ---
 

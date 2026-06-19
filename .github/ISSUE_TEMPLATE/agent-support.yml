@@ -1,0 +1,59 @@
+name: Request agent support
+description: Ask to add a new AI coding tool or instruction file pattern
+title: '[agent] '
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help us add support for a tool that stores project rules in files.
+        IDE-only settings (no files on disk) usually cannot be scanned.
+
+  - type: input
+    id: tool
+    attributes:
+      label: Tool / agent name
+      placeholder: e.g. Continue.dev
+    validations:
+      required: true
+
+  - type: textarea
+    id: project-files
+    attributes:
+      label: Project-level rule paths
+      description: Exact filenames or globs relative to the repo root
+      placeholder: |
+        .continue/rules/*.md
+        .continue/config.json
+    validations:
+      required: true
+
+  - type: textarea
+    id: global-files
+    attributes:
+      label: Global / user rule paths (optional)
+      description: Paths under the user home directory, if any
+      placeholder: ~/.continue/config.json
+
+  - type: input
+    id: format
+    attributes:
+      label: File format
+      placeholder: Markdown, JSON, YAML, TOML…
+    validations:
+      required: true
+
+  - type: textarea
+    id: docs
+    attributes:
+      label: Official documentation link
+      placeholder: https://…
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example snippet (optional)
+      description: A few lines showing package manager, linter, or similar rules
+      placeholder: Use pnpm and oxlint…

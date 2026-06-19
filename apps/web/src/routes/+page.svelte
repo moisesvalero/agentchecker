@@ -18,15 +18,15 @@
       features: {
         mod1: {
           title: 'DETECTION',
-          desc: 'Static analysis of markdown and text-based instruction files using advanced semantic mapping to find logical overlaps.',
+          desc: 'Scans AGENTS.md, CLAUDE.md, Cursor rules, Copilot instructions, and 9 other agent config paths. Reports conflicts in package managers, linters, and formatters.',
         },
         mod2: {
           title: 'CORRECTION',
-          desc: 'Automated conflict resolution suggestions powered by specialized reasoning models. One-click remediation for edge cases.',
+          desc: 'Lists each conflict with file paths and a recommended value. Fix interactively or pass --yes for non-interactive defaults.',
         },
         mod3: {
           title: 'INTEGRATION',
-          desc: "CLI tool that fits into your CI/CD pipeline. Fail builds if agent instructions don't pass the check.",
+          desc: 'Runs via npx with no install. Use --check-only in CI to fail on contradictions. Writes local project files only.',
         },
       },
       footer: {
@@ -47,15 +47,15 @@
       features: {
         mod1: {
           title: 'DETECCIÓN',
-          desc: 'Análisis estático de archivos markdown e instrucciones de texto usando mapeo semántico avanzado para detectar solapamientos lógicos.',
+          desc: 'Escanea AGENTS.md, CLAUDE.md, reglas de Cursor, instrucciones de Copilot y 9 rutas más. Detecta conflictos en gestores de paquetes, linters y formateadores.',
         },
         mod2: {
           title: 'CORRECCIÓN',
-          desc: 'Sugerencias automáticas de resolución de conflictos. Corrección con un clic para cualquier caso.',
+          desc: 'Muestra cada conflicto con rutas de archivo y un valor recomendado. Corrige en interactivo o usa --yes para valores por defecto.',
         },
         mod3: {
           title: 'INTEGRACIÓN',
-          desc: 'Herramienta CLI que encaja en tu pipeline CI/CD. Falla el build si las instrucciones de los agentes no pasan la revisión.',
+          desc: 'Se ejecuta con npx sin instalar. Usa --check-only en CI para fallar si hay contradicciones. Solo modifica archivos locales del proyecto.',
         },
       },
       footer: {
@@ -73,56 +73,85 @@
   }
 
   async function copyInstall() {
-    await navigator.clipboard.writeText(installCommand);
-    copied = true;
-    setTimeout(() => {
+    try {
+      if (!navigator.clipboard?.writeText) {
+        throw new Error('clipboard unavailable');
+      }
+      await navigator.clipboard.writeText(installCommand);
+      copied = true;
+      setTimeout(() => {
+        copied = false;
+      }, 2000);
+    } catch {
       copied = false;
-    }, 2000);
+    }
   }
 
   const TERMINAL_STEP_COUNT = 8;
-  let terminalStep = $state(0);
+  const TERMINAL_SEEN_KEY = 'agentchecker-terminal-seen';
+  let terminalStep = $state(TERMINAL_STEP_COUNT);
   let terminalDone = $derived(terminalStep >= TERMINAL_STEP_COUNT);
 
   onMount(() => {
-    // Mouse glow usa coordenadas de viewport (capas fixed)
-    const updateMouse = (e: MouseEvent) => {
-      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
-    };
-    window.addEventListener('mousemove', updateMouse);
+    let mouseRaf = 0;
+    let lastX = 0;
+    let lastY = 0;
 
-    // Grain animado
-    const grain = document.querySelector('.crt-grain') as HTMLElement;
-    let grainTimer: ReturnType<typeof setInterval>;
-    if (grain) {
-      grainTimer = setInterval(() => {
-        grain.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
-      }, 50);
-    }
+    const applyMouse = () => {
+      mouseRaf = 0;
+      document.documentElement.style.setProperty('--mouse-x', `${lastX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${lastY}px`);
+    };
+
+    const updateMouse = (e: MouseEvent) => {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (!mouseRaf) {
+        mouseRaf = requestAnimationFrame(applyMouse);
+      }
+    };
 
     const reducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches;
-    if (reducedMotion) {
-      terminalStep = TERMINAL_STEP_COUNT;
-    } else {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let seenBefore = false;
+    try {
+      seenBefore = sessionStorage.getItem(TERMINAL_SEEN_KEY) === '1';
+    } catch {
+      seenBefore = false;
+    }
+    const shouldAnimate = !reducedMotion && !seenBefore;
+
+    if (!reducedMotion) {
+      window.addEventListener('mousemove', updateMouse, { passive: true });
+    }
+
+    if (shouldAnimate) {
+      terminalStep = 0;
       const delays = [0, 220, 420, 620, 900, 1150, 1500, 1850];
-      const timers = delays.map((delay, index) =>
-        setTimeout(() => {
-          terminalStep = index + 1;
-        }, delay),
-      );
-      return () => {
-        window.removeEventListener('mousemove', updateMouse);
-        clearInterval(grainTimer);
-        timers.forEach(clearTimeout);
-      };
+      delays.forEach((delay, index) => {
+        timers.push(
+          setTimeout(() => {
+            terminalStep = index + 1;
+            if (index + 1 === TERMINAL_STEP_COUNT) {
+              try {
+                sessionStorage.setItem(TERMINAL_SEEN_KEY, '1');
+              } catch {
+                /* private mode */
+              }
+            }
+          }, delay),
+        );
+      });
     }
 
     return () => {
       window.removeEventListener('mousemove', updateMouse);
-      clearInterval(grainTimer);
+      if (mouseRaf) {
+        cancelAnimationFrame(mouseRaf);
+      }
+      timers.forEach(clearTimeout);
     };
   });
 </script>
@@ -199,7 +228,11 @@
           </div>
           <span class="terminal-title">agentchecker — ~/my-app</span>
         </div>
-        <div class="terminal-body" class:terminal-body--done={terminalDone}>
+        <div
+          class="terminal-body"
+          class:terminal-body--done={terminalDone}
+          aria-live="polite"
+        >
           {#if terminalStep >= 1}
             <p class="command t-line" style="--d:0">
               <span>$</span> npx agentchecker
@@ -487,14 +520,15 @@
     );
   }
 
-  /* Grain animado tipo CRT */
+  /* Grain estático (sin petición externa) */
   .crt-grain {
     position: fixed;
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    opacity: 0.04;
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
   }
 
   /* Viñeta radial */
@@ -515,7 +549,7 @@
   .crt-overlay {
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: 4;
     pointer-events: none;
     background:
       linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%),
@@ -622,6 +656,10 @@
 
   .nav a,
   .footer-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 4px;
     color: var(--text-dim);
     font-size: 11px;
     font-weight: 700;
@@ -646,14 +684,19 @@
   }
 
   .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
     background: transparent;
     border: 1px solid rgba(0, 255, 65, 0.25);
-    color: rgba(0, 255, 65, 0.6);
+    color: rgba(0, 255, 65, 0.75);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.12em;
-    padding: 3px 8px;
+    padding: 8px 12px;
     cursor: pointer;
     transition:
       border-color 0.2s ease,
@@ -730,10 +773,10 @@
     overflow: hidden;
     color: var(--text);
     text-align: left;
-    background: #050505;
-    border: 1px solid rgba(0, 255, 65, 0.25);
+    background: var(--terminal-bg);
+    border: 1px solid rgba(0, 255, 65, 0.3);
     border-radius: 0;
-    box-shadow: 0 0 32px rgba(0, 255, 65, 0.15);
+    box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.12);
     position: relative;
     animation: crt-flicker 0.15s infinite;
     transition:
@@ -743,7 +786,7 @@
 
   .terminal:hover {
     border-color: rgba(0, 255, 65, 0.45);
-    box-shadow: 0 0 44px rgba(0, 255, 65, 0.24);
+    box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.22);
   }
 
   .terminal::after {
@@ -824,7 +867,7 @@
   }
 
   .terminal-title {
-    color: #323232;
+    color: var(--terminal-bar-muted);
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -839,7 +882,6 @@
     font-size: 10px;
     font-weight: 600;
     line-height: 1.32;
-    transition: min-height 0.25s ease;
   }
 
   .terminal-body--done {
@@ -867,12 +909,6 @@
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .t-line {
-      animation: none;
-    }
-  }
-
   .command {
     margin-bottom: 4px;
     color: var(--text);
@@ -890,7 +926,7 @@
   }
 
   .dim {
-    color: #4d504d;
+    color: var(--terminal-dim);
   }
 
   .dim .ok {
@@ -1067,8 +1103,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     color: var(--primary);
     background: transparent;
     border: 0;
@@ -1334,6 +1370,26 @@
 
     .install-bar code {
       font-size: 12px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .landing,
+    .terminal {
+      animation: none;
+    }
+
+    .mouse-glow {
+      display: none;
+    }
+
+    .crt-grain,
+    .crt-overlay {
+      opacity: 0.02;
+    }
+
+    .t-line {
+      animation: none;
     }
   }
 </style>

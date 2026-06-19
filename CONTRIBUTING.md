@@ -40,6 +40,10 @@ This repo uses Husky. After `pnpm install`, each commit runs lint-staged, type c
 3. Ensure `pnpm lint && pnpm check && pnpm test && pnpm build` pass
 4. Use [conventional commits](https://www.conventionalcommits.org/) in English
 
+## Requesting support for a new agent
+
+Use the [agent support issue template](https://github.com/moisesvalero/agentchecker/issues/new?template=agent-support.yml) or send a PR that updates `packages/cli/src/scan/known-files.ts` with tests in `packages/cli/tests/fixtures/`.
+
 ## Project structure
 
 - `packages/cli` — publishable CLI (`agentchecker` on npm)
