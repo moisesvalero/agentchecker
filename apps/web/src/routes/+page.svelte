@@ -13,22 +13,34 @@
   }
 
   onMount(() => {
-    const landing = document.querySelector('.landing') as HTMLElement;
-    if (!landing) return;
+    // Mouse glow usa coordenadas de viewport (capas fixed)
     const updateMouse = (e: MouseEvent) => {
-      const rect = landing.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      landing.style.setProperty('--mouse-x', `${x}px`);
-      landing.style.setProperty('--mouse-y', `${y}px`);
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
     };
     window.addEventListener('mousemove', updateMouse);
-    return () => window.removeEventListener('mousemove', updateMouse);
+
+    // Grain animado
+    const grain = document.querySelector('.crt-grain') as HTMLElement;
+    let grainTimer: ReturnType<typeof setInterval>;
+    if (grain) {
+      grainTimer = setInterval(() => {
+        grain.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
+      }, 50);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', updateMouse);
+      clearInterval(grainTimer);
+    };
   });
 </script>
 
 <div class="landing">
-  <div class="flashlight" aria-hidden="true"></div>
+  <!-- Capas de efecto de fondo (fixed, fuera del flujo) -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+  <div class="crt-grain" aria-hidden="true"></div>
+  <div class="crt-vignette" aria-hidden="true"></div>
   <div class="crt-overlay" aria-hidden="true"></div>
   <header class="header">
     <a class="logo" href="/">
@@ -253,35 +265,69 @@
     margin: 0 auto;
     padding: 20px 24px 44px;
     overflow: hidden;
-    background-color: #050505;
-    background-image: 
-      linear-gradient(to right, rgba(0, 255, 65, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+    background-color: #080808;
+    background-image:
+      linear-gradient(rgba(0, 255, 65, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 65, 0.08) 1px, transparent 1px);
     background-size: 40px 40px;
+    animation: screenFlicker 0.15s infinite;
   }
 
-  .flashlight {
-    position: absolute;
+  /* Linterna que sigue al cursor — fixed para que cubra toda la pantalla */
+  .mouse-glow {
+    position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: 1;
     pointer-events: none;
     background: radial-gradient(
-      600px circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
-      rgba(0, 255, 65, 0.15) 0%,
-      transparent 100%
+      700px circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
+      rgba(0, 255, 65, 0.12),
+      transparent 80%
     );
   }
 
+  /* Grain animado tipo CRT */
+  .crt-grain {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+  }
+
+  /* Viñeta radial */
+  .crt-vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.55) 100%);
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Scanlines + vignette radial combinados */
   .crt-overlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
     pointer-events: none;
-    background: 
-      linear-gradient(rgba(0, 0, 0, 0.15) 50%, transparent 50%),
-      radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.75) 130%);
-    background-size: 100% 4px, 100% 100%;
-    opacity: 0.85;
+    background:
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%),
+      linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+    background-size: 100% 4px, 3px 100%;
+    opacity: 0.45;
+  }
+
+  @keyframes screenFlicker {
+    0%   { opacity: 0.992; }
+    10%  { opacity: 0.998; }
+    20%  { opacity: 0.991; }
+    35%  { opacity: 0.999; }
+    50%  { opacity: 0.994; }
+    65%  { opacity: 0.997; }
+    80%  { opacity: 0.991; }
+    100% { opacity: 0.998; }
   }
 
   .header {
