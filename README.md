@@ -66,10 +66,14 @@ graph TD
 5. **Creates `AGENTS.md`** automatically if no local config exists, locking in your choices for this project.
 
 <p align="center">
-  <a href="https://asciinema.org/a/RjSsDnzYvvVyoYC4"><img src="https://asciinema.org/a/RjSsDnzYvvVyoYC4.svg" alt="agentchecker terminal demo"></a>
+  <img src="demo.gif" alt="agentchecker terminal demo" width="720">
 </p>
 
-> Terminal recording: real `npx agentchecker --dry-run` on a sample project. [Open full player →](https://asciinema.org/a/RjSsDnzYvvVyoYC4)
+<p align="center">
+  <a href="https://asciinema.org/a/RjSsDnzYvvVyoYC4">▶ Interactive terminal demo (asciinema)</a>
+</p>
+
+> GIF preview for GitHub. Click the link above for the full interactive player with copy/paste.
 
 ---
 
@@ -240,10 +244,14 @@ graph TD
 5. **Crea `AGENTS.md`** automáticamente si no existe ninguna configuración local, asegurando tus elecciones para este proyecto.
 
 <p align="center">
-  <a href="https://asciinema.org/a/RjSsDnzYvvVyoYC4"><img src="https://asciinema.org/a/RjSsDnzYvvVyoYC4.svg" alt="demo de agentchecker en terminal"></a>
+  <img src="demo.gif" alt="demo de agentchecker en terminal" width="720">
 </p>
 
-> Grabación real de `npx agentchecker --dry-run` en un proyecto de ejemplo. [Ver reproductor completo →](https://asciinema.org/a/RjSsDnzYvvVyoYC4)
+<p align="center">
+  <a href="https://asciinema.org/a/RjSsDnzYvvVyoYC4">▶ Demo interactiva en terminal (asciinema)</a>
+</p>
+
+> Vista previa en GIF para GitHub. Usa el enlace para el reproductor interactivo completo.
 
 ---
 

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import AsciinemaPlayer from '$lib/AsciinemaPlayer.svelte';
 
   const installCommand = 'npx agentchecker';
   let copied = $state(false);
@@ -29,6 +30,12 @@
       cta: { github: 'VIEW ON GITHUB', docs: 'DOCUMENTATION' },
       install: 'QUICK INSTALL',
       copyLabel: 'Copy install command',
+      demo: {
+        title: 'LIVE TERMINAL RECORDING',
+        subtitle:
+          'Real `npx agentchecker --dry-run` on a sample project with conflicting rules.',
+        link: 'Open on asciinema.org →',
+      },
       features: {
         mod1: {
           title: 'DETECTION',
@@ -72,6 +79,12 @@
       cta: { github: 'VER EN GITHUB', docs: 'DOCUMENTACIÓN' },
       install: 'INSTALACIÓN RÁPIDA',
       copyLabel: 'Copiar comando de instalación',
+      demo: {
+        title: 'GRABACIÓN REAL DE TERMINAL',
+        subtitle:
+          'Ejecución real de `npx agentchecker --dry-run` en un proyecto de ejemplo con reglas en conflicto.',
+        link: 'Abrir en asciinema.org →',
+      },
       features: {
         mod1: {
           title: 'DETECCIÓN',
@@ -240,6 +253,20 @@
           </div>
         </div>
       </div>
+
+      <section class="live-demo" aria-label="Live terminal demo">
+        <h2 class="demo-title">{t.demo.title}</h2>
+        <p class="demo-subtitle">{t.demo.subtitle}</p>
+        <AsciinemaPlayer />
+        <a
+          class="demo-link"
+          href="https://asciinema.org/a/RjSsDnzYvvVyoYC4"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t.demo.link}
+        </a>
+      </section>
 
       <div class="cta-row">
         <a
@@ -882,6 +909,41 @@
     50% {
       opacity: 0;
     }
+  }
+
+  .live-demo {
+    width: min(100%, 920px);
+    margin: 0 auto 28px;
+    text-align: center;
+  }
+
+  .demo-title {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--primary);
+  }
+
+  .demo-subtitle {
+    margin: 0 0 16px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(205, 214, 244, 0.72);
+  }
+
+  .demo-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: rgba(0, 255, 65, 0.85);
+    text-decoration: none;
+  }
+
+  .demo-link:hover {
+    color: var(--primary);
+    text-decoration: underline;
   }
 
   .cta-row {
