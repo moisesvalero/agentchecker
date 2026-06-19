@@ -8,6 +8,8 @@
     'https://github.com/moisesvalero/agentchecker/blob/main/LICENSE';
   const ciDocsUrl =
     'https://github.com/moisesvalero/agentchecker#2-cicd-pipeline-github-actions';
+  const donateUrl =
+    'https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD';
 
   let copied = $state(false);
   let copyStatus = $state<'idle' | 'success' | 'error'>('idle');
@@ -15,7 +17,7 @@
 
   const translations = {
     en: {
-      nav: { docs: 'Docs', donate: 'Donate', star: 'Star' },
+      nav: { docs: 'Docs', star: 'Star' },
       langToggle: 'ES',
       status: `v${pkgVersion} on npm`,
       terminalSkip: 'Skip demo',
@@ -47,10 +49,11 @@
         npm: `v${pkgVersion}`,
         license: 'PolyForm NC license',
         commercial: 'Commercial use',
+        support: 'Support',
       },
     },
     es: {
-      nav: { docs: 'Docs', donate: 'Donar', star: 'Estrella' },
+      nav: { docs: 'Docs', star: 'Estrella' },
       langToggle: 'EN',
       status: `v${pkgVersion} en npm`,
       terminalSkip: 'Saltar demo',
@@ -82,6 +85,7 @@
         npm: `v${pkgVersion}`,
         license: 'Licencia PolyForm NC',
         commercial: 'Uso comercial',
+        support: 'Apoyar',
       },
     },
   } as const;
@@ -225,12 +229,6 @@
         class="active"
         href="https://github.com/moisesvalero/agentchecker#readme"
         >{t.nav.docs}</a
-      >
-      <a
-        class="donate-link"
-        href="https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD"
-        target="_blank"
-        rel="noreferrer">{t.nav.donate}</a
       >
       <a
         class="star-link"
@@ -512,6 +510,10 @@
         >{t.footer.docs}</a
       >
       <a href={npmUrl}>{t.footer.npm}</a>
+      <a class="support-link" href={donateUrl} target="_blank" rel="noreferrer">
+        <span class="support-heart" aria-hidden="true">♥</span>
+        {t.footer.support}
+      </a>
     </nav>
   </footer>
 </div>
@@ -1231,8 +1233,21 @@
     text-shadow: var(--glow);
   }
 
-  .donate-link,
   .star-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .star-link:hover {
+    color: var(--primary);
+    text-shadow: var(--glow);
+  }
+
+  .support-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     color: var(--text-dim);
     font-size: 12px;
     font-weight: 600;
@@ -1240,15 +1255,17 @@
     transition: color 0.16s ease;
   }
 
-  .star-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+  .support-heart {
+    color: var(--primary);
+    font-size: 11px;
+    line-height: 1;
   }
 
-  .donate-link:hover,
-  .star-link:hover {
+  .support-link:hover {
     color: var(--primary);
+  }
+
+  .support-link:hover .support-heart {
     text-shadow: var(--glow);
   }
 
