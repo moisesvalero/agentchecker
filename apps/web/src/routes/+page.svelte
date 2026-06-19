@@ -9,7 +9,7 @@
     en: {
       nav: { docs: 'DOCS', donate: 'DONATE', star: '★ STAR ON GITHUB' },
       langToggle: 'ES',
-      status: 'STATUS: PRODUCTION READY V1.2.4',
+      status: 'STATUS: PRODUCTION READY',
       heroSubtitle:
         'Fix contradictions between AI agent instruction files. Clinical precision for ensuring your agents act with logical consistency.',
       terminal: {
@@ -52,7 +52,7 @@
     es: {
       nav: { docs: 'DOCS', donate: 'DONAR', star: '★ DAR ESTRELLA' },
       langToggle: 'EN',
-      status: 'ESTADO: LISTO PARA PRODUCCIÓN V1.2.4',
+      status: 'ESTADO: LISTO PARA PRODUCCIÓN',
       heroSubtitle:
         'Detecta y corrige contradicciones entre archivos de instrucciones de agentes IA. Precisión clínica para garantizar que tus agentes actúen con coherencia lógica.',
       terminal: {

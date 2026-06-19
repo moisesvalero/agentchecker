@@ -10,7 +10,9 @@
 
 ## Pending
 
-1. Terminal GIF in README (`demo.gif`) — script at `scripts/generate-demo-gif.py`
+1. ~~Terminal GIF in README (`demo.gif`)~~ — Done
+
+## Promotion ideas
 
 ## Launch posts
 

@@ -25,6 +25,9 @@ jobs:
       - run: pnpm check
       - run: pnpm test
       - run: pnpm build
+      - run: pnpm exec playwright install chromium --with-deps
+        working-directory: apps/web
+      - run: pnpm test:e2e
       - run: pnpm knip
 
   agent-check:

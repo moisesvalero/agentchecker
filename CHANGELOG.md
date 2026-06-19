@@ -4,6 +4,20 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [Unreleased]
+
+### Added
+
+- `demo.gif` terminal demo embedded in README (EN/ES)
+- CLI tests: `applyFixes`, global scan, interactive prompts
+- Playwright E2E smoke tests for landing
+- `PROMOTION.md` launch checklist
+
+### Changed
+
+- Landing status text without hardcoded version number
+- CI runs Playwright e2e after build
+
 ## [0.1.7] - 2026-06-19
 
 ### Added

@@ -65,6 +65,10 @@ graph TD
 4. **Fixes them interactively** — only modifying local project files. Global configs are always **read-only**.
 5. **Creates `AGENTS.md`** automatically if no local config exists, locking in your choices for this project.
 
+<p align="center">
+  <img src="demo.gif" alt="agentchecker terminal demo" width="720">
+</p>
+
 ---
 
 ### Quick Start: Zero Installation
@@ -232,6 +236,10 @@ graph TD
 3. **Resalta las contradicciones** entre todas las fuentes con un informe de diagnóstico claro en la terminal.
 4. **Las corrige interactivamente**, modificando únicamente los archivos locales del proyecto. Las configuraciones globales son siempre de **solo lectura**.
 5. **Crea `AGENTS.md`** automáticamente si no existe ninguna configuración local, asegurando tus elecciones para este proyecto.
+
+<p align="center">
+  <img src="demo.gif" alt="demo de agentchecker en terminal" width="720">
+</p>
 
 ---
 

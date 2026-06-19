@@ -6,6 +6,7 @@
     "build:cli": "pnpm --filter agentchecker build",
     "build:web": "pnpm --filter @agentchecker/web build",
     "test": "pnpm --filter agentchecker test",
+    "test:e2e": "pnpm --filter @agentchecker/web test:e2e",
     "lint": "pnpm --filter agentchecker lint && pnpm --filter @agentchecker/web lint",
     "check": "pnpm --filter agentchecker check && pnpm --filter @agentchecker/web check",
     "format": "pnpm --filter agentchecker format && pnpm --filter @agentchecker/web exec prettier --write .",
