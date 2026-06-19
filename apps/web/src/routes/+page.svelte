@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  let copied = $state(false);
 
   const installCommand = 'npx agentchecker';
-  let copied = $state(false);
+  const githubUrl = 'https://github.com/moisesvalero/agentchecker';
+  const docsUrl = 'https://github.com/moisesvalero/agentchecker#readme';
 
   async function copyInstall() {
     await navigator.clipboard.writeText(installCommand);
@@ -11,567 +12,453 @@
       copied = false;
     }, 2000);
   }
-
-  onMount(() => {
-    const landing = document.querySelector('.landing') as HTMLElement;
-    if (!landing) return;
-    const updateMouse = (e: MouseEvent) => {
-      const rect = landing.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      landing.style.setProperty('--mouse-x', `${x}px`);
-      landing.style.setProperty('--mouse-y', `${y}px`);
-    };
-    window.addEventListener('mousemove', updateMouse);
-    return () => window.removeEventListener('mousemove', updateMouse);
-  });
 </script>
 
-<div class="landing">
-  <div class="flashlight" aria-hidden="true"></div>
-  <div class="crt-overlay" aria-hidden="true"></div>
-  <header class="header">
-    <a class="logo" href="/">
-      <span class="logo-prompt">&gt;_</span>
-      <span class="logo-text">agentchecker</span>
-      <span class="logo-dot">.</span>
-    </a>
-    <nav class="nav" aria-label="Primary">
-      <a class="active" href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
-      <a class="donate-link" href="https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD" target="_blank" rel="noreferrer">DONATE</a>
-      <a class="star-link" href="https://github.com/moisesvalero/agentchecker" target="_blank" rel="noreferrer">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-          <path d="M9 18c-4.51 2-5-2-7-2" />
-        </svg>
-        <span>★ STAR ON GITHUB</span>
-      </a>
-    </nav>
-    <div class="header-spacer"></div>
-  </header>
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a class="brand" href="/">agentchecker</a>
+    <div class="top-nav-links">
+      <a class="active" href={docsUrl}>DOCS</a>
+      <a href="https://www.npmjs.com/package/agentchecker">STATUS</a>
+      <a href="https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD" target="_blank" rel="noreferrer">DONATE</a>
+    </div>
+    <a class="github-btn" href={githubUrl} target="_blank" rel="noreferrer">GitHub</a>
+  </div>
+</nav>
 
-  <main>
-    <section class="hero">
-      <div class="status-badge">STATUS: PRODUCTION READY V1.2.4</div>
-      <h1 class="hero-title">AGENTCHECKER<span>.</span></h1>
-      <p class="hero-subtitle">
+<main class="main">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="status-badge">Status: Production Ready v1.2.4</div>
+      <h1>AGENTCHECKER<span class="dot">.</span></h1>
+      <p>
         Fix contradictions between AI agent instruction files. Clinical precision for ensuring
         your agents act with logical consistency.
       </p>
+    </div>
 
-      <div class="terminal" aria-label="Agentchecker audit terminal preview">
-        <div class="terminal-bar">
-          <div class="traffic" aria-hidden="true">
-            <span class="dot-red"></span>
-            <span class="dot-yellow"></span>
-            <span class="dot-green"></span>
-          </div>
-          <span class="terminal-title">SYSTEM_AUDIT_TERMINAL</span>
+    <div class="terminal terminal-glow">
+      <div class="terminal-bar">
+        <div class="traffic" aria-hidden="true">
+          <span class="dot-red"></span>
+          <span class="dot-yellow"></span>
+          <span class="dot-green"></span>
         </div>
-        <div class="terminal-body">
-          <div class="terminal-main">
-            <p class="command"><span>$</span> npx agentchecker</p>
-            <p class="muted">Scanning AI agent rules files...</p>
-            <p class="dim">Found:</p>
-            <p class="dim">  ✓ AGENTS.md (Shared)</p>
-            <p class="dim">  ✓ CLAUDE.md (Claude Code)</p>
-            <p class="dim">  ✓ .cursor/rules/global.mdc (Cursor)</p>
-            
-            <p class="accent audit">⚠ 2 contradictions found</p>
-
-            <div class="terminal-grid">
-              <div>
-                <p class="dim">CATEGORY: PACKAGE MANAGER</p>
-                <p class="dim">  - .cursor/rules/global.mdc -> npm</p>
-                <p class="dim">  - CLAUDE.md -> npm</p>
-                <p class="dim">  - AGENTS.md -> pnpm</p>
-                <p class="accent">  recommended: pnpm</p>
-              </div>
-              <div>
-                <p class="dim">CATEGORY: LINTER</p>
-                <p class="dim">  - .cursor/rules/global.mdc -> eslint</p>
-                <p class="dim">  - CLAUDE.md -> eslint</p>
-                <p class="dim">  - AGENTS.md -> oxlint</p>
-                <p class="accent">  recommended: oxlint</p>
-              </div>
+        <span class="terminal-title">SYSTEM_AUDIT_TERMINAL</span>
+        <span class="terminal-spacer" aria-hidden="true"></span>
+      </div>
+      <div class="terminal-body">
+        <div class="command-line">
+          <span class="prompt">$</span>
+          <span>agentchecker ./instructions</span>
+        </div>
+        <div class="terminal-output">
+          <p class="info">[INFO] Initializing logic engine v1.2.4...</p>
+          <p class="info">[INFO] Loading 42 instruction files...</p>
+          <p class="info">[INFO] Mapping semantic dependencies...</p>
+          <p class="audit-start">&gt;&gt;&gt; AUDIT STARTED</p>
+          <div class="conflict-grid">
+            <div class="conflict-left">
+              <span class="label">Checking File: instruction_v1.md</span>
+              <span>Rule 1: Never reveal data.</span>
+              <span>Rule 42: Export to CDN.</span>
             </div>
-
-            <p class="prompt">? Fix contradictions? Yes</p>
-            <p class="prompt">? Select package manager: pnpm (recommended)</p>
-            <p class="prompt">? Select linter: oxlint</p>
-            <p class="success">✓ Fixed 2 files. All your agents agree.</p>
-            <p class="wait">Process complete. Ready.<span class="cursor"></span></p>
+            <div class="conflict-right">
+              <span class="label accent">Conflict Detected</span>
+              <span class="scanline-text conflict">CONFLICT: DATA_LEAK_RISK</span>
+              <span>Resolution: Override Rule 42 with VPC endpoint.</span>
+            </div>
           </div>
+          <p class="success">[SUCCESS] Logic map consistent.</p>
+          <p class="active-cursor">Process complete. Waiting for command...</p>
         </div>
       </div>
+    </div>
 
-      <div class="cta-row">
-        <a
-          class="btn btn-primary"
-          href="https://github.com/moisesvalero/agentchecker"
-          target="_blank"
-          rel="noreferrer"
-        >
-          VIEW ON GITHUB
-        </a>
-        <a
-          class="btn btn-secondary"
-          href="https://github.com/moisesvalero/agentchecker#readme"
-          target="_blank"
-          rel="noreferrer"
-        >
-          DOCUMENTATION
-        </a>
-      </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href={githubUrl} target="_blank" rel="noreferrer">View on GitHub</a>
+      <a class="btn btn-secondary" href={docsUrl} target="_blank" rel="noreferrer">Documentation</a>
+    </div>
+  </section>
 
+  <section class="install-section">
+    <div class="install-wrap">
+      <span class="install-label">Quick Install</span>
       <div class="install-bar">
-        <span class="install-label">QUICK INSTALL</span>
-        <code><span>$</span> {installCommand}</code>
+        <div class="install-command">
+          <span class="prompt">$</span>
+          <span>{installCommand}</span>
+        </div>
         <button class="copy-btn" type="button" onclick={copyInstall} aria-label="Copy install command">
           {#if copied}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M20 6L9 17l-5-5"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <span class="material-symbols-outlined">check</span>
           {:else}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect
-                x="9"
-                y="3"
-                width="9"
-                height="13"
-                rx="1"
-                stroke="currentColor"
-                stroke-width="2"
-              />
-              <path
-                d="M6 8H5a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <span class="material-symbols-outlined">content_copy</span>
           {/if}
         </button>
       </div>
-    </section>
-
-    <section class="features" id="features" aria-label="Features">
-      <article class="feature-card">
-        <span class="feature-mod">MOD_01</span>
-        <div class="feature-icon" aria-hidden="true">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8" />
-            <path d="M16 16l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-            <path d="M7.5 10.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-          </svg>
-        </div>
-        <h2>DETECTION</h2>
-        <div class="feature-line"></div>
-        <p>
-          Static analysis of markdown and text-based instruction files using advanced semantic
-          mapping to find logical overlaps.
-        </p>
-      </article>
-
-      <article class="feature-card">
-        <span class="feature-mod">MOD_02</span>
-        <div class="feature-icon" aria-hidden="true">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M14 3l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3zM7 11l.8 2.2L10 14l-2.2.8L7 17l-.8-2.2L4 14l2.2-.8L7 11z"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-            />
-            <path d="M5 20L20 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
-          </svg>
-        </div>
-        <h2>CORRECTION</h2>
-        <div class="feature-line"></div>
-        <p>
-          Automated conflict resolution suggestions powered by specialized reasoning models.
-          One-click remediation for edge cases.
-        </p>
-      </article>
-
-      <article class="feature-card">
-        <span class="feature-mod">MOD_03</span>
-        <div class="feature-icon" aria-hidden="true">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <rect x="4" y="6" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.8" />
-            <path d="M8 10l3 2-3 2M13 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </div>
-        <h2>INTEGRATION</h2>
-        <div class="feature-line"></div>
-        <p>
-          CLI tool that fits into your CI/CD pipeline. Fail builds if agent instructions don't
-          pass the check.
-        </p>
-      </article>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-left">
-      <span class="footer-brand">AGENTCHECKER</span>
-      <span class="footer-copy">
-        © 2026 AGENTCHECKER // HECHO POR 
-        <a class="portfolio-link" href="https://moisesvalero.es" target="_blank" rel="noreferrer">MOISÉS VALERO</a>
-      </span>
     </div>
-    <nav class="footer-nav" aria-label="Footer">
-      <a
-        class="footer-github"
-        href="https://github.com/moisesvalero/agentchecker"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="GitHub Repository"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-          <path d="M9 18c-4.51 2-5-2-7-2" />
-        </svg>
-      </a>
-      <a href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
-      <a href="https://www.npmjs.com/package/agentchecker">STATUS</a>
-    </nav>
-  </footer>
-</div>
+  </section>
+
+  <section class="features" aria-label="Features">
+    <article class="feature-card corner-accent">
+      <div class="feature-head">
+        <span class="material-symbols-outlined feature-icon">search_check</span>
+        <span class="feature-mod">MOD_01</span>
+      </div>
+      <h2>DETECTION</h2>
+      <div class="feature-line"></div>
+      <p>
+        Static analysis of markdown and text-based instruction files using advanced semantic
+        mapping to find logical overlaps.
+      </p>
+    </article>
+
+    <article class="feature-card corner-accent">
+      <div class="feature-head">
+        <span class="material-symbols-outlined feature-icon">auto_fix_high</span>
+        <span class="feature-mod">MOD_02</span>
+      </div>
+      <h2>CORRECTION</h2>
+      <div class="feature-line"></div>
+      <p>
+        Automated conflict resolution suggestions powered by specialized reasoning models.
+        One-click remediation for edge cases.
+      </p>
+    </article>
+
+    <article class="feature-card corner-accent">
+      <div class="feature-head">
+        <span class="material-symbols-outlined feature-icon">terminal</span>
+        <span class="feature-mod">MOD_03</span>
+      </div>
+      <h2>INTEGRATION</h2>
+      <div class="feature-line"></div>
+      <p>
+        Seamless CLI tool that fits into your CI/CD pipeline. Fail builds if agent instructions
+        don't pass the check.
+      </p>
+    </article>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-left">
+    <span class="footer-brand">agentchecker</span>
+    <p class="footer-copy">
+      © 2026 AGENTCHECKER // HECHO POR
+      <a href="https://moisesvalero.es" target="_blank" rel="noreferrer">MOISÉS VALERO</a>
+    </p>
+  </div>
+  <nav class="footer-nav" aria-label="Footer">
+    <a href={githubUrl} target="_blank" rel="noreferrer">Repository</a>
+    <a href={docsUrl}>Docs</a>
+    <a href="https://www.npmjs.com/package/agentchecker">Status</a>
+  </nav>
+</footer>
 
 <style>
-  .landing {
-    position: relative;
-    width: min(100%, 1280px);
-    min-height: 100vh;
-    margin: 0 auto;
-    padding: 20px 24px 44px;
-    overflow: hidden;
-    background-color: #050505;
-    background-image: 
-      linear-gradient(to right, rgba(0, 255, 65, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-
-  .flashlight {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(
-      600px circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
-      rgba(0, 255, 65, 0.15) 0%,
-      transparent 100%
-    );
-  }
-
-  .crt-overlay {
+  .top-nav {
     position: fixed;
-    inset: 0;
-    z-index: 9999;
-    pointer-events: none;
-    background: 
-      linear-gradient(rgba(0, 0, 0, 0.15) 50%, transparent 50%),
-      radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.75) 130%);
-    background-size: 100% 4px, 100% 100%;
-    opacity: 0.85;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(10, 10, 10, 0.9);
+    backdrop-filter: blur(8px);
   }
 
-  .header {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: start;
-    min-height: 36px;
+  .top-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    max-width: 1536px;
+    height: 56px;
+    margin: 0 auto;
+    padding: 0 24px;
   }
 
-  .logo,
-  .nav a,
-  .footer-github,
-  .status-badge,
+  .brand,
+  .top-nav-links a,
+  .github-btn,
   .terminal,
   .btn,
   .install-bar,
   .feature-mod,
-  .footer {
+  .footer-brand,
+  .footer-nav a,
+  .status-badge,
+  .terminal-body,
+  .install-command {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
   }
 
-  .logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 800;
-    text-decoration: none;
-    letter-spacing: -0.01em;
-    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-
-  .logo:hover {
-    transform: translateY(-1px);
-  }
-
-  .logo:hover .logo-prompt {
-    color: #ffffff;
-    text-shadow: var(--glow-strong);
-  }
-
-  .logo-prompt {
+  .brand {
     color: var(--primary);
-    text-shadow: var(--glow);
-    font-weight: 800;
-  }
-
-  .logo-text {
-    text-transform: lowercase;
-  }
-
-  .logo-dot {
-    color: var(--primary);
-    text-shadow: var(--glow-strong);
+    font-size: 13px;
     font-weight: 900;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
   }
 
-  .nav {
-    display: flex;
-    gap: clamp(28px, 5vw, 64px);
-    justify-content: center;
+  .top-nav-links {
+    display: none;
+    align-items: center;
+    gap: 40px;
   }
 
-  .nav a,
-  .footer-nav a {
-    color: var(--text-dim);
+  .top-nav-links a {
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.18em;
-    transition: color 0.16s ease;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
   }
 
-  .nav a:hover,
-  .nav a.active,
-  .footer-nav a:hover {
+  .top-nav-links a:hover,
+  .top-nav-links a.active {
     color: var(--primary);
   }
 
-  .nav a.active {
+  .top-nav-links a.active {
+    border-bottom: 1px solid var(--primary);
+  }
+
+  .github-btn {
+    padding: 6px 20px;
+    border: 1px solid var(--primary);
     color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
   }
 
-  .header-spacer {
-    justify-self: end;
+  .github-btn:hover {
+    background: var(--primary);
+    color: #003907;
   }
 
-  .footer-github {
-    display: inline-flex;
-    align-items: center;
-    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), color 0.2s ease;
-  }
-
-  .footer-github:hover {
-    transform: translateY(-2px) scale(1.08);
-    color: var(--primary);
+  .main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 96px 24px 64px;
   }
 
   .hero {
-    padding: 32px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding-top: 24px;
+  }
+
+  .hero-copy {
+    max-width: 48rem;
     text-align: center;
   }
 
   .status-badge {
-    display: inline-flex;
-    padding: 9px 15px;
-    margin-bottom: 16px;
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 4px 12px;
+    border: 1px solid rgba(0, 255, 65, 0.2);
+    background: rgba(0, 255, 65, 0.05);
     color: var(--primary);
-    background: rgba(0, 255, 65, 0.06);
-    border: 1px solid rgba(0, 255, 65, 0.34);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.2em;
-    box-shadow: var(--glow);
-  }
-
-  .hero-title {
-    margin: 0;
-    color: #ffffff;
-    font-size: clamp(36px, 6vw, 68px);
-    font-weight: 900;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
     text-transform: uppercase;
-    text-wrap: balance;
-    text-shadow: 0 0 24px rgba(0, 255, 65, 0.2);
   }
 
-  .hero-title span {
+  .hero-copy h1 {
+    margin: 0 0 16px;
+    color: #fff;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(36px, 10vw, 96px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+  }
+
+  .hero-copy .dot {
     color: var(--primary);
-    text-shadow: var(--glow-strong);
   }
 
-  .hero-subtitle {
-    max-width: 580px;
-    margin: 10px auto 18px;
+  .hero-copy p {
+    max-width: 36rem;
+    margin: 0 auto;
     color: var(--text-muted);
-    font-size: 14px;
-    line-height: 1.55;
-    text-wrap: pretty;
+    font-size: 18px;
+    line-height: 1.6;
   }
 
   .terminal {
-    width: min(760px, 100%);
-    margin: 0 auto 24px;
+    width: 100%;
+    max-width: 56rem;
     overflow: hidden;
-    color: var(--text);
-    text-align: left;
-    background: #050505;
-    border: 1px solid rgba(0, 255, 65, 0.25);
-    border-radius: 0;
-    box-shadow: 0 0 32px rgba(0, 255, 65, 0.15);
+    border: 1px solid #222;
+    border-radius: 4px;
+    background: #0c0c0c;
+  }
+
+  .terminal-glow {
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
     position: relative;
-    animation: crt-flicker 0.15s infinite;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
   }
 
-  .terminal:hover {
-    border-color: rgba(0, 255, 65, 0.45);
-    box-shadow: 0 0 44px rgba(0, 255, 65, 0.24);
-  }
-
-  .terminal::after {
-    content: " ";
-    display: block;
+  .terminal-glow::after {
+    content: '';
     position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    background: 
-      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-      linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
-    z-index: 10;
-    background-size: 100% 3px, 6px 100%;
+    inset: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+    background-size: 100% 2px;
     pointer-events: none;
-    opacity: 0.85;
-  }
-
-  @keyframes crt-flicker {
-    0% { opacity: 0.985; }
-    50% { opacity: 0.995; }
-    100% { opacity: 0.985; }
   }
 
   .terminal-bar {
-    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-height: 35px;
-    background: linear-gradient(#181818, #121212);
-    border-bottom: 1px solid var(--border);
+    justify-content: space-between;
+    padding: 8px 20px;
+    background: #1a1a1a;
+    border-bottom: 1px solid #222;
   }
 
   .traffic {
-    position: absolute;
-    left: 20px;
     display: flex;
-    gap: 7px;
+    gap: 6px;
   }
 
   .traffic span {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    opacity: 0.65;
-    transition: filter 0.16s ease, opacity 0.16s ease;
-  }
-
-  .terminal:hover .traffic span {
-    opacity: 0.9;
-    filter: brightness(1.2) drop-shadow(0 0 3px currentColor);
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
   }
 
   .dot-red {
-    background: #ff6b6b;
+    background: rgba(255, 180, 171, 0.4);
   }
 
   .dot-yellow {
-    background: #f5c542;
+    background: rgba(173, 198, 255, 0.4);
   }
 
   .dot-green {
-    background: #00ff41;
+    background: rgba(0, 255, 65, 0.4);
   }
 
   .terminal-title {
-    color: #323232;
+    color: rgba(97, 96, 96, 0.6);
     font-size: 11px;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .terminal-spacer {
+    width: 40px;
   }
 
   .terminal-body {
-    padding: 16px 22px 14px;
-    font-size: 12.5px;
-    font-weight: 700;
+    position: relative;
+    height: 360px;
+    padding: 20px 24px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
     line-height: 1.5;
+    text-align: left;
   }
 
-  .terminal p {
-    margin: 0 0 4px;
-  }
-
-  .command {
-    margin-bottom: 8px;
-    color: var(--text);
-  }
-
-  .command span,
-  .install-bar code span {
-    color: var(--primary);
-  }
-
-  .muted,
-  .dim {
-    color: #4d504d;
-  }
-
-  .accent,
-  .success,
-  .wait {
-    color: var(--primary);
-    text-shadow: var(--glow);
-  }
-
-  .audit {
-    margin-top: 4px;
-  }
-
-  .terminal-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    padding: 6px 0;
-    margin: 0 0 6px;
-    border-top: 1px solid #151515;
-    border-bottom: 1px solid #151515;
+  .command-line {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: #fff;
   }
 
   .prompt {
-    color: #ffffff;
+    color: rgba(0, 255, 65, 0.6);
   }
 
-  .cursor {
-    display: inline-block;
-    width: 14px;
-    height: 2px;
-    margin-left: 4px;
-    background: var(--primary);
-    vertical-align: middle;
-    animation: blink 1s step-end infinite;
+  .terminal-output {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .info {
+    margin: 0;
+    color: rgba(185, 204, 178, 0.4);
+  }
+
+  .audit-start {
+    margin: 8px 0 0;
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .conflict-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 12px 0;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .conflict-left,
+  .conflict-right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .conflict-left {
+    color: rgba(97, 96, 96, 0.7);
+  }
+
+  .conflict-right {
+    color: var(--primary);
+  }
+
+  .label {
+    margin-bottom: 4px;
+    font-size: 11px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .label.accent {
+    color: var(--primary);
+  }
+
+  .conflict {
+    font-weight: 700;
+  }
+
+  .success {
+    margin: 0;
+    color: rgba(0, 255, 65, 0.6);
+  }
+
+  .active-cursor {
+    margin: 0;
+    color: var(--primary);
+  }
+
+  .active-cursor::after {
+    content: '_';
+    animation: blink 0.8s step-end infinite;
+    color: var(--primary);
+    text-shadow: 0 0 5px var(--primary);
   }
 
   @keyframes blink {
@@ -582,80 +469,88 @@
 
   .cta-row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 22px;
-    margin-bottom: 20px;
+    gap: 20px;
   }
 
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 248px;
-    min-height: 46px;
-    padding: 14px 24px;
-    border-radius: 0;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    transition:
-      background 0.16s ease,
-      border-color 0.16s ease,
-      color 0.16s ease;
+    min-width: 200px;
+    padding: 12px 64px;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: filter 0.2s ease, box-shadow 0.2s ease;
   }
 
   .btn-primary {
-    color: #000000;
     background: var(--primary);
-    border: 1px solid var(--primary);
+    color: #003907;
+    border: 0;
   }
 
   .btn-primary:hover {
-    background-color: #33ff66;
-    box-shadow: var(--glow);
+    filter: brightness(1.1);
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
   }
 
   .btn-secondary {
-    color: var(--text);
+    border: 1px solid #1a1a1a;
+    color: #fff;
     background: transparent;
-    border: 1px solid transparent;
   }
 
   .btn-secondary:hover {
-    color: var(--primary);
+    background: #201f1f;
   }
 
-  .install-bar {
+  .install-section {
+    max-width: 48rem;
+    margin: 20px auto 0;
+    width: 100%;
+  }
+
+  .install-wrap {
     position: relative;
-    display: flex;
-    align-items: center;
-    width: min(720px, 100%);
-    min-height: 52px;
-    margin: 0 auto 28px;
-    padding: 0 18px;
-    color: var(--text);
-    background: #050505;
-    border: 1px solid var(--primary);
   }
 
   .install-label {
     position: absolute;
-    top: -9px;
-    left: 20px;
+    top: -12px;
+    left: 16px;
+    z-index: 1;
     padding: 0 8px;
-    color: #888;
-    background: #0a0a0a;
+    background: var(--bg);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.28em;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
   }
 
-  .install-bar code {
-    flex: 1;
+  .install-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px;
+    border: 1px solid #1a1a1a;
+    background: #000;
+  }
+
+  .install-command {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: rgba(229, 226, 225, 0.8);
+    font-size: 13px;
+    font-weight: 500;
     overflow-x: auto;
-    color: var(--text);
-    font-size: 14px;
-    font-weight: 700;
     white-space: nowrap;
   }
 
@@ -663,261 +558,193 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
-    color: var(--primary);
-    background: transparent;
+    padding: 0;
     border: 0;
-    transition: transform 0.16s ease, color 0.16s ease;
+    background: transparent;
+    color: var(--primary);
+    transition: transform 0.2s ease;
   }
 
   .copy-btn:hover {
-    color: #ffffff;
     transform: scale(1.1);
   }
 
-  .copy-btn:active {
-    transform: scale(0.95);
+  .copy-btn .material-symbols-outlined {
+    font-size: 22px;
   }
 
   .features {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 20px;
-    margin-top: 0;
+    margin-top: 40px;
   }
 
   .feature-card {
-    position: relative;
-    min-height: 220px;
-    padding: 42px 22px 26px;
-    overflow: hidden;
+    padding: 20px;
+    border: 1px solid #222;
+    background: linear-gradient(135deg, #121212 0%, #0a0a0a 100%);
     text-align: left;
-    background: linear-gradient(180deg, rgba(17, 17, 17, 0.94), rgba(14, 14, 14, 0.94));
-    border: 1px solid var(--border);
-    transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+    transition: border-color 0.2s ease;
   }
 
   .feature-card:hover {
-    transform: translateY(-4px);
     border-color: rgba(0, 255, 65, 0.4);
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.12);
   }
 
-  .feature-card::before {
+  .corner-accent {
+    position: relative;
+  }
+
+  .corner-accent::before {
     content: '';
     position: absolute;
     top: -1px;
     left: -1px;
-    width: 28px;
-    height: 28px;
-    border-top: 1px solid var(--primary);
-    border-left: 1px solid var(--primary);
-    transition: border-color 0.22s ease;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid var(--primary);
+    border-left: 2px solid var(--primary);
   }
 
-  .feature-card:hover::before {
-    border-color: #33ff66;
-  }
-
-  .feature-mod {
-    position: absolute;
-    top: 43px;
-    right: 22px;
-    color: #343434;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.14em;
+  .feature-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
   }
 
   .feature-icon {
-    margin-bottom: 28px;
     color: var(--primary);
-    filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.35));
-    transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), color 0.22s ease, filter 0.22s ease;
+    font-size: 30px;
   }
 
-  .feature-card:hover .feature-icon {
-    color: #ffffff;
-    filter: drop-shadow(0 0 12px rgba(0, 255, 65, 0.65));
-    transform: scale(1.05);
+  .feature-mod {
+    color: rgba(97, 96, 96, 0.5);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
   }
 
   .feature-card h2 {
-    margin: 0 0 14px;
-    font-size: 17px;
-    font-weight: 900;
+    margin: 0 0 8px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 24px;
+    font-weight: 700;
     letter-spacing: -0.02em;
+    text-transform: uppercase;
   }
 
   .feature-line {
     width: 32px;
-    height: 1px;
-    margin-bottom: 22px;
+    height: 2px;
+    margin-bottom: 12px;
     background: var(--primary);
-    box-shadow: var(--glow);
   }
 
   .feature-card p {
     margin: 0;
     color: var(--text-muted);
-    font-family: 'Geist Sans', Geist, ui-sans-serif, system-ui, sans-serif;
     font-size: 14px;
-    font-weight: 500;
-    line-height: 1.55;
+    line-height: 1.6;
   }
 
   .footer {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 24px;
-    margin-top: 126px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 1536px;
+    margin: 64px auto 0;
+    padding: 64px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.4);
   }
 
   .footer-left {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
   }
 
   .footer-brand {
     color: var(--primary);
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
   }
 
   .footer-copy {
-    color: #343434;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.18em;
+    margin: 0;
+    color: rgba(97, 96, 96, 0.6);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
   }
 
-  .portfolio-link {
-    color: #444444;
+  .footer-copy a {
+    color: inherit;
     text-decoration: underline;
-    transition: color 0.16s ease;
+    transition: color 0.2s ease;
   }
 
-  .portfolio-link:hover {
+  .footer-copy a:hover {
     color: var(--primary);
-    text-shadow: var(--glow);
-  }
-
-  .donate-link,
-  .star-link {
-    color: var(--text-dim);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    transition: color 0.16s ease;
-  }
-
-  .star-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .donate-link:hover,
-  .star-link:hover {
-    color: var(--primary);
-    text-shadow: var(--glow);
   }
 
   .footer-nav {
     display: flex;
-    gap: clamp(20px, 4vw, 44px);
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: center;
+    gap: 40px;
   }
 
-  @media (max-width: 900px) {
-    .landing {
-      padding-inline: 18px;
-    }
+  .footer-nav a {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    transition: color 0.2s ease;
+  }
 
-    .header {
-      grid-template-columns: 1fr;
-      gap: 18px;
-      justify-items: center;
-    }
+  .footer-nav a:hover {
+    color: var(--primary);
+  }
 
-
-
-    .hero {
-      padding-top: 58px;
-    }
-
-    .hero-title {
-      font-size: clamp(42px, 13vw, 72px);
-      overflow-wrap: anywhere;
-    }
-
-    .terminal-body {
-      padding: 28px 22px;
-      font-size: 12px;
-    }
-
-    .terminal-grid {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .cta-row {
-      flex-direction: column;
-      align-items: stretch;
-      margin-bottom: 64px;
-    }
-
-    .btn {
-      min-width: 0;
+  @media (min-width: 768px) {
+    .top-nav-links {
+      display: flex;
     }
 
     .features {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .footer {
-      align-items: flex-start;
-      flex-direction: column;
-      margin-top: 72px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .footer-nav {
-      justify-content: flex-start;
+    .footer-left {
+      align-items: flex-start;
+      text-align: left;
     }
   }
 
-  @media (max-width: 520px) {
-    .nav {
-      gap: 18px;
-      flex-wrap: wrap;
+  @media (max-width: 767px) {
+    .conflict-grid {
+      grid-template-columns: 1fr;
     }
 
-    .status-badge {
-      max-width: 100%;
-      line-height: 1.45;
-      text-align: center;
-    }
-
-    .hero-subtitle {
-      font-size: 15px;
-    }
-
-    .install-bar {
-      align-items: stretch;
-      flex-direction: column;
-      padding: 20px;
-    }
-
-    .copy-btn {
-      align-self: flex-end;
-    }
-
-    .install-bar code {
-      font-size: 12px;
+    .btn {
+      width: 100%;
+      min-width: 0;
     }
   }
 </style>
