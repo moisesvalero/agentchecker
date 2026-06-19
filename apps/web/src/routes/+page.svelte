@@ -3,6 +3,7 @@
 
   const installCommand = 'npx agentchecker';
   let copied = $state(false);
+  let copyStatus = $state<'idle' | 'success' | 'error'>('idle');
   let lang = $state<'en' | 'es'>('en');
 
   const translations = {
@@ -11,23 +12,25 @@
       langToggle: 'ES',
       status: 'STATUS: PRODUCTION READY',
       heroSubtitle:
-        'Fix contradictions between AI agent instruction files. Clinical precision for ensuring your agents act with logical consistency.',
+        'Scans AGENTS.md, CLAUDE.md, Cursor rules, and Copilot instructions in one command. Surfaces package manager, linter, and formatter conflicts in under 2 seconds.',
       cta: { github: 'VIEW ON GITHUB', docs: 'DOCUMENTATION' },
       install: 'QUICK INSTALL',
       copyLabel: 'Copy install command',
-      features: {
-        mod1: {
-          title: 'DETECTION',
-          desc: 'Scans AGENTS.md, CLAUDE.md, Cursor rules, Copilot instructions, and 9 other agent config paths. Reports conflicts in package managers, linters, and formatters.',
-        },
-        mod2: {
-          title: 'CORRECTION',
-          desc: 'Lists each conflict with file paths and a recommended value. Fix interactively or pass --yes for non-interactive defaults.',
-        },
-        mod3: {
-          title: 'INTEGRATION',
-          desc: 'Runs via npx with no install. Use --check-only in CI to fail on contradictions. Writes local project files only.',
-        },
+      copyOk: 'Copied to clipboard',
+      copyFail: 'Copy failed — select the command manually',
+      specs: {
+        agentsTitle: 'Scanned agent paths',
+        ciTitle: 'CI check',
+        ciHint: 'Fails the workflow when project rules disagree:',
+        ciSnippet: 'npx agentchecker --check-only --local-only',
+        paths: [
+          'AGENTS.md',
+          'CLAUDE.md · .claude/CLAUDE.md',
+          '.cursor/rules/*.mdc · .cursorrules',
+          '.github/copilot-instructions.md',
+          '.windsurfrules · .clinerules · .roo/rules',
+          'Codex · OpenCode · Aider · Antigravity',
+        ],
       },
       footer: {
         copy: '© 2026 AGENTCHECKER // MADE BY',
@@ -40,23 +43,25 @@
       langToggle: 'EN',
       status: 'ESTADO: LISTO PARA PRODUCCIÓN',
       heroSubtitle:
-        'Detecta y corrige contradicciones entre archivos de instrucciones de agentes IA. Precisión clínica para garantizar que tus agentes actúen con coherencia lógica.',
+        'Escanea AGENTS.md, CLAUDE.md, reglas de Cursor e instrucciones de Copilot en un comando. Detecta conflictos de gestor, linter y formateador en menos de 2 segundos.',
       cta: { github: 'VER EN GITHUB', docs: 'DOCUMENTACIÓN' },
       install: 'INSTALACIÓN RÁPIDA',
       copyLabel: 'Copiar comando de instalación',
-      features: {
-        mod1: {
-          title: 'DETECCIÓN',
-          desc: 'Escanea AGENTS.md, CLAUDE.md, reglas de Cursor, instrucciones de Copilot y 9 rutas más. Detecta conflictos en gestores de paquetes, linters y formateadores.',
-        },
-        mod2: {
-          title: 'CORRECCIÓN',
-          desc: 'Muestra cada conflicto con rutas de archivo y un valor recomendado. Corrige en interactivo o usa --yes para valores por defecto.',
-        },
-        mod3: {
-          title: 'INTEGRACIÓN',
-          desc: 'Se ejecuta con npx sin instalar. Usa --check-only en CI para fallar si hay contradicciones. Solo modifica archivos locales del proyecto.',
-        },
+      copyOk: 'Copiado al portapapeles',
+      copyFail: 'No se pudo copiar — selecciona el comando manualmente',
+      specs: {
+        agentsTitle: 'Rutas de agentes escaneadas',
+        ciTitle: 'Check en CI',
+        ciHint: 'Falla el workflow si las reglas del proyecto no coinciden:',
+        ciSnippet: 'npx agentchecker --check-only --local-only',
+        paths: [
+          'AGENTS.md',
+          'CLAUDE.md · .claude/CLAUDE.md',
+          '.cursor/rules/*.mdc · .cursorrules',
+          '.github/copilot-instructions.md',
+          '.windsurfrules · .clinerules · .roo/rules',
+          'Codex · OpenCode · Aider · Antigravity',
+        ],
       },
       footer: {
         copy: '© 2026 AGENTCHECKER // HECHO POR',
@@ -67,6 +72,12 @@
   } as const;
 
   let t = $derived(translations[lang]);
+
+  $effect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
+  });
 
   function toggleLang() {
     lang = lang === 'en' ? 'es' : 'en';
@@ -79,11 +90,17 @@
       }
       await navigator.clipboard.writeText(installCommand);
       copied = true;
+      copyStatus = 'success';
       setTimeout(() => {
         copied = false;
-      }, 2000);
+        copyStatus = 'idle';
+      }, 2500);
     } catch {
       copied = false;
+      copyStatus = 'error';
+      setTimeout(() => {
+        copyStatus = 'idle';
+      }, 3500);
     }
   }
 
@@ -157,11 +174,8 @@
 </script>
 
 <div class="landing">
-  <!-- Capas de efecto de fondo (fixed, fuera del flujo) -->
   <div class="mouse-glow" aria-hidden="true"></div>
-  <div class="crt-grain" aria-hidden="true"></div>
   <div class="crt-vignette" aria-hidden="true"></div>
-  <div class="crt-overlay" aria-hidden="true"></div>
   <header class="header">
     <a class="logo" href="/">
       <span class="logo-prompt">&gt;_</span>
@@ -361,88 +375,35 @@
           {/if}
         </button>
       </div>
+      {#if copyStatus !== 'idle'}
+        <p
+          class="copy-feedback"
+          class:copy-feedback--error={copyStatus === 'error'}
+          role="status"
+        >
+          {copyStatus === 'success' ? t.copyOk : t.copyFail}
+        </p>
+      {/if}
     </section>
 
-    <section class="features" id="features" aria-label="Features">
-      <article class="feature-card">
-        <span class="feature-mod">MOD_01</span>
-        <div class="feature-icon" aria-hidden="true">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <circle
-              cx="10.5"
-              cy="10.5"
-              r="6.5"
-              stroke="currentColor"
-              stroke-width="1.8"
-            />
-            <path
-              d="M16 16l4 4"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-            />
-            <path
-              d="M7.5 10.5h6"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-            />
-          </svg>
-        </div>
-        <h2>{t.features.mod1.title}</h2>
-        <div class="feature-line"></div>
-        <p>{t.features.mod1.desc}</p>
-      </article>
-
-      <article class="feature-card">
-        <span class="feature-mod">MOD_02</span>
-        <div class="feature-icon" aria-hidden="true">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M14 3l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3zM7 11l.8 2.2L10 14l-2.2.8L7 17l-.8-2.2L4 14l2.2-.8L7 11z"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M5 20L20 5"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linecap="round"
-            />
-          </svg>
-        </div>
-        <h2>{t.features.mod2.title}</h2>
-        <div class="feature-line"></div>
-        <p>{t.features.mod2.desc}</p>
-      </article>
-
-      <article class="feature-card">
-        <span class="feature-mod">MOD_03</span>
-        <div class="feature-icon" aria-hidden="true">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <rect
-              x="4"
-              y="6"
-              width="16"
-              height="12"
-              rx="1"
-              stroke="currentColor"
-              stroke-width="1.8"
-            />
-            <path
-              d="M8 10l3 2-3 2M13 15h4"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-        <h2>{t.features.mod3.title}</h2>
-        <div class="feature-line"></div>
-        <p>{t.features.mod3.desc}</p>
-      </article>
+    <section class="specs" id="specs" aria-labelledby="specs-agents-title">
+      <div class="specs-panel">
+        <h2 id="specs-agents-title" class="specs-title">
+          {t.specs.agentsTitle}
+        </h2>
+        <ul class="specs-list">
+          {#each t.specs.paths as path}
+            <li><span class="specs-ok">✓</span> {path}</li>
+          {/each}
+        </ul>
+      </div>
+      <div class="specs-panel">
+        <h2 class="specs-title">{t.specs.ciTitle}</h2>
+        <p class="specs-hint">{t.specs.ciHint}</p>
+        <pre class="specs-code"><code
+            ><span class="specs-prompt">$</span> {t.specs.ciSnippet}</code
+          ></pre>
+      </div>
     </section>
   </main>
 
@@ -501,95 +462,33 @@
     overflow: hidden;
     background-color: #080808;
     background-image:
-      linear-gradient(rgba(0, 255, 65, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 65, 0.08) 1px, transparent 1px);
+      linear-gradient(rgba(0, 255, 65, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 65, 0.06) 1px, transparent 1px);
     background-size: 40px 40px;
-    animation: screenFlicker 0.15s infinite;
   }
 
-  /* Linterna que sigue al cursor — fixed para que cubra toda la pantalla */
   .mouse-glow {
     position: fixed;
     inset: 0;
     z-index: 1;
     pointer-events: none;
     background: radial-gradient(
-      700px circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
-      rgba(0, 255, 65, 0.12),
-      transparent 80%
+      600px circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
+      rgba(0, 255, 65, 0.07),
+      transparent 75%
     );
   }
 
-  /* Grain estático (sin petición externa) */
-  .crt-grain {
+  .crt-vignette {
     position: fixed;
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-    background-size: 180px 180px;
-  }
-
-  /* Viñeta radial */
-  .crt-vignette {
-    position: fixed;
-    inset: 0;
-    z-index: 3;
-    pointer-events: none;
     background: radial-gradient(
       circle at center,
-      transparent 60%,
-      rgba(0, 0, 0, 0.55) 100%
+      transparent 65%,
+      rgba(0, 0, 0, 0.4) 100%
     );
-    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7);
-  }
-
-  /* Scanlines + vignette radial combinados */
-  .crt-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 4;
-    pointer-events: none;
-    background:
-      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%),
-      linear-gradient(
-        90deg,
-        rgba(255, 0, 0, 0.02),
-        rgba(0, 255, 0, 0.01),
-        rgba(0, 0, 255, 0.02)
-      );
-    background-size:
-      100% 4px,
-      3px 100%;
-    opacity: 0.45;
-  }
-
-  @keyframes screenFlicker {
-    0% {
-      opacity: 0.992;
-    }
-    10% {
-      opacity: 0.998;
-    }
-    20% {
-      opacity: 0.991;
-    }
-    35% {
-      opacity: 0.999;
-    }
-    50% {
-      opacity: 0.994;
-    }
-    65% {
-      opacity: 0.997;
-    }
-    80% {
-      opacity: 0.991;
-    }
-    100% {
-      opacity: 0.998;
-    }
   }
 
   .header {
@@ -606,7 +505,7 @@
   .terminal,
   .btn,
   .install-bar,
-  .feature-mod,
+  .specs,
   .footer {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
   }
@@ -778,7 +677,6 @@
     border-radius: 0;
     box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.12);
     position: relative;
-    animation: crt-flicker 0.15s infinite;
     transition:
       border-color 0.25s ease,
       box-shadow 0.25s ease;
@@ -794,32 +692,14 @@
     display: block;
     position: absolute;
     inset: 0;
-    background:
-      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-      linear-gradient(
-        90deg,
-        rgba(255, 0, 0, 0.04),
-        rgba(0, 255, 0, 0.02),
-        rgba(0, 0, 255, 0.04)
-      );
+    background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%,
+      rgba(0, 0, 0, 0.12) 50%
+    );
     z-index: 10;
-    background-size:
-      100% 3px,
-      6px 100%;
+    background-size: 100% 3px;
     pointer-events: none;
-    opacity: 0.85;
-  }
-
-  @keyframes crt-flicker {
-    0% {
-      opacity: 0.985;
-    }
-    50% {
-      opacity: 0.995;
-    }
-    100% {
-      opacity: 0.985;
-    }
+    opacity: 0.5;
   }
 
   .terminal-bar {
@@ -1122,101 +1002,86 @@
     transform: scale(0.95);
   }
 
-  .features {
+  .copy-feedback {
+    width: min(720px, 100%);
+    margin: 8px auto 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--primary);
+    text-align: center;
+  }
+
+  .copy-feedback--error {
+    color: #ff8a8a;
+  }
+
+  .specs {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-    margin-top: 0;
-  }
-
-  .feature-card {
-    position: relative;
-    min-height: 220px;
-    padding: 42px 22px 26px;
-    overflow: hidden;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    width: min(720px, 100%);
+    margin: 48px auto 0;
     text-align: left;
-    background: linear-gradient(
-      180deg,
-      rgba(17, 17, 17, 0.94),
-      rgba(14, 14, 14, 0.94)
-    );
+  }
+
+  .specs-panel {
+    padding: 16px 18px;
+    background: rgba(5, 5, 5, 0.92);
     border: 1px solid var(--border);
-    transition:
-      transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
-      border-color 0.22s ease,
-      box-shadow 0.22s ease;
   }
 
-  .feature-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(0, 255, 65, 0.4);
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.12);
-  }
-
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    width: 28px;
-    height: 28px;
-    border-top: 1px solid var(--primary);
-    border-left: 1px solid var(--primary);
-    transition: border-color 0.22s ease;
-  }
-
-  .feature-card:hover::before {
-    border-color: #33ff66;
-  }
-
-  .feature-mod {
-    position: absolute;
-    top: 43px;
-    right: 22px;
-    color: #343434;
-    font-size: 10px;
+  .specs-title {
+    margin: 0 0 12px;
+    font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.14em;
-  }
-
-  .feature-icon {
-    margin-bottom: 28px;
+    text-transform: uppercase;
     color: var(--primary);
-    filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.35));
-    transition:
-      transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
-      color 0.22s ease,
-      filter 0.22s ease;
   }
 
-  .feature-card:hover .feature-icon {
-    color: #ffffff;
-    filter: drop-shadow(0 0 12px rgba(0, 255, 65, 0.65));
-    transform: scale(1.05);
-  }
-
-  .feature-card h2 {
-    margin: 0 0 14px;
-    font-size: 17px;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-  }
-
-  .feature-line {
-    width: 32px;
-    height: 1px;
-    margin-bottom: 22px;
-    background: var(--primary);
-    box-shadow: var(--glow);
-  }
-
-  .feature-card p {
-    margin: 0;
+  .specs-hint {
+    margin: 0 0 10px;
+    font-size: 11px;
+    line-height: 1.45;
     color: var(--text-muted);
-    font-family: 'Geist Sans', Geist, ui-sans-serif, system-ui, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.55;
+  }
+
+  .specs-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .specs-list li {
+    margin: 0 0 5px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+
+  .specs-ok {
+    color: var(--primary);
+  }
+
+  .specs-code {
+    margin: 0;
+    padding: 10px 12px;
+    overflow-x: auto;
+    font-size: 11px;
+    line-height: 1.45;
+    color: var(--text);
+    background: #0a0a0a;
+    border: 1px solid rgba(0, 255, 65, 0.15);
+  }
+
+  .specs-code code {
+    font-family: inherit;
+  }
+
+  .specs-prompt {
+    color: var(--primary);
   }
 
   .footer {
@@ -1240,14 +1105,14 @@
   }
 
   .footer-copy {
-    color: #343434;
+    color: var(--text-dim);
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.18em;
   }
 
   .portfolio-link {
-    color: #444444;
+    color: var(--text-muted);
     text-decoration: underline;
     transition: color 0.16s ease;
   }
@@ -1327,8 +1192,9 @@
       min-width: 0;
     }
 
-    .features {
+    .specs {
       grid-template-columns: 1fr;
+      margin-top: 40px;
     }
 
     .footer {
@@ -1374,18 +1240,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .landing,
-    .terminal {
-      animation: none;
-    }
-
     .mouse-glow {
       display: none;
-    }
-
-    .crt-grain,
-    .crt-overlay {
-      opacity: 0.02;
     }
 
     .t-line {
