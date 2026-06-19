@@ -8,7 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Added
 
-- `demo.gif` terminal demo embedded in README (EN/ES)
+- Real terminal demo: `demo.cast` + asciinema embed in README
+- `scripts/record-demo.sh` and `scripts/submit-awesome-prs.sh`
+- `docs/ASCIINEMA.md` recording guide
+- PRs submitted to awesome-cursorrules, awesome-ai-agents, awesome-ai-coding-tools
 - CLI tests: `applyFixes`, global scan, interactive prompts
 - Playwright E2E smoke tests for landing
 - `PROMOTION.md` launch checklist

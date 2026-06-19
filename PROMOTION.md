@@ -21,7 +21,9 @@ Quick ideas to launch **agentchecker** now that the product is ready.
 
 ## Assets you already have
 
-- `demo.gif` in README
+- Real terminal recording on [asciinema.org](https://asciinema.org/a/FpvGzRly3F6TYanv) (also embedded in README)
+- `demo.cast` in repo — re-record with `bash scripts/record-demo.sh`
+- `demo.gif` — static fallback for X/Reddit (`python3 scripts/generate-demo-gif.py`)
 - Landing: https://agentcheck-rho.vercel.app (or current Vercel URL)
 - npm: `npx agentchecker`
 - GitHub: https://github.com/moisesvalero/agentchecker
@@ -36,7 +38,7 @@ Quick ideas to launch **agentchecker** now that the product is ready.
 
 ## Optional next steps
 
-- Record a real terminal session with [asciinema](https://asciinema.org/) for embed in README
+- Link asciinema CLI to your account (`asciinema auth link`) so the recording does not expire — see [docs/ASCIINEMA.md](docs/ASCIINEMA.md)
 - Submit to awesome-cursorrules, awesome-agents lists (see LAUNCH.md follow-up PRs)
 - Add npm keyword "cursor" / "claude" if not already maximized
 - Product Hunt when you have 2–3 testimonials or stars momentum
