@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import AsciinemaPlayer from '$lib/AsciinemaPlayer.svelte';
 
   const installCommand = 'npx agentchecker';
   let copied = $state(false);
@@ -13,29 +12,9 @@
       status: 'STATUS: PRODUCTION READY',
       heroSubtitle:
         'Fix contradictions between AI agent instruction files. Clinical precision for ensuring your agents act with logical consistency.',
-      terminal: {
-        scanning: 'Scanning AI agent rules files...',
-        found: 'Found:',
-        contradictions: '⚠ 2 contradictions found',
-        catPkg: 'CATEGORY: PACKAGE MANAGER',
-        catLinter: 'CATEGORY: LINTER',
-        recPkg: '  recommended: pnpm',
-        recLinter: '  recommended: oxlint',
-        fixQ: '? Fix contradictions? Yes',
-        pkgQ: '? Select package manager: pnpm (recommended)',
-        linterQ: '? Select linter: oxlint',
-        fixed: '✓ Fixed 2 files. All your agents agree.',
-        ready: 'Process complete. Ready.',
-      },
       cta: { github: 'VIEW ON GITHUB', docs: 'DOCUMENTATION' },
       install: 'QUICK INSTALL',
       copyLabel: 'Copy install command',
-      demo: {
-        title: 'LIVE TERMINAL RECORDING',
-        subtitle:
-          'Real `npx agentchecker --dry-run` on a sample project with conflicting rules.',
-        link: 'Open on asciinema.org →',
-      },
       features: {
         mod1: {
           title: 'DETECTION',
@@ -62,29 +41,9 @@
       status: 'ESTADO: LISTO PARA PRODUCCIÓN',
       heroSubtitle:
         'Detecta y corrige contradicciones entre archivos de instrucciones de agentes IA. Precisión clínica para garantizar que tus agentes actúen con coherencia lógica.',
-      terminal: {
-        scanning: 'Escaneando archivos de reglas de agentes IA...',
-        found: 'Encontrado:',
-        contradictions: '⚠ 2 contradicciones encontradas',
-        catPkg: 'CATEGORÍA: GESTOR DE PAQUETES',
-        catLinter: 'CATEGORÍA: LINTER',
-        recPkg: '  recomendado: pnpm',
-        recLinter: '  recomendado: oxlint',
-        fixQ: '? ¿Corregir contradicciones? Sí',
-        pkgQ: '? Selecciona gestor de paquetes: pnpm (recomendado)',
-        linterQ: '? Selecciona linter: oxlint',
-        fixed: '✓ 2 archivos corregidos. Todos tus agentes están alineados.',
-        ready: 'Proceso completado. Listo.',
-      },
       cta: { github: 'VER EN GITHUB', docs: 'DOCUMENTACIÓN' },
       install: 'INSTALACIÓN RÁPIDA',
       copyLabel: 'Copiar comando de instalación',
-      demo: {
-        title: 'GRABACIÓN REAL DE TERMINAL',
-        subtitle:
-          'Ejecución real de `npx agentchecker --dry-run` en un proyecto de ejemplo con reglas en conflicto.',
-        link: 'Abrir en asciinema.org →',
-      },
       features: {
         mod1: {
           title: 'DETECCIÓN',
@@ -208,65 +167,82 @@
       <h1 class="hero-title">AGENTCHECKER<span>.</span></h1>
       <p class="hero-subtitle">{t.heroSubtitle}</p>
 
-      <div class="terminal" aria-label="Agentchecker audit terminal preview">
+      <div class="terminal" aria-label="Agentchecker CLI preview">
         <div class="terminal-bar">
           <div class="traffic" aria-hidden="true">
             <span class="dot-red"></span>
             <span class="dot-yellow"></span>
             <span class="dot-green"></span>
           </div>
-          <span class="terminal-title">SYSTEM_AUDIT_TERMINAL</span>
+          <span class="terminal-title">agentchecker — ~/my-app</span>
         </div>
         <div class="terminal-body">
-          <div class="terminal-main">
-            <p class="command"><span>$</span> npx agentchecker</p>
-            <p class="muted">{t.terminal.scanning}</p>
-            <p class="dim">{t.terminal.found}</p>
-            <p class="dim">✓ AGENTS.md (Shared)</p>
-            <p class="dim">✓ CLAUDE.md (Claude Code)</p>
-            <p class="dim">✓ .cursor/rules/global.mdc (Cursor)</p>
+          <p class="command"><span>$</span> npx agentchecker</p>
+          <p class="brand">agentchecker</p>
+          <p class="dim scan">◇ Scanning AI agent files...</p>
 
-            <p class="accent audit">{t.terminal.contradictions}</p>
+          <p class="dim">Found:</p>
+          <p class="file-line">
+            <span class="ok">✓</span> .cursor/rules/global.mdc
+            <span class="dim">(Cursor)</span>
+          </p>
+          <p class="file-line">
+            <span class="ok">✓</span> AGENTS.md
+            <span class="dim">(AGENTS.md)</span>
+          </p>
+          <p class="file-line">
+            <span class="ok">✓</span> CLAUDE.md
+            <span class="dim">(Claude Code)</span>
+          </p>
 
-            <div class="terminal-grid">
-              <div>
-                <p class="dim">{t.terminal.catPkg}</p>
-                <p class="dim">- .cursor/rules/global.mdc -> npm</p>
-                <p class="dim">- CLAUDE.md -> npm</p>
-                <p class="dim">- AGENTS.md -> pnpm</p>
-                <p class="accent">{t.terminal.recPkg}</p>
-              </div>
-              <div>
-                <p class="dim">{t.terminal.catLinter}</p>
-                <p class="dim">- .cursor/rules/global.mdc -> eslint</p>
-                <p class="dim">- CLAUDE.md -> eslint</p>
-                <p class="dim">- AGENTS.md -> oxlint</p>
-                <p class="accent">{t.terminal.recLinter}</p>
-              </div>
-            </div>
+          <p class="warn">⚠ 2 contradictions found:</p>
 
-            <p class="prompt">{t.terminal.fixQ}</p>
-            <p class="prompt">{t.terminal.pkgQ}</p>
-            <p class="prompt">{t.terminal.linterQ}</p>
-            <p class="success">{t.terminal.fixed}</p>
-            <p class="wait">{t.terminal.ready}<span class="cursor"></span></p>
+          <p class="category">Package manager</p>
+          <p class="dim">
+            .cursor/rules/global.mdc → <span class="val">npm</span>
+          </p>
+          <p class="dim">CLAUDE.md → <span class="val">npm</span></p>
+          <p class="dim">AGENTS.md → <span class="val">pnpm</span></p>
+          <p class="rec">recommended: pnpm</p>
+
+          <p class="category">Linter</p>
+          <p class="dim">
+            .cursor/rules/global.mdc → <span class="val">eslint</span>
+          </p>
+          <p class="dim">CLAUDE.md → <span class="val">eslint</span></p>
+          <p class="dim">AGENTS.md → <span class="val">oxlint</span></p>
+          <p class="rec">recommended: oxlint</p>
+
+          <div class="prompt-block">
+            <p class="prompt">◇ Fix contradictions?</p>
+            <p class="prompt-answer">│ Yes</p>
+            <p class="prompt">◆ Package manager: which do you prefer?</p>
+            <p class="prompt-answer">│ pnpm (recommended)</p>
+            <p class="prompt">◆ Linter: which do you prefer?</p>
+            <p class="prompt-answer">│ oxlint (recommended)</p>
           </div>
+
+          <p class="category">.cursor/rules/global.mdc</p>
+          <p class="diff-minus">- Use eslint and npm run lint.</p>
+          <p class="diff-plus">+ Use oxlint and pnpm run lint.</p>
+
+          <p class="category">CLAUDE.md</p>
+          <p class="diff-minus">- Run `npm install` before starting.</p>
+          <p class="diff-plus">+ Run `pnpm install` before starting.</p>
+          <p class="diff-minus">- Use ESLint for linting.</p>
+          <p class="diff-plus">+ Use Oxlint for linting.</p>
+
+          <div class="prompt-block">
+            <p class="prompt">◇ Apply changes?</p>
+            <p class="prompt-answer">│ Yes</p>
+          </div>
+
+          <p class="success">✓ Fixed 2 files. All your agents agree.</p>
+          <p class="done">
+            Done in 1.2s<span class="cursor" aria-hidden="true"></span>
+          </p>
         </div>
       </div>
-
-      <section class="live-demo" aria-label="Live terminal demo">
-        <h2 class="demo-title">{t.demo.title}</h2>
-        <p class="demo-subtitle">{t.demo.subtitle}</p>
-        <AsciinemaPlayer />
-        <a
-          class="demo-link"
-          href="https://asciinema.org/a/RjSsDnzYvvVyoYC4"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {t.demo.link}
-        </a>
-      </section>
 
       <div class="cta-row">
         <a
@@ -761,10 +737,7 @@
     content: ' ';
     display: block;
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    inset: 0;
     background:
       linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
       linear-gradient(
@@ -845,18 +818,20 @@
   }
 
   .terminal-body {
+    position: relative;
+    z-index: 1;
     padding: 16px 22px 14px;
-    font-size: 12.5px;
-    font-weight: 700;
-    line-height: 1.5;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.55;
   }
 
-  .terminal p {
-    margin: 0 0 4px;
+  .terminal-body p {
+    margin: 0 0 3px;
   }
 
   .command {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     color: var(--text);
   }
 
@@ -865,28 +840,49 @@
     color: var(--primary);
   }
 
-  .muted,
+  .brand {
+    margin-bottom: 8px;
+    color: #67e8f9;
+    font-weight: 700;
+  }
+
+  .scan {
+    margin-bottom: 10px;
+    color: #4d504d;
+  }
+
   .dim {
     color: #4d504d;
   }
 
-  .accent,
-  .success,
-  .wait {
+  .file-line .ok {
     color: var(--primary);
-    text-shadow: var(--glow);
   }
 
-  .audit {
-    margin-top: 4px;
+  .warn {
+    margin: 12px 0 8px;
+    color: #f5c542;
   }
 
-  .terminal-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    padding: 6px 0;
-    margin: 0 0 6px;
+  .category {
+    margin-top: 8px;
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .val {
+    color: #67e8f9;
+  }
+
+  .rec {
+    margin-bottom: 4px;
+    color: #4d504d;
+    font-size: 11.5px;
+  }
+
+  .prompt-block {
+    margin: 14px 0;
+    padding: 10px 0;
     border-top: 1px solid #151515;
     border-bottom: 1px solid #151515;
   }
@@ -895,13 +891,39 @@
     color: #ffffff;
   }
 
+  .prompt-answer {
+    margin-bottom: 6px;
+    padding-left: 2px;
+    color: var(--primary);
+  }
+
+  .diff-minus {
+    color: #ff6b6b;
+    font-size: 11.5px;
+  }
+
+  .diff-plus {
+    color: var(--primary);
+    font-size: 11.5px;
+  }
+
+  .success {
+    margin-top: 10px;
+    color: var(--primary);
+    text-shadow: var(--glow);
+  }
+
+  .done {
+    color: #4d504d;
+  }
+
   .cursor {
     display: inline-block;
-    width: 14px;
-    height: 2px;
-    margin-left: 4px;
+    width: 8px;
+    height: 14px;
+    margin-left: 2px;
     background: var(--primary);
-    vertical-align: middle;
+    vertical-align: text-bottom;
     animation: blink 1s step-end infinite;
   }
 
@@ -909,41 +931,6 @@
     50% {
       opacity: 0;
     }
-  }
-
-  .live-demo {
-    width: min(100%, 920px);
-    margin: 0 auto 28px;
-    text-align: center;
-  }
-
-  .demo-title {
-    margin: 0 0 8px;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    color: var(--primary);
-  }
-
-  .demo-subtitle {
-    margin: 0 0 16px;
-    font-size: 13px;
-    line-height: 1.5;
-    color: rgba(205, 214, 244, 0.72);
-  }
-
-  .demo-link {
-    display: inline-block;
-    margin-top: 12px;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: rgba(0, 255, 65, 0.85);
-    text-decoration: none;
-  }
-
-  .demo-link:hover {
-    color: var(--primary);
-    text-decoration: underline;
   }
 
   .cta-row {
@@ -1232,13 +1219,8 @@
     }
 
     .terminal-body {
-      padding: 28px 22px;
-      font-size: 12px;
-    }
-
-    .terminal-grid {
-      grid-template-columns: 1fr;
-      gap: 12px;
+      padding: 20px 16px;
+      font-size: 11px;
     }
 
     .cta-row {
