@@ -503,9 +503,13 @@
     position: relative;
     width: min(100%, 1280px);
     min-height: 100vh;
+    min-height: 100dvh;
     margin: 0 auto;
-    padding: 20px 24px 44px;
-    overflow: hidden;
+    padding: max(20px, env(safe-area-inset-top, 0px))
+      max(24px, env(safe-area-inset-right, 0px))
+      max(44px, env(safe-area-inset-bottom, 0px))
+      max(24px, env(safe-area-inset-left, 0px));
+    overflow-x: clip;
     background-color: transparent;
   }
 
@@ -1228,7 +1232,8 @@
 
   @media (max-width: 900px) {
     .landing {
-      padding-inline: 18px;
+      padding-inline: max(18px, env(safe-area-inset-left, 0px))
+        max(18px, env(safe-area-inset-right, 0px));
     }
 
     .header {
@@ -1297,7 +1302,21 @@
     }
 
     .hero-subtitle {
-      font-size: 15px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .terminal-title {
+      max-width: calc(100% - 96px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .terminal-skip {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 8px 12px;
     }
 
     .install-bar {
@@ -1312,6 +1331,50 @@
 
     .install-bar code {
       font-size: 12px;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .copy-btn {
+      align-self: stretch;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 900px) and (orientation: landscape) {
+    .hero {
+      padding-top: 24px;
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 8vw, 48px);
+    }
+
+    .cta-row {
+      margin-bottom: 32px;
+    }
+
+    .footer {
+      margin-top: 48px;
+    }
+  }
+
+  @media (pointer: coarse) {
+    .terminal-skip {
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    .lang-toggle {
+      min-width: 48px;
+      min-height: 48px;
+    }
+  }
+
+  @media (hover: none) {
+    .logo:hover,
+    .footer-github:hover {
+      transform: none;
     }
   }
 

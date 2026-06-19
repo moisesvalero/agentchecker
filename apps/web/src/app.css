@@ -39,6 +39,12 @@
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
+  padding:
+    env(safe-area-inset-top, 0)
+    env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0)
+    env(safe-area-inset-left, 0);
   background-color: var(--bg);
   background-image:
     radial-gradient(circle at 50% 35%, transparent 20%, #0a0a0a 75%),
