@@ -6,20 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
-### Added
-
-- Real terminal demo: `demo.cast` + asciinema embed in README
-- `scripts/record-demo.sh` and `scripts/submit-awesome-prs.sh`
-- `docs/ASCIINEMA.md` recording guide
-- PRs submitted to awesome-cursorrules, awesome-ai-agents, awesome-ai-coding-tools
-- CLI tests: `applyFixes`, global scan, interactive prompts
-- Playwright E2E smoke tests for landing
-- `PROMOTION.md` launch checklist
+## [0.1.8] - 2026-06-19
 
 ### Changed
 
-- Landing status text without hardcoded version number
-- CI runs Playwright e2e after build
+- License: MIT → PolyForm Noncommercial 1.0.0
+- Landing footer: license link and commercial contact (info@moisesvalero.es)
 
 ## [0.1.7] - 2026-06-19
 

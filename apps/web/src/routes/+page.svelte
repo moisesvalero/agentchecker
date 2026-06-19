@@ -2,8 +2,10 @@
   import { onMount } from 'svelte';
 
   const installCommand = 'npx agentchecker';
-  const pkgVersion = '0.1.7';
+  const pkgVersion = '0.1.8';
   const npmUrl = 'https://www.npmjs.com/package/agentchecker';
+  const licenseUrl =
+    'https://github.com/moisesvalero/agentchecker/blob/main/LICENSE';
   const ciDocsUrl =
     'https://github.com/moisesvalero/agentchecker#2-cicd-pipeline-github-actions';
 
@@ -43,6 +45,8 @@
         copy: '© 2026 AGENTCHECKER // MADE BY',
         docs: 'Docs',
         npm: `v${pkgVersion}`,
+        license: 'PolyForm NC license',
+        commercial: 'Commercial use',
       },
     },
     es: {
@@ -76,6 +80,8 @@
         copy: '© 2026 AGENTCHECKER // HECHO POR',
         docs: 'Docs',
         npm: `v${pkgVersion}`,
+        license: 'Licencia PolyForm NC',
+        commercial: 'Uso comercial',
       },
     },
   } as const;
@@ -463,6 +469,18 @@
           href="https://moisesvalero.es"
           target="_blank"
           rel="noreferrer">MOISÉS VALERO</a
+        >
+      </span>
+      <span class="footer-license">
+        <a
+          class="portfolio-link"
+          href={licenseUrl}
+          target="_blank"
+          rel="noreferrer">{t.footer.license}</a
+        >
+        ·
+        <a class="portfolio-link" href="mailto:info@moisesvalero.es"
+          >{t.footer.commercial}</a
         >
       </span>
     </div>
@@ -1189,6 +1207,17 @@
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.18em;
+  }
+
+  .footer-license {
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-license .portfolio-link {
+    text-decoration: underline;
   }
 
   .portfolio-link {

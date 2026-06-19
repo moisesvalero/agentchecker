@@ -19,6 +19,6 @@ test('toggle de idioma cambia textos visibles', async ({ page }) => {
   await toggle.click();
 
   await expect(toggle).toHaveText('EN');
-  await expect(page.getByText('v0.1.7 en npm')).toBeVisible();
+  await expect(page.getByText('v0.1.8 en npm')).toBeVisible();
   await expect(page.getByText(/Escanea AGENTS\.md/)).toBeVisible();
 });

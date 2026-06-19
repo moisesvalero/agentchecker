@@ -407,4 +407,24 @@ Consulta [CONTRIBUTING.md](CONTRIBUTING.md) para las guías completas de desarro
 
 ## License / Licencia
 
-MIT
+**PolyForm Noncommercial 1.0.0**
+
+You may use, modify, and distribute this software for **noncommercial** purposes.
+
+**Commercial use** (selling products or services that use this software, SaaS, paid tooling, etc.) requires **written permission** from the author.
+
+Contact: info@moisesvalero.es
+
+Full text: [LICENSE](LICENSE) · https://polyformproject.org/licenses/noncommercial/1.0.0
+
+---
+
+**PolyForm Noncommercial 1.0.0**
+
+Puedes usar, modificar y distribuir este software con fines **no comerciales**.
+
+El **uso comercial** (vender productos o servicios que lo usen, SaaS, herramientas de pago, etc.) requiere **permiso por escrito** del autor.
+
+Contacto: info@moisesvalero.es
+
+Texto completo: [LICENSE](LICENSE) · https://polyformproject.org/licenses/noncommercial/1.0.0
