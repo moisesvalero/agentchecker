@@ -80,6 +80,10 @@
     }, 2000);
   }
 
+  const TERMINAL_STEP_COUNT = 8;
+  let terminalStep = $state(0);
+  let terminalDone = $derived(terminalStep >= TERMINAL_STEP_COUNT);
+
   onMount(() => {
     // Mouse glow usa coordenadas de viewport (capas fixed)
     const updateMouse = (e: MouseEvent) => {
@@ -95,6 +99,25 @@
       grainTimer = setInterval(() => {
         grain.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
       }, 50);
+    }
+
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    if (reducedMotion) {
+      terminalStep = TERMINAL_STEP_COUNT;
+    } else {
+      const delays = [0, 220, 420, 620, 900, 1150, 1500, 1850];
+      const timers = delays.map((delay, index) =>
+        setTimeout(() => {
+          terminalStep = index + 1;
+        }, delay),
+      );
+      return () => {
+        window.removeEventListener('mousemove', updateMouse);
+        clearInterval(grainTimer);
+        timers.forEach(clearTimeout);
+      };
     }
 
     return () => {
@@ -176,71 +199,61 @@
           </div>
           <span class="terminal-title">agentchecker — ~/my-app</span>
         </div>
-        <div class="terminal-body">
-          <p class="command"><span>$</span> npx agentchecker</p>
-          <p class="brand">agentchecker</p>
-          <p class="dim scan">◇ Scanning AI agent files...</p>
-
-          <p class="dim">Found:</p>
-          <p class="file-line">
-            <span class="ok">✓</span> .cursor/rules/global.mdc
-            <span class="dim">(Cursor)</span>
-          </p>
-          <p class="file-line">
-            <span class="ok">✓</span> AGENTS.md
-            <span class="dim">(AGENTS.md)</span>
-          </p>
-          <p class="file-line">
-            <span class="ok">✓</span> CLAUDE.md
-            <span class="dim">(Claude Code)</span>
-          </p>
-
-          <p class="warn">⚠ 2 contradictions found:</p>
-
-          <p class="category">Package manager</p>
-          <p class="dim">
-            .cursor/rules/global.mdc → <span class="val">npm</span>
-          </p>
-          <p class="dim">CLAUDE.md → <span class="val">npm</span></p>
-          <p class="dim">AGENTS.md → <span class="val">pnpm</span></p>
-          <p class="rec">recommended: pnpm</p>
-
-          <p class="category">Linter</p>
-          <p class="dim">
-            .cursor/rules/global.mdc → <span class="val">eslint</span>
-          </p>
-          <p class="dim">CLAUDE.md → <span class="val">eslint</span></p>
-          <p class="dim">AGENTS.md → <span class="val">oxlint</span></p>
-          <p class="rec">recommended: oxlint</p>
-
-          <div class="prompt-block">
-            <p class="prompt">◇ Fix contradictions?</p>
-            <p class="prompt-answer">│ Yes</p>
-            <p class="prompt">◆ Package manager: which do you prefer?</p>
-            <p class="prompt-answer">│ pnpm (recommended)</p>
-            <p class="prompt">◆ Linter: which do you prefer?</p>
-            <p class="prompt-answer">│ oxlint (recommended)</p>
-          </div>
-
-          <p class="category">.cursor/rules/global.mdc</p>
-          <p class="diff-minus">- Use eslint and npm run lint.</p>
-          <p class="diff-plus">+ Use oxlint and pnpm run lint.</p>
-
-          <p class="category">CLAUDE.md</p>
-          <p class="diff-minus">- Run `npm install` before starting.</p>
-          <p class="diff-plus">+ Run `pnpm install` before starting.</p>
-          <p class="diff-minus">- Use ESLint for linting.</p>
-          <p class="diff-plus">+ Use Oxlint for linting.</p>
-
-          <div class="prompt-block">
-            <p class="prompt">◇ Apply changes?</p>
-            <p class="prompt-answer">│ Yes</p>
-          </div>
-
-          <p class="success">✓ Fixed 2 files. All your agents agree.</p>
-          <p class="done">
-            Done in 1.2s<span class="cursor" aria-hidden="true"></span>
-          </p>
+        <div class="terminal-body" class:terminal-body--done={terminalDone}>
+          {#if terminalStep >= 1}
+            <p class="command t-line" style="--d:0">
+              <span>$</span> npx agentchecker
+            </p>
+          {/if}
+          {#if terminalStep >= 2}
+            <p class="brand t-line" style="--d:1">agentchecker</p>
+          {/if}
+          {#if terminalStep >= 3}
+            <p class="dim t-line" style="--d:2">
+              Found: <span class="ok">✓</span> .cursor/rules/global.mdc · AGENTS.md
+              · CLAUDE.md
+            </p>
+          {/if}
+          {#if terminalStep >= 4}
+            <p class="warn t-line" style="--d:3">⚠ 2 contradictions found:</p>
+          {/if}
+          {#if terminalStep >= 5}
+            <div class="terminal-grid t-line" style="--d:4">
+              <div>
+                <p class="category">Package manager</p>
+                <p class="dim">.cursor/... → <span class="val">npm</span></p>
+                <p class="dim">CLAUDE.md → <span class="val">npm</span></p>
+                <p class="dim">AGENTS.md → <span class="val">pnpm</span></p>
+                <p class="rec">→ pnpm</p>
+              </div>
+              <div>
+                <p class="category">Linter</p>
+                <p class="dim">.cursor/... → <span class="val">eslint</span></p>
+                <p class="dim">CLAUDE.md → <span class="val">eslint</span></p>
+                <p class="dim">AGENTS.md → <span class="val">oxlint</span></p>
+                <p class="rec">→ oxlint</p>
+              </div>
+            </div>
+          {/if}
+          {#if terminalStep >= 6}
+            <p class="prompt t-line" style="--d:5">
+              ◇ Fix? <span class="accent">Yes</span> · pnpm · oxlint
+            </p>
+          {/if}
+          {#if terminalStep >= 7}
+            <div class="diff-block t-line" style="--d:6">
+              <p class="category">CLAUDE.md</p>
+              <p class="diff-minus">- Run `npm install` before starting.</p>
+              <p class="diff-plus">+ Run `pnpm install` before starting.</p>
+            </div>
+          {/if}
+          {#if terminalStep >= 8}
+            <p class="success t-line" style="--d:7">
+              ✓ Fixed 2 files. All your agents agree.
+              {#if terminalDone}<span class="cursor" aria-hidden="true"
+                ></span>{/if}
+            </p>
+          {/if}
         </div>
       </div>
 
@@ -712,8 +725,8 @@
   }
 
   .terminal {
-    width: min(760px, 100%);
-    margin: 0 auto 24px;
+    width: min(640px, 100%);
+    margin: 0 auto 20px;
     overflow: hidden;
     color: var(--text);
     text-align: left;
@@ -771,21 +784,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 35px;
+    min-height: 28px;
     background: linear-gradient(#181818, #121212);
     border-bottom: 1px solid var(--border);
   }
 
   .traffic {
     position: absolute;
-    left: 20px;
+    left: 14px;
     display: flex;
-    gap: 7px;
+    gap: 6px;
   }
 
   .traffic span {
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     opacity: 0.65;
     transition:
@@ -812,7 +825,7 @@
 
   .terminal-title {
     color: #323232;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.08em;
   }
@@ -820,18 +833,48 @@
   .terminal-body {
     position: relative;
     z-index: 1;
-    padding: 16px 22px 14px;
-    font-size: 12px;
+    min-height: 168px;
+    max-height: 220px;
+    padding: 10px 14px 8px;
+    font-size: 10px;
     font-weight: 600;
-    line-height: 1.55;
+    line-height: 1.32;
+    transition: min-height 0.25s ease;
+  }
+
+  .terminal-body--done {
+    min-height: 0;
+    max-height: none;
   }
 
   .terminal-body p {
-    margin: 0 0 3px;
+    margin: 0 0 2px;
+  }
+
+  .t-line {
+    animation: term-in 0.28s ease both;
+    animation-delay: calc(var(--d, 0) * 30ms);
+  }
+
+  @keyframes term-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .t-line {
+      animation: none;
+    }
   }
 
   .command {
-    margin-bottom: 10px;
+    margin-bottom: 4px;
     color: var(--text);
   }
 
@@ -841,33 +884,29 @@
   }
 
   .brand {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     color: #67e8f9;
     font-weight: 700;
-  }
-
-  .scan {
-    margin-bottom: 10px;
-    color: #4d504d;
   }
 
   .dim {
     color: #4d504d;
   }
 
-  .file-line .ok {
+  .dim .ok {
     color: var(--primary);
   }
 
   .warn {
-    margin: 12px 0 8px;
+    margin: 6px 0 4px;
     color: #f5c542;
   }
 
   .category {
-    margin-top: 8px;
+    margin: 0 0 2px;
     color: #ffffff;
     font-weight: 800;
+    font-size: 9.5px;
   }
 
   .val {
@@ -875,52 +914,64 @@
   }
 
   .rec {
-    margin-bottom: 4px;
-    color: #4d504d;
-    font-size: 11.5px;
+    margin: 0;
+    color: var(--primary);
+    font-size: 9.5px;
   }
 
-  .prompt-block {
-    margin: 14px 0;
-    padding: 10px 0;
+  .terminal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+    margin: 4px 0 6px;
+    padding: 6px 0;
     border-top: 1px solid #151515;
     border-bottom: 1px solid #151515;
   }
 
+  .terminal-grid p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .prompt {
+    margin: 4px 0;
     color: #ffffff;
   }
 
-  .prompt-answer {
-    margin-bottom: 6px;
-    padding-left: 2px;
+  .prompt .accent {
     color: var(--primary);
+  }
+
+  .diff-block {
+    margin: 4px 0;
+  }
+
+  .diff-block .category {
+    margin-bottom: 1px;
   }
 
   .diff-minus {
     color: #ff6b6b;
-    font-size: 11.5px;
+    font-size: 9.5px;
   }
 
   .diff-plus {
     color: var(--primary);
-    font-size: 11.5px;
+    font-size: 9.5px;
   }
 
   .success {
-    margin-top: 10px;
+    margin-top: 6px;
     color: var(--primary);
     text-shadow: var(--glow);
   }
 
-  .done {
-    color: #4d504d;
-  }
-
   .cursor {
     display: inline-block;
-    width: 8px;
-    height: 14px;
+    width: 7px;
+    height: 12px;
     margin-left: 2px;
     background: var(--primary);
     vertical-align: text-bottom;
@@ -1219,8 +1270,15 @@
     }
 
     .terminal-body {
-      padding: 20px 16px;
-      font-size: 11px;
+      min-height: 0;
+      max-height: none;
+      padding: 12px 12px 10px;
+      font-size: 9.5px;
+    }
+
+    .terminal-grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
     }
 
     .cta-row {
