@@ -66,10 +66,10 @@ graph TD
 5. **Creates `AGENTS.md`** automatically if no local config exists, locking in your choices for this project.
 
 <p align="center">
-  <a href="https://asciinema.org/a/FpvGzRly3F6TYanv"><img src="https://asciinema.org/a/FpvGzRly3F6TYanv.svg" alt="agentchecker terminal demo"></a>
+  <a href="https://asciinema.org/a/RjSsDnzYvvVyoYC4"><img src="https://asciinema.org/a/RjSsDnzYvvVyoYC4.svg" alt="agentchecker terminal demo"></a>
 </p>
 
-> Terminal recording: real `npx agentchecker --dry-run` on a sample project. [Open full player →](https://asciinema.org/a/FpvGzRly3F6TYanv)
+> Terminal recording: real `npx agentchecker --dry-run` on a sample project. [Open full player →](https://asciinema.org/a/RjSsDnzYvvVyoYC4)
 
 ---
 
@@ -240,10 +240,10 @@ graph TD
 5. **Crea `AGENTS.md`** automáticamente si no existe ninguna configuración local, asegurando tus elecciones para este proyecto.
 
 <p align="center">
-  <a href="https://asciinema.org/a/FpvGzRly3F6TYanv"><img src="https://asciinema.org/a/FpvGzRly3F6TYanv.svg" alt="demo de agentchecker en terminal"></a>
+  <a href="https://asciinema.org/a/RjSsDnzYvvVyoYC4"><img src="https://asciinema.org/a/RjSsDnzYvvVyoYC4.svg" alt="demo de agentchecker en terminal"></a>
 </p>
 
-> Grabación real de `npx agentchecker --dry-run` en un proyecto de ejemplo. [Ver reproductor completo →](https://asciinema.org/a/FpvGzRly3F6TYanv)
+> Grabación real de `npx agentchecker --dry-run` en un proyecto de ejemplo. [Ver reproductor completo →](https://asciinema.org/a/RjSsDnzYvvVyoYC4)
 
 ---
 

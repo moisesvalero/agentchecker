@@ -7,7 +7,7 @@ CLI="$ROOT/packages/cli/dist/cli.js"
 FIXTURE="$ROOT/packages/cli/tests/fixtures/cursor-claude-conflict"
 
 cd "$ROOT/packages/cli"
-pnpm run build --silent 2>/dev/null || pnpm run build >/dev/null
+pnpm run build >/dev/null 2>&1
 
 clear
 echo "\$ cd my-project"
