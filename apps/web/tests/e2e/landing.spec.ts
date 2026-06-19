@@ -7,7 +7,7 @@ test('landing muestra comando de instalación y CTA principal', async ({
 
   await expect(page.getByText('npx agentchecker').first()).toBeVisible();
   await expect(
-    page.getByRole('link', { name: /VIEW ON GITHUB|STAR ON GITHUB/i }).first(),
+    page.getByRole('link', { name: /VIEW ON GITHUB|VER EN GITHUB/i }).first(),
   ).toBeVisible();
 });
 
@@ -19,5 +19,6 @@ test('toggle de idioma cambia textos visibles', async ({ page }) => {
   await toggle.click();
 
   await expect(toggle).toHaveText('EN');
-  await expect(page.getByText('LISTO PARA PRODUCCIÓN')).toBeVisible();
+  await expect(page.getByText('v0.1.7 en npm')).toBeVisible();
+  await expect(page.getByText(/Escanea AGENTS\.md/)).toBeVisible();
 });
