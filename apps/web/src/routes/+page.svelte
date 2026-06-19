@@ -2,26 +2,33 @@
   import { onMount } from 'svelte';
 
   const installCommand = 'npx agentchecker';
+  const pkgVersion = '0.1.7';
+  const npmUrl = 'https://www.npmjs.com/package/agentchecker';
+  const ciDocsUrl =
+    'https://github.com/moisesvalero/agentchecker#2-cicd-pipeline-github-actions';
+
   let copied = $state(false);
   let copyStatus = $state<'idle' | 'success' | 'error'>('idle');
   let lang = $state<'en' | 'es'>('en');
 
   const translations = {
     en: {
-      nav: { docs: 'DOCS', donate: 'DONATE', star: '★ STAR ON GITHUB' },
+      nav: { docs: 'Docs', donate: 'Donate', star: 'Star' },
       langToggle: 'ES',
-      status: 'STATUS: PRODUCTION READY',
+      status: `v${pkgVersion} on npm`,
+      terminalSkip: 'Skip demo',
       heroSubtitle:
         'Scans AGENTS.md, CLAUDE.md, Cursor rules, and Copilot instructions in one command. Surfaces package manager, linter, and formatter conflicts in under 2 seconds.',
       cta: { github: 'VIEW ON GITHUB', docs: 'DOCUMENTATION' },
       install: 'QUICK INSTALL',
       copyLabel: 'Copy install command',
       copyOk: 'Copied to clipboard',
-      copyFail: 'Copy failed — select the command manually',
+      copyFail: 'Copy failed. Select the command manually.',
       specs: {
         agentsTitle: 'Scanned agent paths',
         ciTitle: 'CI check',
         ciHint: 'Fails the workflow when project rules disagree:',
+        ciDocs: 'CI setup in README',
         ciSnippet: 'npx agentchecker --check-only --local-only',
         paths: [
           'AGENTS.md',
@@ -34,25 +41,27 @@
       },
       footer: {
         copy: '© 2026 AGENTCHECKER // MADE BY',
-        docs: 'DOCS',
-        status: 'STATUS',
+        docs: 'Docs',
+        npm: `v${pkgVersion}`,
       },
     },
     es: {
-      nav: { docs: 'DOCS', donate: 'DONAR', star: '★ DAR ESTRELLA' },
+      nav: { docs: 'Docs', donate: 'Donar', star: 'Estrella' },
       langToggle: 'EN',
-      status: 'ESTADO: LISTO PARA PRODUCCIÓN',
+      status: `v${pkgVersion} en npm`,
+      terminalSkip: 'Saltar demo',
       heroSubtitle:
         'Escanea AGENTS.md, CLAUDE.md, reglas de Cursor e instrucciones de Copilot en un comando. Detecta conflictos de gestor, linter y formateador en menos de 2 segundos.',
       cta: { github: 'VER EN GITHUB', docs: 'DOCUMENTACIÓN' },
       install: 'INSTALACIÓN RÁPIDA',
       copyLabel: 'Copiar comando de instalación',
       copyOk: 'Copiado al portapapeles',
-      copyFail: 'No se pudo copiar — selecciona el comando manualmente',
+      copyFail: 'No se pudo copiar. Selecciona el comando manualmente.',
       specs: {
         agentsTitle: 'Rutas de agentes escaneadas',
         ciTitle: 'Check en CI',
         ciHint: 'Falla el workflow si las reglas del proyecto no coinciden:',
+        ciDocs: 'Configuración CI en README',
         ciSnippet: 'npx agentchecker --check-only --local-only',
         paths: [
           'AGENTS.md',
@@ -65,8 +74,8 @@
       },
       footer: {
         copy: '© 2026 AGENTCHECKER // HECHO POR',
-        docs: 'DOCS',
-        status: 'ESTADO',
+        docs: 'Docs',
+        npm: `v${pkgVersion}`,
       },
     },
   } as const;
@@ -106,8 +115,27 @@
 
   const TERMINAL_STEP_COUNT = 8;
   const TERMINAL_SEEN_KEY = 'agentchecker-terminal-seen';
+  const TERMINAL_DELAYS = [0, 140, 260, 380, 500, 620, 740, 860];
   let terminalStep = $state(TERMINAL_STEP_COUNT);
   let terminalDone = $derived(terminalStep >= TERMINAL_STEP_COUNT);
+  let terminalAnimating = $state(false);
+  let terminalTimers: ReturnType<typeof setTimeout>[] = [];
+
+  function finishTerminalAnimation() {
+    terminalTimers.forEach(clearTimeout);
+    terminalTimers = [];
+    terminalStep = TERMINAL_STEP_COUNT;
+    terminalAnimating = false;
+    try {
+      sessionStorage.setItem(TERMINAL_SEEN_KEY, '1');
+    } catch {
+      /* private mode */
+    }
+  }
+
+  function skipTerminalDemo() {
+    finishTerminalAnimation();
+  }
 
   onMount(() => {
     let mouseRaf = 0;
@@ -131,7 +159,6 @@
     const reducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches;
-    const timers: ReturnType<typeof setTimeout>[] = [];
     let seenBefore = false;
     try {
       seenBefore = sessionStorage.getItem(TERMINAL_SEEN_KEY) === '1';
@@ -145,30 +172,35 @@
     }
 
     if (shouldAnimate) {
+      terminalAnimating = true;
       terminalStep = 0;
-      const delays = [0, 220, 420, 620, 900, 1150, 1500, 1850];
-      delays.forEach((delay, index) => {
-        timers.push(
+      TERMINAL_DELAYS.forEach((delay, index) => {
+        terminalTimers.push(
           setTimeout(() => {
             terminalStep = index + 1;
             if (index + 1 === TERMINAL_STEP_COUNT) {
-              try {
-                sessionStorage.setItem(TERMINAL_SEEN_KEY, '1');
-              } catch {
-                /* private mode */
-              }
+              finishTerminalAnimation();
             }
           }, delay),
         );
       });
     }
 
+    const onKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && terminalAnimating) {
+        skipTerminalDemo();
+      }
+    };
+    window.addEventListener('keydown', onKeydown);
+
     return () => {
       window.removeEventListener('mousemove', updateMouse);
+      window.removeEventListener('keydown', onKeydown);
       if (mouseRaf) {
         cancelAnimationFrame(mouseRaf);
       }
-      timers.forEach(clearTimeout);
+      terminalTimers.forEach(clearTimeout);
+      terminalTimers = [];
     };
   });
 </script>
@@ -229,7 +261,9 @@
 
   <main>
     <section class="hero">
-      <div class="status-badge">{t.status}</div>
+      <a class="status-badge" href={npmUrl} target="_blank" rel="noreferrer">
+        {t.status}
+      </a>
       <h1 class="hero-title">AGENTCHECKER<span>.</span></h1>
       <p class="hero-subtitle">{t.heroSubtitle}</p>
 
@@ -241,6 +275,15 @@
             <span class="dot-green"></span>
           </div>
           <span class="terminal-title">agentchecker — ~/my-app</span>
+          {#if terminalAnimating && !terminalDone}
+            <button
+              type="button"
+              class="terminal-skip"
+              onclick={skipTerminalDemo}
+            >
+              {t.terminalSkip}
+            </button>
+          {/if}
         </div>
         <div
           class="terminal-body"
@@ -403,6 +446,9 @@
         <pre class="specs-code"><code
             ><span class="specs-prompt">$</span> {t.specs.ciSnippet}</code
           ></pre>
+        <a class="specs-docs" href={ciDocsUrl} target="_blank" rel="noreferrer">
+          {t.specs.ciDocs}
+        </a>
       </div>
     </section>
   </main>
@@ -447,7 +493,7 @@
       <a href="https://github.com/moisesvalero/agentchecker#readme"
         >{t.footer.docs}</a
       >
-      <a href="https://www.npmjs.com/package/agentchecker">{t.footer.status}</a>
+      <a href={npmUrl}>{t.footer.npm}</a>
     </nav>
   </footer>
 </div>
@@ -460,11 +506,7 @@
     margin: 0 auto;
     padding: 20px 24px 44px;
     overflow: hidden;
-    background-color: #080808;
-    background-image:
-      linear-gradient(rgba(0, 255, 65, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 65, 0.06) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-color: transparent;
   }
 
   .mouse-glow {
@@ -560,9 +602,9 @@
     min-height: 44px;
     padding: 8px 4px;
     color: var(--text-dim);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     transition: color 0.16s ease;
   }
 
@@ -634,10 +676,19 @@
     color: var(--primary);
     background: rgba(0, 255, 65, 0.06);
     border: 1px solid rgba(0, 255, 65, 0.34);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     box-shadow: var(--glow);
+    text-decoration: none;
+    transition:
+      border-color 0.16s ease,
+      color 0.16s ease;
+  }
+
+  .status-badge:hover {
+    border-color: var(--primary);
+    color: #ffffff;
   }
 
   .hero-title {
@@ -687,21 +738,6 @@
     box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.22);
   }
 
-  .terminal::after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      rgba(18, 16, 16, 0) 50%,
-      rgba(0, 0, 0, 0.12) 50%
-    );
-    z-index: 10;
-    background-size: 100% 3px;
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
   .terminal-bar {
     position: relative;
     display: flex;
@@ -749,8 +785,33 @@
   .terminal-title {
     color: var(--terminal-bar-muted);
     font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .terminal-skip {
+    position: absolute;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 4px 10px;
+    color: var(--terminal-bar-muted);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition:
+      border-color 0.16s ease,
+      color 0.16s ease;
+  }
+
+  .terminal-skip:hover {
+    border-color: rgba(0, 255, 65, 0.4);
+    color: var(--primary);
   }
 
   .terminal-body {
@@ -759,9 +820,9 @@
     min-height: 168px;
     max-height: 220px;
     padding: 10px 14px 8px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
-    line-height: 1.32;
+    line-height: 1.38;
   }
 
   .terminal-body--done {
@@ -822,7 +883,7 @@
     margin: 0 0 2px;
     color: #ffffff;
     font-weight: 800;
-    font-size: 9.5px;
+    font-size: 10px;
   }
 
   .val {
@@ -832,7 +893,7 @@
   .rec {
     margin: 0;
     color: var(--primary);
-    font-size: 9.5px;
+    font-size: 10px;
   }
 
   .terminal-grid {
@@ -870,12 +931,12 @@
 
   .diff-minus {
     color: #ff6b6b;
-    font-size: 9.5px;
+    font-size: 10px;
   }
 
   .diff-plus {
     color: var(--primary);
-    font-size: 9.5px;
+    font-size: 10px;
   }
 
   .success {
@@ -963,7 +1024,7 @@
     top: -9px;
     left: 20px;
     padding: 0 8px;
-    color: #888;
+    color: var(--text-muted);
     background: #0a0a0a;
     font-size: 10px;
     font-weight: 800;
@@ -1084,6 +1145,21 @@
     color: var(--primary);
   }
 
+  .specs-docs {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.16s ease;
+  }
+
+  .specs-docs:hover {
+    color: #ffffff;
+  }
+
   .footer {
     display: flex;
     justify-content: space-between;
@@ -1125,9 +1201,9 @@
   .donate-link,
   .star-link {
     color: var(--text-dim);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     transition: color 0.16s ease;
   }
 
@@ -1166,7 +1242,7 @@
     }
 
     .hero-title {
-      font-size: clamp(42px, 13vw, 72px);
+      font-size: clamp(36px, 11vw, 58px);
       overflow-wrap: anywhere;
     }
 
@@ -1174,7 +1250,7 @@
       min-height: 0;
       max-height: none;
       padding: 12px 12px 10px;
-      font-size: 9.5px;
+      font-size: 11px;
     }
 
     .terminal-grid {
