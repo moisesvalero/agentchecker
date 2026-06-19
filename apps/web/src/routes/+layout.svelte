@@ -3,7 +3,7 @@
 
   let { children } = $props();
 
-  const SITE_URL = 'https://agentchecker.dev';
+  const SITE_URL = 'https://agentcheck-rho.vercel.app';
   const OG_IMAGE = `${SITE_URL}/og-image.png`;
 </script>
 
@@ -79,7 +79,7 @@
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Linux, macOS, Windows",
     "description": "A zero-install CLI tool that scans and fixes contradictions between AI agent instruction files such as AGENTS.md, CLAUDE.md, Cursor rules, GitHub Copilot instructions, and other AI coding assistant configurations.",
-    "url": "https://agentchecker.dev",
+    "url": "https://agentcheck-rho.vercel.app",
     "downloadUrl": "https://www.npmjs.com/package/agentchecker",
     "softwareVersion": "0.1.6",
     "releaseNotes": "Added global config scanning (~/.claude, ~/.cursor/rules, ~/.codex) and shell environment contradiction detection.",
@@ -211,7 +211,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "agentchecker",
-    "url": "https://agentchecker.dev",
+    "url": "https://agentcheck-rho.vercel.app",
     "description": "CLI tool to fix contradictions between AI agent instruction files",
     "inLanguage": ["en", "es"],
     "author": {
