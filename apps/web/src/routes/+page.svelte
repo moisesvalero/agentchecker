@@ -3,13 +3,79 @@
 
   const installCommand = 'npx agentchecker';
   let copied = $state(false);
+  let lang = $state<'en' | 'es'>('en');
+
+  const translations = {
+    en: {
+      nav: { docs: 'DOCS', donate: 'DONATE', star: '★ STAR ON GITHUB' },
+      langToggle: 'ES',
+      status: 'STATUS: PRODUCTION READY V1.2.4',
+      heroSubtitle: 'Fix contradictions between AI agent instruction files. Clinical precision for ensuring your agents act with logical consistency.',
+      terminal: {
+        scanning: 'Scanning AI agent rules files...',
+        found: 'Found:',
+        contradictions: '⚠ 2 contradictions found',
+        catPkg: 'CATEGORY: PACKAGE MANAGER',
+        catLinter: 'CATEGORY: LINTER',
+        recPkg: '  recommended: pnpm',
+        recLinter: '  recommended: oxlint',
+        fixQ: '? Fix contradictions? Yes',
+        pkgQ: '? Select package manager: pnpm (recommended)',
+        linterQ: '? Select linter: oxlint',
+        fixed: '✓ Fixed 2 files. All your agents agree.',
+        ready: 'Process complete. Ready.',
+      },
+      cta: { github: 'VIEW ON GITHUB', docs: 'DOCUMENTATION' },
+      install: 'QUICK INSTALL',
+      copyLabel: 'Copy install command',
+      features: {
+        mod1: { title: 'DETECTION', desc: 'Static analysis of markdown and text-based instruction files using advanced semantic mapping to find logical overlaps.' },
+        mod2: { title: 'CORRECTION', desc: 'Automated conflict resolution suggestions powered by specialized reasoning models. One-click remediation for edge cases.' },
+        mod3: { title: 'INTEGRATION', desc: "CLI tool that fits into your CI/CD pipeline. Fail builds if agent instructions don\'t pass the check." },
+      },
+      footer: { copy: '© 2026 AGENTCHECKER // MADE BY', docs: 'DOCS', status: 'STATUS' },
+    },
+    es: {
+      nav: { docs: 'DOCS', donate: 'DONAR', star: '★ DAR ESTRELLA' },
+      langToggle: 'EN',
+      status: 'ESTADO: LISTO PARA PRODUCCIÓN V1.2.4',
+      heroSubtitle: 'Detecta y corrige contradicciones entre archivos de instrucciones de agentes IA. Precisión clínica para garantizar que tus agentes actúen con coherencia lógica.',
+      terminal: {
+        scanning: 'Escaneando archivos de reglas de agentes IA...',
+        found: 'Encontrado:',
+        contradictions: '⚠ 2 contradicciones encontradas',
+        catPkg: 'CATEGORÍA: GESTOR DE PAQUETES',
+        catLinter: 'CATEGORÍA: LINTER',
+        recPkg: '  recomendado: pnpm',
+        recLinter: '  recomendado: oxlint',
+        fixQ: '? ¿Corregir contradicciones? Sí',
+        pkgQ: '? Selecciona gestor de paquetes: pnpm (recomendado)',
+        linterQ: '? Selecciona linter: oxlint',
+        fixed: '✓ 2 archivos corregidos. Todos tus agentes están alineados.',
+        ready: 'Proceso completado. Listo.',
+      },
+      cta: { github: 'VER EN GITHUB', docs: 'DOCUMENTACIÓN' },
+      install: 'INSTALACIÓN RÁPIDA',
+      copyLabel: 'Copiar comando de instalación',
+      features: {
+        mod1: { title: 'DETECCIÓN', desc: 'Análisis estático de archivos markdown e instrucciones de texto usando mapeo semántico avanzado para detectar solapamientos lógicos.' },
+        mod2: { title: 'CORRECCIÓN', desc: 'Sugerencias automáticas de resolución de conflictos. Corrección con un clic para cualquier caso.' },
+        mod3: { title: 'INTEGRACIÓN', desc: 'Herramienta CLI que encaja en tu pipeline CI/CD. Falla el build si las instrucciones de los agentes no pasan la revisión.' },
+      },
+      footer: { copy: '© 2026 AGENTCHECKER // HECHO POR', docs: 'DOCS', status: 'ESTADO' },
+    },
+  } as const;
+
+  let t = $derived(translations[lang]);
+
+  function toggleLang() {
+    lang = lang === 'en' ? 'es' : 'en';
+  }
 
   async function copyInstall() {
     await navigator.clipboard.writeText(installCommand);
     copied = true;
-    setTimeout(() => {
-      copied = false;
-    }, 2000);
+    setTimeout(() => { copied = false; }, 2000);
   }
 
   onMount(() => {
@@ -49,27 +115,26 @@
       <span class="logo-dot">.</span>
     </a>
     <nav class="nav" aria-label="Primary">
-      <a class="active" href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
-      <a class="donate-link" href="https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD" target="_blank" rel="noreferrer">DONATE</a>
+      <a class="active" href="https://github.com/moisesvalero/agentchecker#readme">{t.nav.docs}</a>
+      <a class="donate-link" href="https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD" target="_blank" rel="noreferrer">{t.nav.donate}</a>
       <a class="star-link" href="https://github.com/moisesvalero/agentchecker" target="_blank" rel="noreferrer">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
           <path d="M9 18c-4.51 2-5-2-7-2" />
         </svg>
-        <span>★ STAR ON GITHUB</span>
+        <span>{t.nav.star}</span>
       </a>
     </nav>
-    <div class="header-spacer"></div>
+    <div class="header-spacer">
+      <button class="lang-toggle" onclick={toggleLang} aria-label="Switch language">{t.langToggle}</button>
+    </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="status-badge">STATUS: PRODUCTION READY V1.2.4</div>
+      <div class="status-badge">{t.status}</div>
       <h1 class="hero-title">AGENTCHECKER<span>.</span></h1>
-      <p class="hero-subtitle">
-        Fix contradictions between AI agent instruction files. Clinical precision for ensuring
-        your agents act with logical consistency.
-      </p>
+      <p class="hero-subtitle">{t.heroSubtitle}</p>
 
       <div class="terminal" aria-label="Agentchecker audit terminal preview">
         <div class="terminal-bar">
@@ -83,36 +148,36 @@
         <div class="terminal-body">
           <div class="terminal-main">
             <p class="command"><span>$</span> npx agentchecker</p>
-            <p class="muted">Scanning AI agent rules files...</p>
-            <p class="dim">Found:</p>
+            <p class="muted">{t.terminal.scanning}</p>
+            <p class="dim">{t.terminal.found}</p>
             <p class="dim">  ✓ AGENTS.md (Shared)</p>
             <p class="dim">  ✓ CLAUDE.md (Claude Code)</p>
             <p class="dim">  ✓ .cursor/rules/global.mdc (Cursor)</p>
-            
-            <p class="accent audit">⚠ 2 contradictions found</p>
+
+            <p class="accent audit">{t.terminal.contradictions}</p>
 
             <div class="terminal-grid">
               <div>
-                <p class="dim">CATEGORY: PACKAGE MANAGER</p>
+                <p class="dim">{t.terminal.catPkg}</p>
                 <p class="dim">  - .cursor/rules/global.mdc -> npm</p>
                 <p class="dim">  - CLAUDE.md -> npm</p>
                 <p class="dim">  - AGENTS.md -> pnpm</p>
-                <p class="accent">  recommended: pnpm</p>
+                <p class="accent">{t.terminal.recPkg}</p>
               </div>
               <div>
-                <p class="dim">CATEGORY: LINTER</p>
+                <p class="dim">{t.terminal.catLinter}</p>
                 <p class="dim">  - .cursor/rules/global.mdc -> eslint</p>
                 <p class="dim">  - CLAUDE.md -> eslint</p>
                 <p class="dim">  - AGENTS.md -> oxlint</p>
-                <p class="accent">  recommended: oxlint</p>
+                <p class="accent">{t.terminal.recLinter}</p>
               </div>
             </div>
 
-            <p class="prompt">? Fix contradictions? Yes</p>
-            <p class="prompt">? Select package manager: pnpm (recommended)</p>
-            <p class="prompt">? Select linter: oxlint</p>
-            <p class="success">✓ Fixed 2 files. All your agents agree.</p>
-            <p class="wait">Process complete. Ready.<span class="cursor"></span></p>
+            <p class="prompt">{t.terminal.fixQ}</p>
+            <p class="prompt">{t.terminal.pkgQ}</p>
+            <p class="prompt">{t.terminal.linterQ}</p>
+            <p class="success">{t.terminal.fixed}</p>
+            <p class="wait">{t.terminal.ready}<span class="cursor"></span></p>
           </div>
         </div>
       </div>
@@ -124,7 +189,7 @@
           target="_blank"
           rel="noreferrer"
         >
-          VIEW ON GITHUB
+          {t.cta.github}
         </a>
         <a
           class="btn btn-secondary"
@@ -132,14 +197,14 @@
           target="_blank"
           rel="noreferrer"
         >
-          DOCUMENTATION
+          {t.cta.docs}
         </a>
       </div>
 
       <div class="install-bar">
-        <span class="install-label">QUICK INSTALL</span>
+        <span class="install-label">{t.install}</span>
         <code><span>$</span> {installCommand}</code>
-        <button class="copy-btn" type="button" onclick={copyInstall} aria-label="Copy install command">
+        <button class="copy-btn" type="button" onclick={copyInstall} aria-label={t.copyLabel}>
           {#if copied}
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path
@@ -183,12 +248,9 @@
             <path d="M7.5 10.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
           </svg>
         </div>
-        <h2>DETECTION</h2>
+        <h2>{t.features.mod1.title}</h2>
         <div class="feature-line"></div>
-        <p>
-          Static analysis of markdown and text-based instruction files using advanced semantic
-          mapping to find logical overlaps.
-        </p>
+        <p>{t.features.mod1.desc}</p>
       </article>
 
       <article class="feature-card">
@@ -204,12 +266,9 @@
             <path d="M5 20L20 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
           </svg>
         </div>
-        <h2>CORRECTION</h2>
+        <h2>{t.features.mod2.title}</h2>
         <div class="feature-line"></div>
-        <p>
-          Automated conflict resolution suggestions powered by specialized reasoning models.
-          One-click remediation for edge cases.
-        </p>
+        <p>{t.features.mod2.desc}</p>
       </article>
 
       <article class="feature-card">
@@ -220,12 +279,9 @@
             <path d="M8 10l3 2-3 2M13 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </div>
-        <h2>INTEGRATION</h2>
+        <h2>{t.features.mod3.title}</h2>
         <div class="feature-line"></div>
-        <p>
-          CLI tool that fits into your CI/CD pipeline. Fail builds if agent instructions don't
-          pass the check.
-        </p>
+        <p>{t.features.mod3.desc}</p>
       </article>
     </section>
   </main>
@@ -234,7 +290,7 @@
     <div class="footer-left">
       <span class="footer-brand">AGENTCHECKER</span>
       <span class="footer-copy">
-        © 2026 AGENTCHECKER // HECHO POR 
+        {t.footer.copy}
         <a class="portfolio-link" href="https://moisesvalero.es" target="_blank" rel="noreferrer">MOISÉS VALERO</a>
       </span>
     </div>
@@ -251,8 +307,8 @@
           <path d="M9 18c-4.51 2-5-2-7-2" />
         </svg>
       </a>
-      <a href="https://github.com/moisesvalero/agentchecker#readme">DOCS</a>
-      <a href="https://www.npmjs.com/package/agentchecker">STATUS</a>
+      <a href="https://github.com/moisesvalero/agentchecker#readme">{t.footer.docs}</a>
+      <a href="https://www.npmjs.com/package/agentchecker">{t.footer.status}</a>
     </nav>
   </footer>
 </div>
@@ -413,6 +469,27 @@
 
   .header-spacer {
     justify-self: end;
+    display: flex;
+    align-items: center;
+  }
+
+  .lang-toggle {
+    background: transparent;
+    border: 1px solid rgba(0, 255, 65, 0.25);
+    color: rgba(0, 255, 65, 0.6);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 3px 8px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+
+  .lang-toggle:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(0, 255, 65, 0.06);
   }
 
   .footer-github {
