@@ -10,7 +10,8 @@
       nav: { docs: 'DOCS', donate: 'DONATE', star: '★ STAR ON GITHUB' },
       langToggle: 'ES',
       status: 'STATUS: PRODUCTION READY V1.2.4',
-      heroSubtitle: 'Fix contradictions between AI agent instruction files. Clinical precision for ensuring your agents act with logical consistency.',
+      heroSubtitle:
+        'Fix contradictions between AI agent instruction files. Clinical precision for ensuring your agents act with logical consistency.',
       terminal: {
         scanning: 'Scanning AI agent rules files...',
         found: 'Found:',
@@ -29,17 +30,31 @@
       install: 'QUICK INSTALL',
       copyLabel: 'Copy install command',
       features: {
-        mod1: { title: 'DETECTION', desc: 'Static analysis of markdown and text-based instruction files using advanced semantic mapping to find logical overlaps.' },
-        mod2: { title: 'CORRECTION', desc: 'Automated conflict resolution suggestions powered by specialized reasoning models. One-click remediation for edge cases.' },
-        mod3: { title: 'INTEGRATION', desc: "CLI tool that fits into your CI/CD pipeline. Fail builds if agent instructions don\'t pass the check." },
+        mod1: {
+          title: 'DETECTION',
+          desc: 'Static analysis of markdown and text-based instruction files using advanced semantic mapping to find logical overlaps.',
+        },
+        mod2: {
+          title: 'CORRECTION',
+          desc: 'Automated conflict resolution suggestions powered by specialized reasoning models. One-click remediation for edge cases.',
+        },
+        mod3: {
+          title: 'INTEGRATION',
+          desc: "CLI tool that fits into your CI/CD pipeline. Fail builds if agent instructions don't pass the check.",
+        },
       },
-      footer: { copy: '© 2026 AGENTCHECKER // MADE BY', docs: 'DOCS', status: 'STATUS' },
+      footer: {
+        copy: '© 2026 AGENTCHECKER // MADE BY',
+        docs: 'DOCS',
+        status: 'STATUS',
+      },
     },
     es: {
       nav: { docs: 'DOCS', donate: 'DONAR', star: '★ DAR ESTRELLA' },
       langToggle: 'EN',
       status: 'ESTADO: LISTO PARA PRODUCCIÓN V1.2.4',
-      heroSubtitle: 'Detecta y corrige contradicciones entre archivos de instrucciones de agentes IA. Precisión clínica para garantizar que tus agentes actúen con coherencia lógica.',
+      heroSubtitle:
+        'Detecta y corrige contradicciones entre archivos de instrucciones de agentes IA. Precisión clínica para garantizar que tus agentes actúen con coherencia lógica.',
       terminal: {
         scanning: 'Escaneando archivos de reglas de agentes IA...',
         found: 'Encontrado:',
@@ -58,11 +73,24 @@
       install: 'INSTALACIÓN RÁPIDA',
       copyLabel: 'Copiar comando de instalación',
       features: {
-        mod1: { title: 'DETECCIÓN', desc: 'Análisis estático de archivos markdown e instrucciones de texto usando mapeo semántico avanzado para detectar solapamientos lógicos.' },
-        mod2: { title: 'CORRECCIÓN', desc: 'Sugerencias automáticas de resolución de conflictos. Corrección con un clic para cualquier caso.' },
-        mod3: { title: 'INTEGRACIÓN', desc: 'Herramienta CLI que encaja en tu pipeline CI/CD. Falla el build si las instrucciones de los agentes no pasan la revisión.' },
+        mod1: {
+          title: 'DETECCIÓN',
+          desc: 'Análisis estático de archivos markdown e instrucciones de texto usando mapeo semántico avanzado para detectar solapamientos lógicos.',
+        },
+        mod2: {
+          title: 'CORRECCIÓN',
+          desc: 'Sugerencias automáticas de resolución de conflictos. Corrección con un clic para cualquier caso.',
+        },
+        mod3: {
+          title: 'INTEGRACIÓN',
+          desc: 'Herramienta CLI que encaja en tu pipeline CI/CD. Falla el build si las instrucciones de los agentes no pasan la revisión.',
+        },
       },
-      footer: { copy: '© 2026 AGENTCHECKER // HECHO POR', docs: 'DOCS', status: 'ESTADO' },
+      footer: {
+        copy: '© 2026 AGENTCHECKER // HECHO POR',
+        docs: 'DOCS',
+        status: 'ESTADO',
+      },
     },
   } as const;
 
@@ -75,7 +103,9 @@
   async function copyInstall() {
     await navigator.clipboard.writeText(installCommand);
     copied = true;
-    setTimeout(() => { copied = false; }, 2000);
+    setTimeout(() => {
+      copied = false;
+    }, 2000);
   }
 
   onMount(() => {
@@ -115,18 +145,47 @@
       <span class="logo-dot">.</span>
     </a>
     <nav class="nav" aria-label="Primary">
-      <a class="active" href="https://github.com/moisesvalero/agentchecker#readme">{t.nav.docs}</a>
-      <a class="donate-link" href="https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD" target="_blank" rel="noreferrer">{t.nav.donate}</a>
-      <a class="star-link" href="https://github.com/moisesvalero/agentchecker" target="_blank" rel="noreferrer">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+      <a
+        class="active"
+        href="https://github.com/moisesvalero/agentchecker#readme"
+        >{t.nav.docs}</a
+      >
+      <a
+        class="donate-link"
+        href="https://www.paypal.com/donate/?business=moi6@outlook.com&no_recurring=0&item_name=Agentchecker&currency_code=USD"
+        target="_blank"
+        rel="noreferrer">{t.nav.donate}</a
+      >
+      <a
+        class="star-link"
+        href="https://github.com/moisesvalero/agentchecker"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+          />
           <path d="M9 18c-4.51 2-5-2-7-2" />
         </svg>
         <span>{t.nav.star}</span>
       </a>
     </nav>
     <div class="header-spacer">
-      <button class="lang-toggle" onclick={toggleLang} aria-label="Switch language">{t.langToggle}</button>
+      <button
+        class="lang-toggle"
+        onclick={toggleLang}
+        aria-label="Switch language">{t.langToggle}</button
+      >
     </div>
   </header>
 
@@ -150,25 +209,25 @@
             <p class="command"><span>$</span> npx agentchecker</p>
             <p class="muted">{t.terminal.scanning}</p>
             <p class="dim">{t.terminal.found}</p>
-            <p class="dim">  ✓ AGENTS.md (Shared)</p>
-            <p class="dim">  ✓ CLAUDE.md (Claude Code)</p>
-            <p class="dim">  ✓ .cursor/rules/global.mdc (Cursor)</p>
+            <p class="dim">✓ AGENTS.md (Shared)</p>
+            <p class="dim">✓ CLAUDE.md (Claude Code)</p>
+            <p class="dim">✓ .cursor/rules/global.mdc (Cursor)</p>
 
             <p class="accent audit">{t.terminal.contradictions}</p>
 
             <div class="terminal-grid">
               <div>
                 <p class="dim">{t.terminal.catPkg}</p>
-                <p class="dim">  - .cursor/rules/global.mdc -> npm</p>
-                <p class="dim">  - CLAUDE.md -> npm</p>
-                <p class="dim">  - AGENTS.md -> pnpm</p>
+                <p class="dim">- .cursor/rules/global.mdc -> npm</p>
+                <p class="dim">- CLAUDE.md -> npm</p>
+                <p class="dim">- AGENTS.md -> pnpm</p>
                 <p class="accent">{t.terminal.recPkg}</p>
               </div>
               <div>
                 <p class="dim">{t.terminal.catLinter}</p>
-                <p class="dim">  - .cursor/rules/global.mdc -> eslint</p>
-                <p class="dim">  - CLAUDE.md -> eslint</p>
-                <p class="dim">  - AGENTS.md -> oxlint</p>
+                <p class="dim">- .cursor/rules/global.mdc -> eslint</p>
+                <p class="dim">- CLAUDE.md -> eslint</p>
+                <p class="dim">- AGENTS.md -> oxlint</p>
                 <p class="accent">{t.terminal.recLinter}</p>
               </div>
             </div>
@@ -204,9 +263,20 @@
       <div class="install-bar">
         <span class="install-label">{t.install}</span>
         <code><span>$</span> {installCommand}</code>
-        <button class="copy-btn" type="button" onclick={copyInstall} aria-label={t.copyLabel}>
+        <button
+          class="copy-btn"
+          type="button"
+          onclick={copyInstall}
+          aria-label={t.copyLabel}
+        >
           {#if copied}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
               <path
                 d="M20 6L9 17l-5-5"
                 stroke="currentColor"
@@ -216,7 +286,13 @@
               />
             </svg>
           {:else}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
               <rect
                 x="9"
                 y="3"
@@ -243,9 +319,25 @@
         <span class="feature-mod">MOD_01</span>
         <div class="feature-icon" aria-hidden="true">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8" />
-            <path d="M16 16l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-            <path d="M7.5 10.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            <circle
+              cx="10.5"
+              cy="10.5"
+              r="6.5"
+              stroke="currentColor"
+              stroke-width="1.8"
+            />
+            <path
+              d="M16 16l4 4"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+            <path
+              d="M7.5 10.5h6"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
           </svg>
         </div>
         <h2>{t.features.mod1.title}</h2>
@@ -263,7 +355,12 @@
               stroke-width="1.7"
               stroke-linejoin="round"
             />
-            <path d="M5 20L20 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+            <path
+              d="M5 20L20 5"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+            />
           </svg>
         </div>
         <h2>{t.features.mod2.title}</h2>
@@ -275,8 +372,22 @@
         <span class="feature-mod">MOD_03</span>
         <div class="feature-icon" aria-hidden="true">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <rect x="4" y="6" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.8" />
-            <path d="M8 10l3 2-3 2M13 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <rect
+              x="4"
+              y="6"
+              width="16"
+              height="12"
+              rx="1"
+              stroke="currentColor"
+              stroke-width="1.8"
+            />
+            <path
+              d="M8 10l3 2-3 2M13 15h4"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </div>
         <h2>{t.features.mod3.title}</h2>
@@ -291,7 +402,12 @@
       <span class="footer-brand">AGENTCHECKER</span>
       <span class="footer-copy">
         {t.footer.copy}
-        <a class="portfolio-link" href="https://moisesvalero.es" target="_blank" rel="noreferrer">MOISÉS VALERO</a>
+        <a
+          class="portfolio-link"
+          href="https://moisesvalero.es"
+          target="_blank"
+          rel="noreferrer">MOISÉS VALERO</a
+        >
       </span>
     </div>
     <nav class="footer-nav" aria-label="Footer">
@@ -302,12 +418,25 @@
         rel="noreferrer"
         aria-label="GitHub Repository"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+          />
           <path d="M9 18c-4.51 2-5-2-7-2" />
         </svg>
       </a>
-      <a href="https://github.com/moisesvalero/agentchecker#readme">{t.footer.docs}</a>
+      <a href="https://github.com/moisesvalero/agentchecker#readme"
+        >{t.footer.docs}</a
+      >
       <a href="https://www.npmjs.com/package/agentchecker">{t.footer.status}</a>
     </nav>
   </footer>
@@ -358,7 +487,11 @@
     inset: 0;
     z-index: 3;
     pointer-events: none;
-    background: radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.55) 100%);
+    background: radial-gradient(
+      circle at center,
+      transparent 60%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
     box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7);
   }
 
@@ -370,20 +503,43 @@
     pointer-events: none;
     background:
       linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%),
-      linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-    background-size: 100% 4px, 3px 100%;
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.02),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.02)
+      );
+    background-size:
+      100% 4px,
+      3px 100%;
     opacity: 0.45;
   }
 
   @keyframes screenFlicker {
-    0%   { opacity: 0.992; }
-    10%  { opacity: 0.998; }
-    20%  { opacity: 0.991; }
-    35%  { opacity: 0.999; }
-    50%  { opacity: 0.994; }
-    65%  { opacity: 0.997; }
-    80%  { opacity: 0.991; }
-    100% { opacity: 0.998; }
+    0% {
+      opacity: 0.992;
+    }
+    10% {
+      opacity: 0.998;
+    }
+    20% {
+      opacity: 0.991;
+    }
+    35% {
+      opacity: 0.999;
+    }
+    50% {
+      opacity: 0.994;
+    }
+    65% {
+      opacity: 0.997;
+    }
+    80% {
+      opacity: 0.991;
+    }
+    100% {
+      opacity: 0.998;
+    }
   }
 
   .header {
@@ -483,7 +639,10 @@
     letter-spacing: 0.12em;
     padding: 3px 8px;
     cursor: pointer;
-    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease,
+      background 0.2s ease;
   }
 
   .lang-toggle:hover {
@@ -495,7 +654,9 @@
   .footer-github {
     display: inline-flex;
     align-items: center;
-    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), color 0.2s ease;
+    transition:
+      transform 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+      color 0.2s ease;
   }
 
   .footer-github:hover {
@@ -559,7 +720,9 @@
     box-shadow: 0 0 32px rgba(0, 255, 65, 0.15);
     position: relative;
     animation: crt-flicker 0.15s infinite;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
   }
 
   .terminal:hover {
@@ -568,23 +731,39 @@
   }
 
   .terminal::after {
-    content: " ";
+    content: ' ';
     display: block;
     position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    background: 
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background:
       linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-      linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.04),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.04)
+      );
     z-index: 10;
-    background-size: 100% 3px, 6px 100%;
+    background-size:
+      100% 3px,
+      6px 100%;
     pointer-events: none;
     opacity: 0.85;
   }
 
   @keyframes crt-flicker {
-    0% { opacity: 0.985; }
-    50% { opacity: 0.995; }
-    100% { opacity: 0.985; }
+    0% {
+      opacity: 0.985;
+    }
+    50% {
+      opacity: 0.995;
+    }
+    100% {
+      opacity: 0.985;
+    }
   }
 
   .terminal-bar {
@@ -609,7 +788,9 @@
     height: 9px;
     border-radius: 50%;
     opacity: 0.65;
-    transition: filter 0.16s ease, opacity 0.16s ease;
+    transition:
+      filter 0.16s ease,
+      opacity 0.16s ease;
   }
 
   .terminal:hover .traffic span {
@@ -791,7 +972,9 @@
     color: var(--primary);
     background: transparent;
     border: 0;
-    transition: transform 0.16s ease, color 0.16s ease;
+    transition:
+      transform 0.16s ease,
+      color 0.16s ease;
   }
 
   .copy-btn:hover {
@@ -816,9 +999,16 @@
     padding: 42px 22px 26px;
     overflow: hidden;
     text-align: left;
-    background: linear-gradient(180deg, rgba(17, 17, 17, 0.94), rgba(14, 14, 14, 0.94));
+    background: linear-gradient(
+      180deg,
+      rgba(17, 17, 17, 0.94),
+      rgba(14, 14, 14, 0.94)
+    );
     border: 1px solid var(--border);
-    transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+    transition:
+      transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
   }
 
   .feature-card:hover {
@@ -857,7 +1047,10 @@
     margin-bottom: 28px;
     color: var(--primary);
     filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.35));
-    transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), color 0.22s ease, filter 0.22s ease;
+    transition:
+      transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
+      color 0.22s ease,
+      filter 0.22s ease;
   }
 
   .feature-card:hover .feature-icon {
@@ -966,8 +1159,6 @@
       gap: 18px;
       justify-items: center;
     }
-
-
 
     .hero {
       padding-top: 58px;

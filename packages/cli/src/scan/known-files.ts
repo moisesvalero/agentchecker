@@ -1,6 +1,6 @@
 import type { AgentId } from '../types.js';
 
-export type AgentFilePattern = {
+type AgentFilePattern = {
   agent: AgentId;
   kind: 'shared' | 'tool-specific' | 'legacy';
   patterns: string[];
@@ -25,10 +25,7 @@ export const AGENT_FILE_PATTERNS: AgentFilePattern[] = [
   {
     agent: 'copilot',
     kind: 'tool-specific',
-    patterns: [
-      '.github/copilot-instructions.md',
-      '.github/instructions/*.instructions.md',
-    ],
+    patterns: ['.github/copilot-instructions.md', '.github/instructions/*.instructions.md'],
   },
   {
     agent: 'codex',
@@ -71,7 +68,7 @@ export const IGNORE_PATTERNS = [
 ];
 
 // Rutas globales de cada herramienta, relativas al home del usuario
-export type GlobalAgentPattern = {
+type GlobalAgentPattern = {
   agent: AgentId;
   paths: string[];
 };
@@ -106,4 +103,3 @@ export const GLOBAL_AGENT_PATTERNS: GlobalAgentPattern[] = [
     paths: ['.gemini/gemini.md'],
   },
 ];
-

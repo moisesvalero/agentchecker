@@ -57,6 +57,7 @@ export type CliOptions = {
   cwd: string;
   dryRun: boolean;
   checkOnly: boolean;
+  localOnly: boolean;
   yes: boolean;
   verbose: boolean;
   agents: AgentId[] | null;

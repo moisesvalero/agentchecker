@@ -16,9 +16,15 @@
     name="description"
     content="agentchecker is a zero-install CLI that detects and fixes contradictions between AGENTS.md, CLAUDE.md, Cursor rules, Copilot instructions and other AI agent config files. Run npx agentchecker."
   />
-  <meta name="keywords" content="agentchecker, AI agent instructions, AGENTS.md, CLAUDE.md, cursor rules, copilot instructions, AI conflict resolver, CLI tool, npx agentchecker" />
+  <meta
+    name="keywords"
+    content="agentchecker, AI agent instructions, AGENTS.md, CLAUDE.md, cursor rules, copilot instructions, AI conflict resolver, CLI tool, npx agentchecker"
+  />
   <meta name="author" content="Moisés Valero" />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta
+    name="robots"
+    content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+  />
   <link rel="canonical" href={SITE_URL} />
 
   <!-- ═══════════════════════════════════════════
@@ -34,7 +40,10 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content={SITE_URL} />
   <meta property="og:site_name" content="agentchecker" />
-  <meta property="og:title" content="agentchecker — Fix AI Agent Instruction Conflicts in 2 Seconds" />
+  <meta
+    property="og:title"
+    content="agentchecker — Fix AI Agent Instruction Conflicts in 2 Seconds"
+  />
   <meta
     property="og:description"
     content="Zero-install CLI that detects and fixes contradictions between AGENTS.md, CLAUDE.md, Cursor rules and Copilot instructions. Run npx agentchecker in any project."
@@ -42,7 +51,10 @@
   <meta property="og:image" content={OG_IMAGE} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="agentchecker terminal showing contradiction detection between AI agent files" />
+  <meta
+    property="og:image:alt"
+    content="agentchecker terminal showing contradiction detection between AI agent files"
+  />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="es_ES" />
 
@@ -50,7 +62,10 @@
        TWITTER / X CARD
   ═══════════════════════════════════════════ -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="agentchecker — Fix AI Agent Instruction Conflicts" />
+  <meta
+    name="twitter:title"
+    content="agentchecker — Fix AI Agent Instruction Conflicts"
+  />
   <meta
     name="twitter:description"
     content="Zero-install CLI to fix contradictions between AGENTS.md, CLAUDE.md, Cursor rules and Copilot instructions. npx agentchecker"

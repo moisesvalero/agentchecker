@@ -2,7 +2,7 @@ import * as p from '@clack/prompts';
 import type { Contradiction } from '../types.js';
 import { CATEGORY_LABELS } from '../types.js';
 
-export type ResolvedContradiction = Contradiction & { chosen: string };
+type ResolvedContradiction = Contradiction & { chosen: string };
 
 export async function promptFixContradictions(
   contradictions: Contradiction[],
@@ -20,9 +20,7 @@ export async function promptFixContradictions(
     const options = contradiction.values.map((entry) => ({
       value: entry.value,
       label:
-        entry.value === contradiction.recommendation
-          ? `${entry.value} (recommended)`
-          : entry.value,
+        entry.value === contradiction.recommendation ? `${entry.value} (recommended)` : entry.value,
     }));
 
     const chosen = await p.select({

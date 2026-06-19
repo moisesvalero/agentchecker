@@ -13,24 +13,6 @@ export const AGENT_LABELS: Record<AgentId, string> = {
   aider: 'Aider',
 };
 
-export const AGENT_FILE_OWNERS: Record<string, AgentId[]> = {
-  'AGENTS.md': ['shared'],
-  'CLAUDE.md': ['claude'],
-  '.claude/CLAUDE.md': ['claude'],
-  '.cursorrules': ['cursor'],
-  '.github/copilot-instructions.md': ['copilot'],
-  '.codex/config.toml': ['codex'],
-  '.gemini.md': ['antigravity'],
-  '.gemini/gemini.md': ['antigravity'],
-  'gemini.md': ['antigravity'],
-  '.agents/AGENTS.md': ['antigravity'],
-  '.opencode.json': ['opencode'],
-  '.opencode.jsonc': ['opencode'],
-  '.windsurfrules': ['windsurf'],
-  '.clinerules': ['cline'],
-  'CONVENTIONS.md': ['aider'],
-};
-
 export function normalizeAgentFilter(input: string): AgentId | null {
   const key = input.toLowerCase().replace(/_/g, '-');
   const map: Record<string, AgentId> = {

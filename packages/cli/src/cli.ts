@@ -11,10 +11,7 @@ import { applyRecommendations } from './compare/recommend-resolution.js';
 import { planFixes } from './fix/plan-fixes.js';
 import { applyFixes, previewFixes } from './fix/apply-fixes.js';
 import { renderContradictions, renderFoundFiles } from './ui/render-report.js';
-import {
-  confirmApplyChanges,
-  promptFixContradictions,
-} from './ui/prompt-resolutions.js';
+import { confirmApplyChanges, promptFixContradictions } from './ui/prompt-resolutions.js';
 import { normalizeAgentFilter } from './scan/agent-map.js';
 import {
   EXIT_CONTRADICTIONS,
@@ -31,6 +28,7 @@ function parseCliOptions(argv: string[]): CliOptions {
     options: {
       'dry-run': { type: 'boolean', default: false },
       'check-only': { type: 'boolean', default: false },
+      'local-only': { type: 'boolean', default: false },
       yes: { type: 'boolean', short: 'y', default: false },
       verbose: { type: 'boolean', short: 'v', default: false },
       agent: { type: 'string', short: 'a', multiple: true },
@@ -49,6 +47,7 @@ Usage:
 Options:
   --dry-run       Show contradictions and preview without writing
   --check-only    Exit 1 if contradictions exist (CI mode)
+  --local-only    Scan only project files, skip global home configs
   -y, --yes       Apply recommended fixes without prompts
   -a, --agent     Limit scan to agents: cursor, claude, copilot, shared
   --project-dir   Project directory to scan (default: cwd)
@@ -62,10 +61,10 @@ Options:
   const agents =
     agentsRaw.length === 0
       ? null
-      : (agentsRaw
+      : agentsRaw
           .flatMap((entry) => entry.split(','))
           .map((entry) => normalizeAgentFilter(entry.trim()))
-          .filter((entry): entry is AgentId => entry !== null));
+          .filter((entry): entry is AgentId => entry !== null);
 
   if (agentsRaw.length > 0 && agents !== null && agents.length === 0) {
     throw new Error('Invalid --agent value. Use cursor, claude, copilot, or shared.');
@@ -75,6 +74,7 @@ Options:
     cwd: values['project-dir'] ? path.resolve(values['project-dir']) : process.cwd(),
     dryRun: Boolean(values['dry-run']),
     checkOnly: Boolean(values['check-only']),
+    localOnly: Boolean(values['local-only']),
     yes: Boolean(values.yes),
     verbose: Boolean(values.verbose),
     agents,
@@ -102,10 +102,10 @@ export async function runCli(argv: string[]): Promise<number> {
   if (!options.checkOnly && !options.yes) {
     const spinner = p.spinner();
     spinner.start('Scanning AI agent files...');
-    files = await scanProject(options.cwd, options.agents);
+    files = await scanProject(options.cwd, options.agents, !options.localOnly);
     spinner.stop(renderFoundFiles(files));
   } else {
-    files = await scanProject(options.cwd, options.agents);
+    files = await scanProject(options.cwd, options.agents, !options.localOnly);
     console.log(renderFoundFiles(files));
   }
 
@@ -130,7 +130,11 @@ export async function runCli(argv: string[]): Promise<number> {
 
   if (contradictions.length === 0) {
     if (!options.checkOnly && !options.yes) {
-      p.outro(pc.green(`✓ No contradictions found. All your agents agree! (Done in ${((Date.now() - started) / 1000).toFixed(1)}s)`));
+      p.outro(
+        pc.green(
+          `✓ No contradictions found. All your agents agree! (Done in ${((Date.now() - started) / 1000).toFixed(1)}s)`,
+        ),
+      );
     } else {
       console.log(pc.green('✓ No contradictions found. All your agents agree!'));
     }
@@ -237,8 +241,8 @@ export async function runCli(argv: string[]): Promise<number> {
 const isMain =
   process.argv[1] &&
   (path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url)) ||
-   process.argv[1].endsWith('agentchecker.js') ||
-   process.argv[1].endsWith('agentchecker'));
+    process.argv[1].endsWith('agentchecker.js') ||
+    process.argv[1].endsWith('agentchecker'));
 
 if (isMain) {
   runCli(process.argv.slice(2)).then((code) => {

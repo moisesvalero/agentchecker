@@ -1,22 +1,17 @@
 import type { Fact, FactCategory, AgentFile } from '../types.js';
 import { getLines } from './normalize-markdown.js';
 
-export type CheckDefinition = {
+type CheckDefinition = {
   category: FactCategory;
   values: string[];
   patterns: RegExp[];
 };
 
-export const CHECK_DEFINITIONS: CheckDefinition[] = [
+const CHECK_DEFINITIONS: CheckDefinition[] = [
   {
     category: 'package-manager',
     values: ['pnpm', 'npm', 'yarn', 'bun'],
-    patterns: [
-      /\bpnpm\b/i,
-      /\bnpm\b/i,
-      /\byarn\b/i,
-      /\bbun\b/i,
-    ],
+    patterns: [/\bpnpm\b/i, /\bnpm\b/i, /\byarn\b/i, /\bbun\b/i],
   },
   {
     category: 'linter',
@@ -36,23 +31,12 @@ export const CHECK_DEFINITIONS: CheckDefinition[] = [
   {
     category: 'shell-environment',
     values: ['wsl', 'wsl2', 'windows', 'macos', 'linux'],
-    patterns: [
-      /\bwsl2\b/i,
-      /\bwsl\b/i,
-      /\bwindows\b/i,
-      /\bmacos\b/i,
-      /\blinux\b/i,
-    ],
+    patterns: [/\bwsl2\b/i, /\bwsl\b/i, /\bwindows\b/i, /\bmacos\b/i, /\blinux\b/i],
   },
   {
     category: 'package-runner',
     values: ['npx', 'pnpm dlx', 'bunx', 'yarn dlx'],
-    patterns: [
-      /\bnpx\b/i,
-      /\bpnpm\s+dlx\b/i,
-      /\bbunx\b/i,
-      /\byarn\s+dlx\b/i,
-    ],
+    patterns: [/\bnpx\b/i, /\bpnpm\s+dlx\b/i, /\bbunx\b/i, /\byarn\s+dlx\b/i],
   },
 ];
 
@@ -67,7 +51,7 @@ function detectValueOnLine(line: string, def: CheckDefinition): string | null {
   return null;
 }
 
-export function extractFactsFromFile(file: AgentFile): Fact[] {
+function extractFactsFromFile(file: AgentFile): Fact[] {
   const facts: Fact[] = [];
   const lines = getLines(file.content);
 

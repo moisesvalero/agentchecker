@@ -11,22 +11,27 @@ const fixturesDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../
 
 describe('scanProject', () => {
   it('finds conflict fixture files', async () => {
-    const files = await scanProject(path.join(fixturesDir, 'cursor-claude-conflict'), null);
+    const files = await scanProject(path.join(fixturesDir, 'cursor-claude-conflict'), null, false);
     expect(files.map((f) => f.relativePath).sort()).toEqual(
       ['.cursor/rules/global.mdc', 'AGENTS.md', 'CLAUDE.md'].sort(),
     );
   });
 
   it('returns empty for no-agent-files', async () => {
-    const files = await scanProject(path.join(fixturesDir, 'no-agent-files'), null);
+    const files = await scanProject(path.join(fixturesDir, 'no-agent-files'), null, false);
     expect(files).toHaveLength(0);
+  });
+
+  it('finds only AGENTS.md in single-file fixture', async () => {
+    const files = await scanProject(path.join(fixturesDir, 'only-agents-md'), null, false);
+    expect(files.map((f) => f.relativePath)).toEqual(['AGENTS.md']);
   });
 });
 
 describe('contradictions', () => {
   it('detects pnpm vs npm and oxlint vs eslint', async () => {
     const cwd = path.join(fixturesDir, 'cursor-claude-conflict');
-    const files = await scanProject(cwd, null);
+    const files = await scanProject(cwd, null, false);
     const facts = extractFacts(files);
     const contradictions = applyRecommendations(findContradictions(facts), facts);
 
@@ -41,7 +46,7 @@ describe('contradictions', () => {
 
   it('returns none for aligned copilot fixture', async () => {
     const cwd = path.join(fixturesDir, 'copilot-agents-ok');
-    const files = await scanProject(cwd, null);
+    const files = await scanProject(cwd, null, false);
     const facts = extractFacts(files);
     const contradictions = findContradictions(facts);
     expect(contradictions).toHaveLength(0);
@@ -51,7 +56,7 @@ describe('contradictions', () => {
 describe('planFixes', () => {
   it('plans npm to pnpm replacements', async () => {
     const cwd = path.join(fixturesDir, 'cursor-claude-conflict');
-    const files = await scanProject(cwd, null);
+    const files = await scanProject(cwd, null, false);
     const facts = extractFacts(files);
     const contradictions = applyRecommendations(findContradictions(facts), facts).map((c) => ({
       ...c,

@@ -14,7 +14,12 @@ describe('cli e2e', () => {
     await expect(
       execFileAsync(
         'node',
-        [cliEntry, '--check-only', '--project-dir', path.join(fixturesDir, 'cursor-claude-conflict')],
+        [
+          cliEntry,
+          '--check-only',
+          '--project-dir',
+          path.join(fixturesDir, 'cursor-claude-conflict'),
+        ],
         { cwd: packageRoot },
       ),
     ).rejects.toMatchObject({ code: 1 });
@@ -42,5 +47,21 @@ describe('cli e2e', () => {
       { cwd: packageRoot },
     );
     expect(stdout).toContain('Dry run complete');
+  });
+
+  it('supports --local-only without scanning global home configs', async () => {
+    const { stdout } = await execFileAsync(
+      'node',
+      [
+        cliEntry,
+        '--check-only',
+        '--local-only',
+        '--project-dir',
+        path.join(fixturesDir, 'no-agent-files'),
+      ],
+      { cwd: packageRoot },
+    );
+    expect(stdout).not.toContain('~/');
+    expect(stdout).toContain('No AI agent instruction files found');
   });
 });

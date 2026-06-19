@@ -73,6 +73,7 @@ async function scanGlobalFiles(agentFilter: AgentId[] | null): Promise<AgentFile
 export async function scanProject(
   cwd: string,
   agentFilter: AgentId[] | null,
+  includeGlobal = true,
 ): Promise<AgentFile[]> {
   const entries = AGENT_FILE_PATTERNS.filter(
     (entry) => !agentFilter || agentFilter.includes(entry.agent),
@@ -106,14 +107,14 @@ export async function scanProject(
     }
   }
 
-  // Escaneo global (~/.claude, ~/.codex, etc.)
-  const globalFiles = await scanGlobalFiles(agentFilter);
+  if (includeGlobal) {
+    const globalFiles = await scanGlobalFiles(agentFilter);
 
-  // Evitar duplicados si el proyecto está dentro del home
-  for (const gf of globalFiles) {
-    if (!seen.has(gf.path)) {
-      seen.add(gf.path);
-      files.push(gf);
+    for (const gf of globalFiles) {
+      if (!seen.has(gf.path)) {
+        seen.add(gf.path);
+        files.push(gf);
+      }
     }
   }
 

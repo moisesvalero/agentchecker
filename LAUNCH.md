@@ -2,11 +2,15 @@
 
 ## Done
 
-1. Terminal GIF in README (`demo.gif`)
-2. GitHub repo `moisesvalero/agentchecker`
-3. npm package `agentchecker` — `npx agentchecker`
-4. Vercel deploy from GitHub (free `.vercel.app` URL)
-5. Tag `v0.1.1`
+1. GitHub repo `moisesvalero/agentchecker`
+2. npm package `agentchecker` — `npx agentchecker`
+3. Vercel deploy from GitHub (free `.vercel.app` URL)
+4. Tag `v0.1.1`
+5. CI workflow, Husky pre-commit, and `AGENTS.md` dogfooding
+
+## Pending
+
+1. Terminal GIF in README (`demo.gif`) — script at `scripts/generate-demo-gif.py`
 
 ## Launch posts
 

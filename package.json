@@ -2,12 +2,35 @@
   "name": "agentchecker-monorepo",
   "private": true,
   "scripts": {
-    "build": "pnpm --filter agentchecker build",
+    "build": "pnpm --filter agentchecker build && pnpm --filter @agentchecker/web build",
+    "build:cli": "pnpm --filter agentchecker build",
+    "build:web": "pnpm --filter @agentchecker/web build",
     "test": "pnpm --filter agentchecker test",
-    "lint": "pnpm --filter agentchecker lint",
-    "check": "pnpm --filter agentchecker check",
-    "format:check": "pnpm --filter agentchecker format:check",
-    "dev:web": "pnpm --filter @agentchecker/web dev"
+    "lint": "pnpm --filter agentchecker lint && pnpm --filter @agentchecker/web lint",
+    "check": "pnpm --filter agentchecker check && pnpm --filter @agentchecker/web check",
+    "format": "pnpm --filter agentchecker format && pnpm --filter @agentchecker/web exec prettier --write .",
+    "format:check": "pnpm --filter agentchecker format:check && pnpm --filter @agentchecker/web format:check",
+    "knip": "knip",
+    "agent-check": "pnpm --filter agentchecker build && node packages/cli/dist/cli.js --check-only --local-only",
+    "dev:web": "pnpm --filter @agentchecker/web dev",
+    "prepare": "husky"
   },
-  "packageManager": "pnpm@10.12.1"
+  "packageManager": "pnpm@10.12.1",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "knip": "^5.50.5",
+    "lint-staged": "^15.5.2",
+    "oxlint": "^0.16.11",
+    "prettier": "^3.5.3",
+    "prettier-plugin-svelte": "^3.4.0"
+  },
+  "lint-staged": {
+    "*.{ts,js,svelte}": [
+      "oxlint",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
 }

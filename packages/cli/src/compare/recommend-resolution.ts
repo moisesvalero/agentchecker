@@ -10,10 +10,7 @@ function hasAgentsMd(facts: Fact[], value: string): boolean {
   );
 }
 
-export function recommendResolution(
-  contradiction: Contradiction,
-  facts: Fact[],
-): string {
+function recommendResolution(contradiction: Contradiction, facts: Fact[]): string {
   const categoryFacts = facts.filter((fact) => fact.category === contradiction.category);
   const candidates = contradiction.values.map((entry) => entry.value);
 
