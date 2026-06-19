@@ -21,7 +21,7 @@ Quick ideas to launch **agentchecker** now that the product is ready.
 
 ## Assets you already have
 
-- Real terminal recording on [asciinema.org](https://asciinema.org/a/FpvGzRly3F6TYanv) (also embedded in README)
+- Real terminal recording on [asciinema.org](https://asciinema.org/a/RjSsDnzYvvVyoYC4) (also embedded in README)
 - `demo.cast` in repo — re-record with `bash scripts/record-demo.sh`
 - `demo.gif` — static fallback for X/Reddit (`python3 scripts/generate-demo-gif.py`)
 - Landing: https://agentcheck-rho.vercel.app (or current Vercel URL)
