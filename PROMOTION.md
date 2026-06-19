@@ -38,7 +38,7 @@ Quick ideas to launch **agentchecker** now that the product is ready.
 
 ## Optional next steps
 
-- Link asciinema CLI to your account (`asciinema auth link`) so the recording does not expire — see [docs/ASCIINEMA.md](docs/ASCIINEMA.md)
+- Link asciinema CLI to your account (`asciinema auth`) so the recording does not expire — see [docs/ASCIINEMA.md](docs/ASCIINEMA.md)
 - Submit to awesome-cursorrules, awesome-agents lists (see LAUNCH.md follow-up PRs)
 - Add npm keyword "cursor" / "claude" if not already maximized
 - Product Hunt when you have 2–3 testimonials or stars momentum

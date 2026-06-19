@@ -17,10 +17,10 @@ asciinema upload demo.cast
 **Permanent hosting:** link your CLI once (otherwise uploads expire after 7 days):
 
 ```bash
-asciinema auth link
+asciinema auth
 ```
 
-Follow the URL printed in the terminal and approve the device in your asciinema.org account.
+Open the URL printed in the terminal (e.g. `https://asciinema.org/connect/...`) while logged in on asciinema.org, then approve.
 
 After upload, update the recording ID in `README.md` (`asciinema.org/a/YOUR_ID`).
 
