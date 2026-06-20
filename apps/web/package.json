@@ -10,7 +10,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "lint": "oxlint src",
     "format:check": "prettier --check .",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "capture:gif": "node scripts/capture-landing-gif.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.0",

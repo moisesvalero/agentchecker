@@ -303,9 +303,11 @@
             <p class="brand t-line" style="--d:1">agentchecker</p>
           {/if}
           {#if terminalStep >= 3}
-            <p class="dim t-line" style="--d:2">
-              Found: <span class="ok">✓</span> .cursor/rules/global.mdc · AGENTS.md
-              · CLAUDE.md
+            <p class="dim t-line found-line" style="--d:2">
+              Found: <span class="ok">✓</span>
+              <span class="found-files"
+                >.cursor/rules/global.mdc · AGENTS.md · CLAUDE.md</span
+              >
             </p>
           {/if}
           {#if terminalStep >= 4}
@@ -743,6 +745,7 @@
 
   .terminal {
     width: min(640px, 100%);
+    min-width: 0;
     margin: 0 auto 20px;
     overflow: hidden;
     color: var(--text);
@@ -841,12 +844,22 @@
   .terminal-body {
     position: relative;
     z-index: 1;
+    min-width: 0;
     min-height: 168px;
     max-height: 220px;
     padding: 10px 14px 8px;
     font-size: 11px;
     font-weight: 600;
     line-height: 1.38;
+    overflow-wrap: anywhere;
+  }
+
+  .found-line {
+    overflow-wrap: anywhere;
+  }
+
+  .found-files {
+    display: inline;
   }
 
   .terminal-body--done {
@@ -1283,13 +1296,33 @@
     }
 
     .header {
-      grid-template-columns: 1fr;
-      gap: 18px;
-      justify-items: center;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        'logo lang'
+        'nav nav';
+      gap: 12px 16px;
+      align-items: center;
+    }
+
+    .logo {
+      grid-area: logo;
+      justify-self: start;
+    }
+
+    .nav {
+      grid-area: nav;
+      width: 100%;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .header-spacer {
+      grid-area: lang;
+      justify-self: end;
     }
 
     .hero {
-      padding-top: 58px;
+      padding-top: 12px;
     }
 
     .hero-title {
@@ -1336,27 +1369,67 @@
   }
 
   @media (max-width: 520px) {
+    .landing {
+      padding-inline: max(16px, env(safe-area-inset-left, 0px))
+        max(16px, env(safe-area-inset-right, 0px));
+    }
+
     .nav {
-      gap: 18px;
-      flex-wrap: wrap;
+      gap: 20px;
     }
 
     .status-badge {
       max-width: 100%;
       line-height: 1.45;
       text-align: center;
+      font-size: 11px;
+    }
+
+    .hero-title {
+      font-size: clamp(30px, 9.5vw, 44px);
     }
 
     .hero-subtitle {
-      font-size: 16px;
-      line-height: 1.5;
+      font-size: 14px;
+      line-height: 1.55;
+      padding-inline: 4px;
+    }
+
+    .terminal {
+      width: 100%;
+    }
+
+    .terminal-body {
+      padding: 10px;
+      font-size: 10px;
+      line-height: 1.45;
+    }
+
+    .found-files {
+      display: block;
+      margin-top: 2px;
+    }
+
+    .terminal-grid p {
+      white-space: normal;
     }
 
     .terminal-title {
-      max-width: calc(100% - 96px);
+      max-width: calc(100% - 56px);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      font-size: 9px;
+    }
+
+    .traffic {
+      left: 8px;
+      gap: 5px;
+    }
+
+    .traffic span {
+      width: 7px;
+      height: 7px;
     }
 
     .terminal-skip {

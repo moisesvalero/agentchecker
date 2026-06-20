@@ -9,6 +9,7 @@ build
 coverage
 test-results
 playwright-report
+.tmp
 .DS_Store
 *.log
 stitch_*.zip
