@@ -1,10 +1,10 @@
 /** Configuración central de SEO, GEO y AEO para la landing. */
-export const SITE_URL = 'https://agentcheck.moisesvalero.es';
+const SITE_URL = 'https://agentcheck.moisesvalero.es';
 export const PKG_VERSION = '0.1.8';
 
 export const siteName = 'agentchecker';
-export const authorName = 'Moisés Valero';
-export const authorUrl = 'https://moisesvalero.es';
+const authorName = 'Moisés Valero';
+const authorUrl = 'https://moisesvalero.es';
 export const githubUrl = 'https://github.com/moisesvalero/agentchecker';
 export const npmUrl = 'https://www.npmjs.com/package/agentchecker';
 export const licenseUrl =
