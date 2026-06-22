@@ -1,11 +1,18 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import {
+    PKG_VERSION,
+    faqsEn,
+    faqsEs,
+    githubUrl,
+    licenseUrl,
+    npmUrl,
+    seoEn,
+    seoEs,
+  } from '$lib/site';
 
   const installCommand = 'npx agentchecker';
-  const pkgVersion = '0.1.8';
-  const npmUrl = 'https://www.npmjs.com/package/agentchecker';
-  const licenseUrl =
-    'https://github.com/moisesvalero/agentchecker/blob/main/LICENSE';
+  const pkgVersion = PKG_VERSION;
   const ciDocsUrl =
     'https://github.com/moisesvalero/agentchecker#2-cicd-pipeline-github-actions';
   const donateUrl =
@@ -43,6 +50,10 @@
           'Codex · OpenCode · Aider · Antigravity',
         ],
       },
+      faq: {
+        title: 'Frequently asked questions',
+        items: faqsEn,
+      },
       footer: {
         copy: '© 2026 AGENTCHECKER // MADE BY',
         docs: 'Docs',
@@ -79,6 +90,10 @@
           'Codex · OpenCode · Aider · Antigravity',
         ],
       },
+      faq: {
+        title: 'Preguntas frecuentes',
+        items: faqsEs,
+      },
       footer: {
         copy: '© 2026 AGENTCHECKER // HECHO POR',
         docs: 'Docs',
@@ -93,8 +108,15 @@
   let t = $derived(translations[lang]);
 
   $effect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.lang = lang;
+    if (typeof document === 'undefined') return;
+    document.documentElement.lang = lang;
+    document.title = lang === 'es' ? seoEs.title : seoEn.title;
+    const description = document.querySelector('meta[name="description"]');
+    if (description) {
+      description.setAttribute(
+        'content',
+        lang === 'es' ? seoEs.description : seoEn.description,
+      );
     }
   });
 
@@ -230,12 +252,7 @@
         href="https://github.com/moisesvalero/agentchecker#readme"
         >{t.nav.docs}</a
       >
-      <a
-        class="star-link"
-        href="https://github.com/moisesvalero/agentchecker"
-        target="_blank"
-        rel="noreferrer"
-      >
+      <a class="star-link" href={githubUrl} target="_blank" rel="noreferrer">
         <svg
           width="14"
           height="14"
@@ -356,7 +373,7 @@
       <div class="cta-row">
         <a
           class="btn btn-primary"
-          href="https://github.com/moisesvalero/agentchecker"
+          href={githubUrl}
           target="_blank"
           rel="noreferrer"
         >
@@ -457,6 +474,18 @@
         </a>
       </div>
     </section>
+
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="faq-title">{t.faq.title}</h2>
+      <div class="faq-list">
+        {#each t.faq.items as item, index (item.question)}
+          <details class="faq-item" open={index === 0}>
+            <summary class="faq-question">{item.question}</summary>
+            <p class="faq-answer">{item.answer}</p>
+          </details>
+        {/each}
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -487,7 +516,7 @@
     <nav class="footer-nav" aria-label="Footer">
       <a
         class="footer-github"
-        href="https://github.com/moisesvalero/agentchecker"
+        href={githubUrl}
         target="_blank"
         rel="noreferrer"
         aria-label="GitHub Repository"
@@ -1195,6 +1224,66 @@
 
   .specs-docs:hover {
     color: #ffffff;
+  }
+
+  .faq {
+    width: min(720px, 100%);
+    margin: 56px auto 0;
+    text-align: left;
+  }
+
+  .faq-title {
+    margin: 0 0 16px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    text-align: center;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .faq-item {
+    padding: 0;
+    background: rgba(5, 5, 5, 0.92);
+    border: 1px solid var(--border);
+  }
+
+  .faq-question {
+    padding: 14px 16px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.45;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::before {
+    content: '› ';
+    color: var(--primary);
+    font-weight: 900;
+  }
+
+  .faq-item[open] .faq-question::before {
+    content: '⌄ ';
+  }
+
+  .faq-answer {
+    margin: 0;
+    padding: 0 16px 14px;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.55;
   }
 
   .footer {

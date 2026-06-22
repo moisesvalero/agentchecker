@@ -4,13 +4,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
   <url>
-    <loc>https://agentcheck-rho.vercel.app/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <loc>https://agentcheck.moisesvalero.es/</loc>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <!-- hreflang alternates (misma URL, selector de idioma en cliente) -->
-    <xhtml:link rel="alternate" hreflang="en" href="https://agentcheck-rho.vercel.app/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://agentcheck-rho.vercel.app/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://agentcheck-rho.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://agentcheck.moisesvalero.es/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://agentcheck.moisesvalero.es/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://agentcheck.moisesvalero.es/" />
   </url>
 </urlset>

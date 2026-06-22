@@ -1,0 +1,44 @@
+# agentchecker
+
+> Zero-install CLI that detects and fixes contradictions between AI agent instruction files (AGENTS.md, CLAUDE.md, Cursor rules, Copilot instructions) in under 2 seconds.
+
+## Canonical URL
+
+- https://agentcheck.moisesvalero.es/
+
+## Quick start
+
+```bash
+npx agentchecker
+```
+
+## What it does
+
+agentchecker scans project-local and global AI coding assistant configuration files, reports contradictions (package manager, linter, formatter, test runner, shell environment, package runner), and optionally fixes project files so all agents follow the same rules.
+
+## Supported files
+
+- AGENTS.md
+- CLAUDE.md and .claude/CLAUDE.md
+- .cursor/rules/*.mdc and .cursorrules
+- .github/copilot-instructions.md
+- .windsurfrules, .clinerules, .roo/rules
+- Codex, OpenCode, Aider, Antigravity configs
+- Global configs in ~/.claude/, ~/.cursor/rules/, ~/.codex/, ~/.config/opencode/
+
+## CI usage
+
+```bash
+npx agentchecker --check-only --local-only
+```
+
+## Links
+
+- Website: https://agentcheck.moisesvalero.es/
+- GitHub: https://github.com/moisesvalero/agentchecker
+- npm: https://www.npmjs.com/package/agentchecker
+- Author: https://moisesvalero.es
+
+## License
+
+PolyForm Noncommercial — commercial use: info@moisesvalero.es

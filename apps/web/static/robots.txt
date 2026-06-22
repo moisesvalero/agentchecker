@@ -1,10 +1,7 @@
 User-agent: *
 Allow: /
 
-# Crawl-delay for politeness
-Crawl-delay: 1
-
-# AI crawlers — allow indexing for GEO (Perplexity, ChatGPT, Gemini)
+# AI crawlers — GEO/AEO: permitir indexación en motores generativos
 User-agent: GPTBot
 Allow: /
 
@@ -20,4 +17,11 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://agentcheck-rho.vercel.app/sitemap.xml
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Contexto para LLMs: https://agentcheck.moisesvalero.es/llms.txt
+Sitemap: https://agentcheck.moisesvalero.es/sitemap.xml
