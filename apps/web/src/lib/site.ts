@@ -36,7 +36,7 @@ export const seoEs = {
     'agentchecker es un CLI sin instalación que detecta y corrige contradicciones entre AGENTS.md, CLAUDE.md, reglas de Cursor, instrucciones de Copilot y otros archivos de agentes IA. Ejecuta npx agentchecker.',
 } as const;
 
-export type FaqItem = { question: string; answer: string };
+type FaqItem = { question: string; answer: string };
 
 export const faqsEn: FaqItem[] = [
   {
