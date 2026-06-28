@@ -541,6 +541,7 @@
         >{t.footer.docs}</a
       >
       <a href={npmUrl}>{t.footer.npm}</a>
+      <a href="/privacy/">Privacy</a>
       <a class="support-link" href={donateUrl} target="_blank" rel="noreferrer">
         <span class="support-heart" aria-hidden="true">♥</span>
         {t.footer.support}

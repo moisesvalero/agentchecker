@@ -1,0 +1,9 @@
+# security.txt — https://securitytxt.org/
+# RFC 9116: A Method for Web Security Researchers
+
+Contact: https://github.com/moisesvalero/agentchecker/security/advisories/new
+Contact: https://github.com/moisesvalero/agentchecker/issues/new
+Expires: 2027-06-28T00:00:00.000Z
+Preferred-Languages: en, es
+Canonical: https://agentcheck.moisesvalero.es/.well-known/security.txt
+Policy: https://github.com/moisesvalero/agentchecker/security/policy
