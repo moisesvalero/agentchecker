@@ -1,4 +1,5 @@
 import type { Contradiction, FactCategory, FileChange } from '../types.js';
+import { isMatchNegated } from '../extract/extract-facts.js';
 
 const PACKAGE_REPLACEMENTS: Record<string, string> = {
   'npm install': 'pnpm install',
@@ -18,20 +19,30 @@ function replaceLosersOnLine(
 
   if (category === 'package-manager' && chosen === 'pnpm') {
     for (const [from, to] of Object.entries(PACKAGE_REPLACEMENTS)) {
-      updated = updated.replace(new RegExp(from, 'gi'), to);
+      updated = updated.replace(
+        new RegExp(`\\b${from}\\b`, 'gi'),
+        (match, offset: number, str: string) => {
+          if (isMatchNegated(str, offset)) return match;
+          return to;
+        },
+      );
     }
   }
 
   for (const loser of losers) {
     const pattern = new RegExp(`\\b${loser}\\b`, 'i');
     if (pattern.test(updated) && !new RegExp(`\\b${chosen}\\b`, 'i').test(line)) {
-      updated = updated.replace(new RegExp(`\\b${loser}\\b`, 'gi'), (match) => {
-        if (match === match.toUpperCase()) return chosen.toUpperCase();
-        if (match[0] === match[0]?.toUpperCase()) {
-          return chosen.charAt(0).toUpperCase() + chosen.slice(1);
-        }
-        return chosen;
-      });
+      updated = updated.replace(
+        new RegExp(`\\b${loser}\\b`, 'gi'),
+        (match, offset: number, str: string) => {
+          if (isMatchNegated(str, offset)) return match;
+          if (match === match.toUpperCase()) return chosen.toUpperCase();
+          if (match[0] === match[0]?.toUpperCase()) {
+            return chosen.charAt(0).toUpperCase() + chosen.slice(1);
+          }
+          return chosen;
+        },
+      );
     }
   }
 

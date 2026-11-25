@@ -10,7 +10,7 @@ const NEGATION_WORDS =
   /\b(?:never|not|don't|dont|do\s+not|avoid|forbidden|deprecated|nunca|jam[aá]s|evitar|prohibid[oa]s?|sin|no\s+(?:use|uses|usar|run|install|ejecutar))\b/i;
 const AFFIRMATIVE_RESET = /\b(?:always|siempre|instead|en\s+cambio|pero|prefer|prefier[a-z]*)\b/i;
 
-function isMatchNegated(line: string, matchIndex: number): boolean {
+export function isMatchNegated(line: string, matchIndex: number): boolean {
   const prefix = line.slice(0, matchIndex);
 
   // Caso 1: Dentro de un paréntesis (ej. (never npm, yarn, or bun))

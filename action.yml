@@ -28,19 +28,24 @@ runs:
   steps:
     - name: Run agentchecker
       shell: bash
+      env:
+        INPUT_CHECK_ONLY: ${{ inputs.check-only }}
+        INPUT_LOCAL_ONLY: ${{ inputs.local-only }}
+        INPUT_AUDIT_DEPS: ${{ inputs.audit-deps }}
+        INPUT_PROJECT_DIR: ${{ inputs.project-dir }}
       run: |
-        CMD="npx --yes agentchecker@latest"
-        if [ "${{ inputs.check-only }}" = "true" ]; then
-          CMD="$CMD --check-only"
+        ARGS=()
+        if [ "$INPUT_CHECK_ONLY" = "true" ]; then
+          ARGS+=(--check-only)
         fi
-        if [ "${{ inputs.local-only }}" = "true" ]; then
-          CMD="$CMD --local-only"
+        if [ "$INPUT_LOCAL_ONLY" = "true" ]; then
+          ARGS+=(--local-only)
         fi
-        if [ "${{ inputs.audit-deps }}" = "true" ]; then
-          CMD="$CMD --audit-deps"
+        if [ "$INPUT_AUDIT_DEPS" = "true" ]; then
+          ARGS+=(--audit-deps)
         fi
-        if [ -n "${{ inputs.project-dir }}" ] && [ "${{ inputs.project-dir }}" != "." ]; then
-          CMD="$CMD --project-dir ${{ inputs.project-dir }}"
+        if [ -n "$INPUT_PROJECT_DIR" ] && [ "$INPUT_PROJECT_DIR" != "." ]; then
+          ARGS+=(--project-dir "$INPUT_PROJECT_DIR")
         fi
-        echo "Running: $CMD"
-        $CMD
+        echo "Running: npx --yes agentchecker@latest ${ARGS[*]}"
+        npx --yes agentchecker@latest "${ARGS[@]}"
